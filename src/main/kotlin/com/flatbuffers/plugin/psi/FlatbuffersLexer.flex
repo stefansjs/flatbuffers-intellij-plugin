@@ -28,12 +28,13 @@ WHITE_SPACE=\s+
 INTEGER=-?[0-9]+
 FLOAT=-?[0-9]+.[0-9]+([eE][+-]?[0-9]+)?
 STRING=\".*?\\\"
-IDENT=[a-zA-Z_][a-zA-Z0-9_]*
+IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
 DEC_INTEGER=[-+]?[0-9]+
 HEX_INTEGER=[-+]?0[xX][0-9a-fA-F]+
 DEC_FLOAT=[-+]?(([.][0-9]+)|([0-9]+[.][0-9]*)|([0-9]+))([eE][-+]?[0-9]+)?
 HEX_FLOAT=[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F]+))([pP][-+]?[0-9]+)
 SPECIAL_FLOAT=[-+]?(nan|inf|infinity)
+COMMENT="//".+$
 
 %%
 <YYINITIAL> {
@@ -89,12 +90,13 @@ SPECIAL_FLOAT=[-+]?(nan|inf|infinity)
   {INTEGER}            { return INTEGER; }
   {FLOAT}              { return FLOAT; }
   {STRING}             { return STRING; }
-  {IDENT}              { return IDENT; }
+  {IDENTIFIER}         { return IDENTIFIER; }
   {DEC_INTEGER}        { return DEC_INTEGER; }
   {HEX_INTEGER}        { return HEX_INTEGER; }
   {DEC_FLOAT}          { return DEC_FLOAT; }
   {HEX_FLOAT}          { return HEX_FLOAT; }
   {SPECIAL_FLOAT}      { return SPECIAL_FLOAT; }
+  {COMMENT}            { return COMMENT; }
 
 }
 

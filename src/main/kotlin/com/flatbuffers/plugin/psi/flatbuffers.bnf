@@ -1,5 +1,6 @@
 {
   parserClass="com.flatbuffers.plugin.parser.FlatbuffersParser"
+  parserUtilClass="com.flatbuffers.plugin.parser.FlatbuffersParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -16,7 +17,7 @@
       INTEGER='regexp:-?\d+'
       FLOAT='regexp:-?\d+.\d+([eE][+-]?\d+)?'
       STRING='regexp:".*?\\"'
-      IDENT='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
+      IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
 
       DEC_INTEGER = 'regexp:[-+]?\d+'
       HEX_INTEGER = 'regexp:[-+]?0[xX][0-9a-fA-F]+'
@@ -24,23 +25,24 @@
       DEC_FLOAT = 'regexp:[-+]?(([.]\d+)|(\d+[.]\d*)|(\d+))([eE][-+]?\d+)?'
       HEX_FLOAT = 'regexp:[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F]+))([pP][-+]?\d+)'
       SPECIAL_FLOAT = 'regexp:[-+]?(nan|inf|infinity)'
+
+      COMMENT = 'regexp://.+$'
   ]
 }
 
-schema ::= include*
-           declaration*
-           
-private declaration ::= namespace_decl
-                      | type_decl
-                      | enum_decl
-                      | root_decl
-                      | file_extension_decl
-                      | file_identifier_decl
-                      | attribute_decl
-                      | rpc_decl
-                      | object
+schema ::= incl* declaration*
 
-include ::= INCLUDE string_constant SEMICOLON
+incl ::= INCLUDE string_constant SEMICOLON
+
+declaration ::= namespace_decl
+              | type_decl
+              | enum_decl
+              | root_decl
+              | file_extension_decl
+              | file_identifier_decl
+              | attribute_decl
+              | rpc_decl
+              | object
 
 namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
@@ -110,7 +112,7 @@ file_identifier_decl ::= FILE_IDENTIFIER string_constant SEMICOLON
 
 string_constant ::= STRING
 
-ident ::= IDENT
+ident ::= IDENTIFIER
 
 integer_constant ::= dec_integer_constant | hex_integer_constant
 
