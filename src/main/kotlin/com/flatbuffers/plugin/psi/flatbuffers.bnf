@@ -1,0 +1,95 @@
+{
+  parserClass="com.flatbuffers.plugin.parser.FlatbuffersParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Flatbuffers"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.flatbuffers.plugin.psi"
+  psiImplPackage="com.flatbuffers.plugin.psi.impl"
+
+  elementTypeHolderClass="com.flatbuffers.plugin.psi.FlatbuffersTypes"
+  elementTypeClass="com.flatbuffers.plugin.psi.FlatbuffersElementType"
+  tokenTypeClass="com.flatbuffers.plugin.psi.FlatbuffersTokenType"
+
+  tokens=[
+      INTEGER='regexp:-?\d+'
+      FLOAT='regexp:-?\d+.\d+([eE][+-]?\d+)?'
+      STRING='regexp:".*?\\"'
+      IDENT='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
+
+      DEC_INTEGER = 'regexp:[-+]?\d+'
+      HEX_INTEGER = 'regexp:[-+]?0[xX][0-9a-fA-F]+'
+
+      DEC_FLOAT = 'regexp:[-+]?(([.]\d+)|(\d+[.]\d*)|(\d+))([eE][-+]?\d+)?'
+      HEX_FLOAT = 'regexp:[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F]+))([pP][-+]?\d+)'
+      SPECIAL_FLOAT = 'regexp:[-+]?(nan|inf|infinity)'
+  ]
+}
+
+schema ::= include* ( namespace_decl | type_decl | enum_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | object )*
+
+include ::= INCLUDE string_constant SEMICOLON
+
+namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
+
+attribute_decl ::= ATTRIBUTE ident | QUOTE ident QUOTE SEMICOLON
+
+type_decl ::= ( TABLE | STRUCT) ident metadata LCURLY field_decl+ RCURLY
+
+enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
+
+private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )*
+
+root_decl ::= ROOT_TYPE ident SEMICOLON
+
+field_decl ::= ident COLON type ( EQUALS scalar )? metadata SEMICOLON
+
+rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
+
+rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
+
+type ::= bool | byte | ubyte | short | ushort | int | uint | float | long | ulong | double | int8 | uint8 | int16 | uint16 | int32 | uint32| int64 | uint64 | float32 | float64 | string | LBRACK type RBRACK | ident
+
+enumval_decl ::= ident ( EQUALS integer_constant )?
+
+metadata ::= ( LPAREN metadata_value ( COMMA metadata_value )* RPAREN )?
+
+private metadata_value ::= ident ( COLON single_value )?
+
+scalar ::= integer_constant | float_constant
+
+object ::= object_value ( COMMA object_value )*
+
+private object_value ::= ident COLON value
+
+single_value ::= scalar | string_constant
+
+value ::= single_value | object | LBRACK commasep_value RBRACK
+
+private commasep_value ::= ( value ( COMMA value )* )?
+
+file_extension_decl ::= FILE_EXTENSION string_constant SEMICOLON
+
+file_identifier_decl ::= FILE_IDENTIFIER string_constant SEMICOLON
+
+string_constant ::= STRING
+
+ident ::= IDENT
+
+integer_constant ::= dec_integer_constant | hex_integer_constant
+
+dec_integer_constant ::= DEC_INTEGER
+
+hex_integer_constant ::= HEX_INTEGER
+
+decimal_float_constant ::= DEC_FLOAT
+
+hexadecimal_float_constant ::= HEX_FLOAT
+
+special_float_constant ::= SPECIAL_FLOAT
+
+float_constant ::= decimal_float_constant | hexadecimal_float_constant | special_float_constant
+
+boolean_constant ::= (TRUE|FALSE) | (integer_constant QUESTION_MARK TRUE COLON FALSE)
+
