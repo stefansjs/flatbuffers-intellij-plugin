@@ -15,7 +15,10 @@
  */
 package com.flatbuffers.plugin
 
-import com.intellij.lang.Language
+import com.intellij.openapi.fileTypes.FileTypeConsumer
+import com.intellij.openapi.fileTypes.FileTypeFactory
 
 /* Created by stefansullivan on 2019-02-15 */
-object FlatbuffersLanguage: Language("Flatbuffers")
+class FlatbuffersFileTypeFactory: FileTypeFactory() {
+    override fun createFileTypes(fileTypeConsumer: FileTypeConsumer) = fileTypeConsumer.consume(FlatbuffersFileType)
+}

@@ -15,7 +15,7 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
+    <fileTypeFactory implementation="com.flatbuffers.plugin.FlatbuffersFileTypeFactory"/>
   </extensions>
 
   <actions>
