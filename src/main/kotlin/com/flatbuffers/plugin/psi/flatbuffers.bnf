@@ -26,7 +26,7 @@
       HEX_FLOAT = 'regexp:[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F]+))([pP][-+]?\d+)'
       SPECIAL_FLOAT = 'regexp:[-+]?(nan|inf|infinity)'
 
-      COMMENT = 'regexp://.+$'
+      COMMENT = 'regexp://[^\r\n]*'
   ]
 }
 

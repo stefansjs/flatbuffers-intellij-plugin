@@ -34,7 +34,7 @@ HEX_INTEGER=[-+]?0[xX][0-9a-fA-F]+
 DEC_FLOAT=[-+]?(([.][0-9]+)|([0-9]+[.][0-9]*)|([0-9]+))([eE][-+]?[0-9]+)?
 HEX_FLOAT=[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F]+))([pP][-+]?[0-9]+)
 SPECIAL_FLOAT=[-+]?(nan|inf|infinity)
-COMMENT="//".+$
+COMMENT="//"[^\r\n]*
 
 %%
 <YYINITIAL> {
