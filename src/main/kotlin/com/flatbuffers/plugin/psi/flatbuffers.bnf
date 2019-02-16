@@ -27,13 +27,25 @@
   ]
 }
 
-schema ::= include* ( namespace_decl | type_decl | enum_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | object )*
+schema ::= include*
+           declaration*
+           
+private declaration ::= namespace_decl
+                      | type_decl
+                      | enum_decl
+                      | root_decl
+                      | file_extension_decl
+                      | file_identifier_decl
+                      | attribute_decl
+                      | rpc_decl
+                      | object
 
 include ::= INCLUDE string_constant SEMICOLON
 
 namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
-attribute_decl ::= ATTRIBUTE ident | QUOTE ident QUOTE SEMICOLON
+attribute_decl ::= ATTRIBUTE ident
+                 | QUOTE ident QUOTE SEMICOLON
 
 type_decl ::= ( TABLE | STRUCT) ident metadata LCURLY field_decl+ RCURLY
 
@@ -49,7 +61,30 @@ rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
 
 rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
 
-type ::= bool | byte | ubyte | short | ushort | int | uint | float | long | ulong | double | int8 | uint8 | int16 | uint16 | int32 | uint32| int64 | uint64 | float32 | float64 | string | LBRACK type RBRACK | ident
+type ::= bool
+       | byte
+       | ubyte
+       | short
+       | ushort
+       | int
+       | uint
+       | float
+       | long
+       | ulong
+       | double
+       | int8
+       | uint8
+       | int16
+       | uint16
+       | int32
+       | uint32
+       | int64
+       | uint64
+       | float32
+       | float64
+       | string
+       | LBRACK type RBRACK
+       | ident
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 
