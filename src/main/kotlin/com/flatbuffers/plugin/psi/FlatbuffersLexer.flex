@@ -90,12 +90,12 @@ COMMENT="//"[^\r\n]*
   {INTEGER}            { return INTEGER; }
   {FLOAT}              { return FLOAT; }
   {STRING}             { return STRING; }
-  {IDENTIFIER}         { return IDENTIFIER; }
   {DEC_INTEGER}        { return DEC_INTEGER; }
   {HEX_INTEGER}        { return HEX_INTEGER; }
   {DEC_FLOAT}          { return DEC_FLOAT; }
   {HEX_FLOAT}          { return HEX_FLOAT; }
   {SPECIAL_FLOAT}      { return SPECIAL_FLOAT; }
+  {IDENTIFIER}         { return IDENTIFIER; }
   {COMMENT}            { return COMMENT; }
 
 }
