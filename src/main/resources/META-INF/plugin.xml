@@ -17,6 +17,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.flatbuffers.plugin.FlatbuffersFileTypeFactory"/>
     <lang.parserDefinition language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersParserDefinition"/>
+    <lang.syntaxHighlighterFactory language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersSyntaxHighlighterFactory"/>
   </extensions>
 
   <actions>
