@@ -79,6 +79,10 @@ ident ::= IDENT
 
 integer_constant ::= dec_integer_constant | hex_integer_constant
 
+float_constant ::= decimal_float_constant | hexadecimal_float_constant | special_float_constant
+
+boolean_constant ::= (TRUE|FALSE) | (integer_constant QUESTION_MARK TRUE COLON FALSE)
+
 dec_integer_constant ::= DEC_INTEGER
 
 hex_integer_constant ::= HEX_INTEGER
@@ -88,8 +92,3 @@ decimal_float_constant ::= DEC_FLOAT
 hexadecimal_float_constant ::= HEX_FLOAT
 
 special_float_constant ::= SPECIAL_FLOAT
-
-float_constant ::= decimal_float_constant | hexadecimal_float_constant | special_float_constant
-
-boolean_constant ::= (TRUE|FALSE) | (integer_constant QUESTION_MARK TRUE COLON FALSE)
-
