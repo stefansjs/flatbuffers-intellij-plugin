@@ -34,6 +34,7 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
     val COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.LINE_COMMENT)
     val IDENTIFIER = attributeFromFallback(DefaultLanguageHighlighterColors.IDENTIFIER)
     val KEYWORD = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
+    val TYPE = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
     val NUMBER = attributeFromFallback(DefaultLanguageHighlighterColors.NUMBER)
 
 
@@ -42,21 +43,26 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
     val COMMENT_KEYS = arrayOf(COMMENT)
     val ID_KEYS = arrayOf(IDENTIFIER)
     val KEYWORD_KEYS = arrayOf(KEYWORD)
+    val TYPE_KEYS = arrayOf(TYPE)
     val NUMBER_KEYS = arrayOf(NUMBER)
 
     override fun getTokenHighlights(token: IElementType?): Array<TextAttributesKey> {
-        if(token == null) {
+        if(token == null)
+        {
             return BAD_CHARACTERS_KEYS
         }
-        else if(token == FlatbuffersTypes.COMMENT) {
+        else if(token == FlatbuffersTypes.COMMENT)
+        {
             return COMMENT_KEYS
         }
-        else if(token == FlatbuffersTypes.IDENTIFIER) {
+        else if(token == FlatbuffersTypes.IDENTIFIER)
+        {
             return ID_KEYS
         }
-        else if(token == FlatbuffersTypes.FLOAT_CONSTANT
-                || token == FlatbuffersTypes.INTEGER_CONSTANT ||
-                token == FlatbuffersTypes.BOOLEAN_CONSTANT) {
+        else if(token == FlatbuffersTypes.FLOAT_CONSTANT ||
+                token == FlatbuffersTypes.INTEGER_CONSTANT ||
+                token == FlatbuffersTypes.BOOLEAN_CONSTANT)
+        {
             return NUMBER_KEYS
         }
         else if(token == FlatbuffersTypes.INCLUDE ||
@@ -69,10 +75,33 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
                 token == FlatbuffersTypes.FILE_EXTENSION ||
                 token == FlatbuffersTypes.FILE_IDENTIFIER ||
                 token == FlatbuffersTypes.ATTRIBUTE ||
-                token == FlatbuffersTypes.RPC_SERVICE ||
-                token == FlatbuffersTypes.TYPE)
+                token == FlatbuffersTypes.RPC_SERVICE)
         {
             return KEYWORD_KEYS
+        }
+        else if(token == FlatbuffersTypes.BOOL ||
+                token == FlatbuffersTypes.BYTE ||
+                token == FlatbuffersTypes.UBYTE ||
+                token == FlatbuffersTypes.SHORT ||
+                token == FlatbuffersTypes.USHORT ||
+                token == FlatbuffersTypes.INT ||
+                token == FlatbuffersTypes.UINT ||
+                token == FlatbuffersTypes.FLOAT ||
+                token == FlatbuffersTypes.LONG ||
+                token == FlatbuffersTypes.ULONG ||
+                token == FlatbuffersTypes.DOUBLE ||
+                token == FlatbuffersTypes.INT8 ||
+                token == FlatbuffersTypes.UINT8 ||
+                token == FlatbuffersTypes.INT16 ||
+                token == FlatbuffersTypes.UINT16 ||
+                token == FlatbuffersTypes.INT32 ||
+                token == FlatbuffersTypes.UINT32 ||
+                token == FlatbuffersTypes.INT64 ||
+                token == FlatbuffersTypes.UINT64 ||
+                token == FlatbuffersTypes.FLOAT32 ||
+                token == FlatbuffersTypes.FLOAT64)
+        {
+            return TYPE_KEYS
         }
         else {
             return EMPTY_KEYS
