@@ -21,6 +21,6 @@ import com.intellij.psi.tree.IElementType
 /* Created by stefansullivan on 2019-02-15 */
 class FlatbuffersTokenType(debugName: String): IElementType(debugName, FlatbuffersLanguage) {
     override fun toString(): String {
-        return "FlatbuffersTokenType." + super.toString()
+        return "flatbuffers." + super.toString()
     }
 }
