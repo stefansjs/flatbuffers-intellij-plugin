@@ -25,8 +25,6 @@ import static com.flatbuffers.plugin.psi.FlatbuffersTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-INTEGER=-?[0-9]+
-FLOAT=-?[0-9]+.[0-9]+([eE][+-]?[0-9]+)?
 STRING=\".*?\"
 IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
 DEC_INTEGER=[-+]?[0-9]+
@@ -58,6 +56,7 @@ COMMENT="//"[^\r\n]*
   "ushort"             { return USHORT; }
   "int"                { return INT; }
   "uint"               { return UINT; }
+  "float"              { return FLOAT; }
   "long"               { return LONG; }
   "ulong"              { return ULONG; }
   "double"             { return DOUBLE; }
@@ -86,8 +85,6 @@ COMMENT="//"[^\r\n]*
 
   "true"               { return TRUE; }
   "false"              { return FALSE; }
-  {INTEGER}            { return INTEGER; }
-  {FLOAT}              { return FLOAT; }
   {STRING}             { return STRING; }
   {DEC_INTEGER}        { return DEC_INTEGER; }
   {HEX_INTEGER}        { return HEX_INTEGER; }

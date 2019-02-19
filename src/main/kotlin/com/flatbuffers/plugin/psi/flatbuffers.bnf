@@ -14,8 +14,6 @@
   tokenTypeClass="com.flatbuffers.plugin.psi.FlatbuffersTokenType"
 
   tokens=[
-      INTEGER='regexp:-?\d+'
-      FLOAT='regexp:-?\d+.\d+([eE][+-]?\d+)?'
       STRING='regexp:".*?"'
       IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
 
