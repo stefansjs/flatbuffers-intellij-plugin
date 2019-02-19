@@ -16,7 +16,6 @@
 package com.flatbuffers.plugin
 
 import com.flatbuffers.plugin.psi.FlatbuffersTypes
-import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -27,19 +26,53 @@ import com.intellij.psi.tree.IElementType
 /* Created by stefansullivan on 2019-02-15 */
 class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
 
-    val COMMENT = createTextAttributesKey("COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
-    val BAD_CHARACTER = createTextAttributesKey("FLATBUFFERS_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+    companion object {
+        private fun attributeFromFallback(fallback: TextAttributesKey) = createTextAttributesKey("FLATBUFFERS_" + fallback, fallback)
+    }
+
+    val BAD_CHARACTER = attributeFromFallback(HighlighterColors.BAD_CHARACTER)
+    val COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.LINE_COMMENT)
+    val IDENTIFIER = attributeFromFallback(DefaultLanguageHighlighterColors.IDENTIFIER)
+    val KEYWORD = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
+    val NUMBER = attributeFromFallback(DefaultLanguageHighlighterColors.NUMBER)
+
 
     val EMPTY_KEYS = emptyArray<TextAttributesKey>()
     val BAD_CHARACTERS_KEYS = arrayOf(BAD_CHARACTER)
     val COMMENT_KEYS = arrayOf(COMMENT)
+    val ID_KEYS = arrayOf(IDENTIFIER)
+    val KEYWORD_KEYS = arrayOf(KEYWORD)
+    val NUMBER_KEYS = arrayOf(NUMBER)
 
     override fun getTokenHighlights(token: IElementType?): Array<TextAttributesKey> {
         if(token == null) {
             return BAD_CHARACTERS_KEYS
         }
-        else if(token.equals(FlatbuffersTypes.COMMENT)) {
+        else if(token == FlatbuffersTypes.COMMENT) {
             return COMMENT_KEYS
+        }
+        else if(token == FlatbuffersTypes.IDENTIFIER) {
+            return ID_KEYS
+        }
+        else if(token == FlatbuffersTypes.FLOAT_CONSTANT
+                || token == FlatbuffersTypes.INTEGER_CONSTANT ||
+                token == FlatbuffersTypes.BOOLEAN_CONSTANT) {
+            return NUMBER_KEYS
+        }
+        else if(token == FlatbuffersTypes.INCLUDE ||
+                token == FlatbuffersTypes.NAMESPACE ||
+                token == FlatbuffersTypes.TABLE ||
+                token == FlatbuffersTypes.STRUCT ||
+                token == FlatbuffersTypes.ENUM ||
+                token == FlatbuffersTypes.UNION ||
+                token == FlatbuffersTypes.ROOT_TYPE ||
+                token == FlatbuffersTypes.FILE_EXTENSION ||
+                token == FlatbuffersTypes.FILE_IDENTIFIER ||
+                token == FlatbuffersTypes.ATTRIBUTE ||
+                token == FlatbuffersTypes.RPC_SERVICE ||
+                token == FlatbuffersTypes.TYPE)
+        {
+            return KEYWORD_KEYS
         }
         else {
             return EMPTY_KEYS
