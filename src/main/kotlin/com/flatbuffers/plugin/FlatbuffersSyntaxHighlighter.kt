@@ -99,9 +99,19 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
                 token == FlatbuffersTypes.INT64 ||
                 token == FlatbuffersTypes.UINT64 ||
                 token == FlatbuffersTypes.FLOAT32 ||
-                token == FlatbuffersTypes.FLOAT64)
+                token == FlatbuffersTypes.FLOAT64 ||
+                token == FlatbuffersTypes.TRUE ||
+                token == FlatbuffersTypes.FALSE)
         {
             return TYPE_KEYS
+        }
+        else if(token == FlatbuffersTypes.DEC_INTEGER ||
+                token == FlatbuffersTypes.HEX_INTEGER ||
+                token == FlatbuffersTypes.DEC_FLOAT ||
+                token == FlatbuffersTypes.HEX_FLOAT ||
+                token == FlatbuffersTypes.SPECIAL_FLOAT)
+        {
+            return NUMBER_KEYS
         }
         else {
             return EMPTY_KEYS
