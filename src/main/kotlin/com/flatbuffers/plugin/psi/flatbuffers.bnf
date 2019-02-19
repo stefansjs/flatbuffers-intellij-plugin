@@ -16,7 +16,7 @@
   tokens=[
       INTEGER='regexp:-?\d+'
       FLOAT='regexp:-?\d+.\d+([eE][+-]?\d+)?'
-      STRING='regexp:".*?\\"'
+      STRING='regexp:".*?"'
       IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
 
       DEC_INTEGER = 'regexp:[-+]?\d+'
@@ -47,9 +47,9 @@ declaration ::= namespace_decl
 namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
 attribute_decl ::= ATTRIBUTE ident
-                 | QUOTE ident QUOTE SEMICOLON
+                 | string_constant SEMICOLON
 
-type_decl ::= ( TABLE | STRUCT) ident metadata LCURLY field_decl+ RCURLY
+type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
 
 enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
 

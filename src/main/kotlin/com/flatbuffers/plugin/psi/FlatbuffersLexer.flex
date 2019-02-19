@@ -27,7 +27,7 @@ WHITE_SPACE=\s+
 
 INTEGER=-?[0-9]+
 FLOAT=-?[0-9]+.[0-9]+([eE][+-]?[0-9]+)?
-STRING=\".*?\\\"
+STRING=\".*?\"
 IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
 DEC_INTEGER=[-+]?[0-9]+
 HEX_INTEGER=[-+]?0[xX][0-9a-fA-F]+
@@ -76,7 +76,6 @@ COMMENT="//"[^\r\n]*
   "="                  { return EQUALS; }
   ";"                  { return SEMICOLON; }
   "."                  { return DOT; }
-  "\""                 { return QUOTE; }
   "{"                  { return LCURLY; }
   "}"                  { return RCURLY; }
   "("                  { return LPAREN; }
@@ -95,8 +94,8 @@ COMMENT="//"[^\r\n]*
   {DEC_FLOAT}          { return DEC_FLOAT; }
   {HEX_FLOAT}          { return HEX_FLOAT; }
   {SPECIAL_FLOAT}      { return SPECIAL_FLOAT; }
-  {IDENTIFIER}         { return IDENTIFIER; }
   {COMMENT}            { return COMMENT; }
+  {IDENTIFIER}         { return IDENTIFIER; }
 
 }
 
