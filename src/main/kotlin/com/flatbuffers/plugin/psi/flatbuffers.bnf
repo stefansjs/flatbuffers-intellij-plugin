@@ -92,7 +92,7 @@ metadata ::= ( LPAREN metadata_value ( COMMA metadata_value )* RPAREN )?
 
 private metadata_value ::= ident ( COLON single_value )?
 
-scalar ::= integer_constant | float_constant
+scalar ::= integer_constant | float_constant | boolean_constant
 
 object ::= object_value ( COMMA object_value )*
 
