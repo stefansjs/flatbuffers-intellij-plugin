@@ -1,0 +1,28 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.4.3'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+}
+
+group 'com.flatbuffers.plugin'
+version '0.1.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+intellij {
+    version '2018.3.4'
+}
+patchPluginXml {
+    changeNotes """Initial version of a .fbs schema file editor plugin for IntelliJ platform"""
+}

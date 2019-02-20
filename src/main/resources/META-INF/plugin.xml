@@ -1,14 +1,9 @@
 <idea-plugin>
   <id>com.flatbuffers.plugin</id>
   <name>Flatbuffers Support</name>
-  <version>0.1</version>
   <vendor email="stefan.sullivan@gmail.com" url="https://github.com/stefansjs">Stefan Sullivan</vendor>
 
   <description>Provides parsing and editing support for flatbuffers schema files</description>
-
-  <change-notes>
-    Initial version of a .fbs schema file editor plugin for IntelliJ platform
-  </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="173.0"/>
