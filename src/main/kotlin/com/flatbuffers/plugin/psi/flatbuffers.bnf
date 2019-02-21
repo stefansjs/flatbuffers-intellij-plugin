@@ -1,6 +1,5 @@
 {
   parserClass="com.flatbuffers.plugin.parser.FlatbuffersParser"
-  parserUtilClass="com.flatbuffers.plugin.parser.FlatbuffersParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
