@@ -12,6 +12,8 @@
   elementTypeClass="com.flatbuffers.plugin.psi.FlatbuffersElementType"
   tokenTypeClass="com.flatbuffers.plugin.psi.FlatbuffersTokenType"
 
+  psiImplUtilClass="com.flatbuffers.plugin.psi.impl.FlatbuffersPsiImplUtil"
+
   tokens=[
       STRING='regexp:".*?"'
       IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
