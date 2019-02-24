@@ -15,4 +15,13 @@
  */
 package com.flatbuffers.plugin.psi.impl
 
+import com.flatbuffers.plugin.psi.*
+
 /* Created by stefansullivan on 2019-02-21 */
+fun getClass(element: FlatbuffersTypeDecl): String? {
+    val classNode = element.getNode().findChildByType(FlatbuffersTypes.IDENTIFIER)
+
+    if(classNode == null) return null
+
+    return classNode.text
+}
