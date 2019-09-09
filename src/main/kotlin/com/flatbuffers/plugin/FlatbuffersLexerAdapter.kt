@@ -15,7 +15,7 @@
  */
 package com.flatbuffers.plugin
 
-import com.flatbuffers.plugin.psi.FlatbuffersLexer
+import com.flatbuffers.plugin.lexer.FlatbuffersLexer
 import com.intellij.lexer.FlexAdapter
 
 /* Created by stefansullivan on 2019-02-15 */
