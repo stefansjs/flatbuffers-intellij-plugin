@@ -52,7 +52,7 @@ type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY {metho
 
 enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
 
-private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )*
+private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
 root_decl ::= ROOT_TYPE ident SEMICOLON
 

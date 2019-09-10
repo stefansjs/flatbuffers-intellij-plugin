@@ -104,7 +104,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enumval_decl ( COMMA enumval_decl )*
+  // enumval_decl ( COMMA enumval_decl )* COMMA?
   static boolean commasep_enumval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "commasep_enumval_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -112,6 +112,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = enumval_decl(b, l + 1);
     r = r && commasep_enumval_decl_1(b, l + 1);
+    r = r && commasep_enumval_decl_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -136,6 +137,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && enumval_decl(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // COMMA?
+  private static boolean commasep_enumval_decl_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "commasep_enumval_decl_2")) return false;
+    consumeToken(b, COMMA);
+    return true;
   }
 
   /* ********************************************************** */
