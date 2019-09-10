@@ -807,7 +807,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   //        | float64
   //        | string
   //        | LBRACK type RBRACK
-  //        | ident
+  //        | ident (DOT ident)*
   public static boolean type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type")) return false;
     boolean r;
@@ -835,7 +835,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FLOAT64);
     if (!r) r = consumeToken(b, STRING);
     if (!r) r = type_22(b, l + 1);
-    if (!r) r = ident(b, l + 1);
+    if (!r) r = type_23(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -848,6 +848,39 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACK);
     r = r && type(b, l + 1);
     r = r && consumeToken(b, RBRACK);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ident (DOT ident)*
+  private static boolean type_23(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_23")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ident(b, l + 1);
+    r = r && type_23_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (DOT ident)*
+  private static boolean type_23_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_23_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!type_23_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "type_23_1", c)) break;
+    }
+    return true;
+  }
+
+  // DOT ident
+  private static boolean type_23_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_23_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && ident(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }

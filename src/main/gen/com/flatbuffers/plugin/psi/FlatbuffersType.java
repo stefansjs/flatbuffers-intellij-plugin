@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface FlatbuffersType extends PsiElement {
 
-  @Nullable
-  FlatbuffersIdent getIdent();
+  @NotNull
+  List<FlatbuffersIdent> getIdentList();
 
   @Nullable
   FlatbuffersType getType();

@@ -85,7 +85,7 @@ type ::= bool
        | float64
        | string
        | LBRACK type RBRACK
-       | ident
+       | ident (DOT ident)*
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 
