@@ -21,9 +21,12 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 intellij {
-    version '2018.3.4'
+    type 'CL'
+    version 'LATEST-EAP-SNAPSHOT'
     plugins 'org.jetbrains.kotlin:1.3.11-release-IJ2018.3-1'
 }
 patchPluginXml {
     changeNotes """Initial version of a .fbs schema file editor plugin for IntelliJ platform"""
 }
+
+sourceSets.main.java.srcDir 'src/main/gen'
