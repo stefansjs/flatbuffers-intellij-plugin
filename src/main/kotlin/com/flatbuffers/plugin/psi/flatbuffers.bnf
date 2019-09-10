@@ -56,7 +56,7 @@ private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
 root_decl ::= ROOT_TYPE ident SEMICOLON
 
-field_decl ::= ident COLON type ( EQUALS scalar )? metadata SEMICOLON
+field_decl ::= ident COLON type ( EQUALS (scalar|ident) )? metadata SEMICOLON
 
 rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
 

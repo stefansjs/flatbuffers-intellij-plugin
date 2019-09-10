@@ -28,8 +28,8 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
 
   @Override
   @NotNull
-  public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
+  public List<FlatbuffersIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
   }
 
   @Override
