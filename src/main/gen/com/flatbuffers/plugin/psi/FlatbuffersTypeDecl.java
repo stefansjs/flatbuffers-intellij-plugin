@@ -16,8 +16,7 @@ public interface FlatbuffersTypeDecl extends PsiElement {
   @NotNull
   FlatbuffersMetadata getMetadata();
 
-  //WARNING: getClass(...) is skipped
-  //matching getClass(FlatbuffersTypeDecl, ...)
-  //methods are not found in FlatbuffersPsiImplUtil
+  @Nullable
+  String getClassName();
 
 }

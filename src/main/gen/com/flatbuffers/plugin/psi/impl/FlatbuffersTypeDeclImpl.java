@@ -44,4 +44,10 @@ public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements Fla
     return findNotNullChildByClass(FlatbuffersMetadata.class);
   }
 
+  @Override
+  @Nullable
+  public String getClassName() {
+    return FlatbuffersPsiImplUtilKt.getClassName(this);
+  }
+
 }

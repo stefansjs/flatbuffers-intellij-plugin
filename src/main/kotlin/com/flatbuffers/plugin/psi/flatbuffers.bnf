@@ -12,7 +12,7 @@
   elementTypeClass="com.flatbuffers.plugin.psi.FlatbuffersElementType"
   tokenTypeClass="com.flatbuffers.plugin.psi.FlatbuffersTokenType"
 
-  psiImplUtilClass="com.flatbuffers.plugin.psi.impl.FlatbuffersPsiImplUtil"
+  psiImplUtilClass="com.flatbuffers.plugin.psi.impl.FlatbuffersPsiImplUtilKt"
 
   tokens=[
       STRING='regexp:".*?"'
@@ -48,7 +48,7 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 attribute_decl ::= ATTRIBUTE ident
                  | string_constant SEMICOLON
 
-type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY {methods=[getClass]}
+type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY {methods=[getClassName]}
 
 enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
 
