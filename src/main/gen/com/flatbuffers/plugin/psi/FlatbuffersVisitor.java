@@ -4,6 +4,7 @@ package com.flatbuffers.plugin.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement;
 
 public class FlatbuffersVisitor extends PsiElementVisitor {
 
@@ -116,10 +117,14 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeDecl(@NotNull FlatbuffersTypeDecl o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitValue(@NotNull FlatbuffersValue o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull FlatbuffersNamedElement o) {
     visitPsiElement(o);
   }
 

@@ -48,7 +48,10 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 attribute_decl ::= ATTRIBUTE ident
                  | string_constant SEMICOLON
 
-type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY {methods=[getClassName]}
+type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+              {mixin="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElementImpl"
+               implements="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement"
+               methods=[getClassName getName setName getNameIdentifier]}
 
 enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
 

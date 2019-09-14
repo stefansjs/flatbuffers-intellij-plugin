@@ -4,8 +4,9 @@ package com.flatbuffers.plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement;
 
-public interface FlatbuffersTypeDecl extends PsiElement {
+public interface FlatbuffersTypeDecl extends FlatbuffersNamedElement {
 
   @NotNull
   List<FlatbuffersFieldDecl> getFieldDeclList();
@@ -18,5 +19,14 @@ public interface FlatbuffersTypeDecl extends PsiElement {
 
   @Nullable
   String getClassName();
+
+  @Nullable
+  String getName();
+
+  @NotNull
+  FlatbuffersTypeDecl setName(@NotNull String newName);
+
+  @Nullable
+  PsiElement getNameIdentifier();
 
 }

@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.flatbuffers.plugin.psi.FlatbuffersTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElementImpl;
 import com.flatbuffers.plugin.psi.*;
 
-public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements FlatbuffersTypeDecl {
+public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl implements FlatbuffersTypeDecl {
 
   public FlatbuffersTypeDeclImpl(@NotNull ASTNode node) {
     super(node);
@@ -48,6 +48,24 @@ public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements Fla
   @Nullable
   public String getClassName() {
     return FlatbuffersPsiImplUtilKt.getClassName(this);
+  }
+
+  @Override
+  @Nullable
+  public String getName() {
+    return FlatbuffersPsiImplUtilKt.getName(this);
+  }
+
+  @Override
+  @NotNull
+  public FlatbuffersTypeDecl setName(@NotNull String newName) {
+    return FlatbuffersPsiImplUtilKt.setName(this, newName);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNameIdentifier() {
+    return FlatbuffersPsiImplUtilKt.getNameIdentifier(this);
   }
 
 }

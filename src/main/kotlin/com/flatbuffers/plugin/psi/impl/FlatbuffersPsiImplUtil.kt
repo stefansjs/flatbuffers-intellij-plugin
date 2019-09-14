@@ -15,13 +15,32 @@
  */
 package com.flatbuffers.plugin.psi.impl
 
-import com.flatbuffers.plugin.psi.*
+import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
+import com.flatbuffers.plugin.psi.FlatbuffersTypes
+import com.flatbuffers.plugin.psi.createClass
+import com.intellij.psi.PsiElement
+
 
 /* Created by stefansullivan on 2019-02-21 */
-fun getClass(element: FlatbuffersTypeDecl): String? {
-    val classNode = element.getNode().findChildByType(FlatbuffersTypes.IDENTIFIER)
 
-    if(classNode == null) return null
-
+fun getClassName(element: FlatbuffersTypeDecl): String? {
+    val classNode = element.node.findChildByType(FlatbuffersTypes.IDENT) ?: return null
     return classNode.text
+}
+
+fun getName(element: FlatbuffersTypeDecl) = getClassName(element)
+
+fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl {
+    val classNode = element.node.findChildByType(FlatbuffersTypes.IDENT) ?: return element
+
+    val property = createClass(element.project, newName)
+    val newClassNode = property?.firstChild?.node ?: return element // That's a lot of null checking :/
+    element.node.replaceChild(classNode, newClassNode)
+
+    return element
+}
+
+fun getNameIdentifier(element: FlatbuffersTypeDecl): PsiElement? {
+    val keyNode = element.node.findChildByType(FlatbuffersTypes.IDENT) ?: return null
+    return keyNode.psi
 }
