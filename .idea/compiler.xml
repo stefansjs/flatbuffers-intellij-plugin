@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="com.flatbuffers.plugin.flatbuffers-plugin.main" target="1.8" />
       <module name="com.flatbuffers.plugin.flatbuffers-plugin.test" target="1.8" />
+      <module name="flatbuffers-plugin.main" target="1.8" />
+      <module name="flatbuffers-plugin.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
