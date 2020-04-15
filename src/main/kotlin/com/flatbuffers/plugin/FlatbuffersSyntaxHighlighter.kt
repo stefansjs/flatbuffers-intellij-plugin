@@ -48,6 +48,11 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
         val NUMBER_KEYS = arrayOf(NUMBER)
         val OPERATOR_KEYS = arrayOf(OPERATOR)
         val ID_KEYS = arrayOf(IDENTIFIER)
+
+
+        // Here's some attributes that are used by the Annotator and not used in token highlights below
+        val CLASS_DECLARATION = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
+        val CLASS_REFERENCE = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_REFERENCE)
     }
 
     override fun getTokenHighlights(token: IElementType?): Array<TextAttributesKey> {
