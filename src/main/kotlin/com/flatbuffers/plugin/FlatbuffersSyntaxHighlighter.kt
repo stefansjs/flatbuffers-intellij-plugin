@@ -28,27 +28,27 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
 
     companion object {
         private fun attributeFromFallback(fallback: TextAttributesKey) = createTextAttributesKey("FLATBUFFERS_" + fallback, fallback)
+
+        val BAD_CHARACTER = attributeFromFallback(HighlighterColors.BAD_CHARACTER)
+        val COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.LINE_COMMENT)
+        val STRING = attributeFromFallback(DefaultLanguageHighlighterColors.STRING)
+        val KEYWORD = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
+        val TYPE = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
+        val NUMBER = attributeFromFallback(DefaultLanguageHighlighterColors.NUMBER)
+        val OPERATOR = attributeFromFallback(DefaultLanguageHighlighterColors.OPERATION_SIGN)
+        val IDENTIFIER = attributeFromFallback(DefaultLanguageHighlighterColors.IDENTIFIER)
+
+
+        val EMPTY_KEYS = emptyArray<TextAttributesKey>()
+        val BAD_CHARACTERS_KEYS = arrayOf(BAD_CHARACTER)
+        val COMMENT_KEYS = arrayOf(COMMENT)
+        val STRING_KEYS = arrayOf(STRING)
+        val KEYWORD_KEYS = arrayOf(KEYWORD)
+        val TYPE_KEYS = arrayOf(TYPE)
+        val NUMBER_KEYS = arrayOf(NUMBER)
+        val OPERATOR_KEYS = arrayOf(OPERATOR)
+        val ID_KEYS = arrayOf(IDENTIFIER)
     }
-
-    val BAD_CHARACTER = attributeFromFallback(HighlighterColors.BAD_CHARACTER)
-    val COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.LINE_COMMENT)
-    val STRING = attributeFromFallback(DefaultLanguageHighlighterColors.STRING)
-    val KEYWORD = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
-    val TYPE = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
-    val NUMBER = attributeFromFallback(DefaultLanguageHighlighterColors.NUMBER)
-    val OPERATOR = attributeFromFallback(DefaultLanguageHighlighterColors.OPERATION_SIGN)
-    val IDENTIFIER = attributeFromFallback(DefaultLanguageHighlighterColors.IDENTIFIER)
-
-
-    val EMPTY_KEYS = emptyArray<TextAttributesKey>()
-    val BAD_CHARACTERS_KEYS = arrayOf(BAD_CHARACTER)
-    val COMMENT_KEYS = arrayOf(COMMENT)
-    val STRING_KEYS = arrayOf(STRING)
-    val KEYWORD_KEYS = arrayOf(KEYWORD)
-    val TYPE_KEYS = arrayOf(TYPE)
-    val NUMBER_KEYS = arrayOf(NUMBER)
-    val OPERATOR_KEYS = arrayOf(OPERATOR)
-    val ID_KEYS = arrayOf(IDENTIFIER)
 
     override fun getTokenHighlights(token: IElementType?): Array<TextAttributesKey> {
         if(token == null)
