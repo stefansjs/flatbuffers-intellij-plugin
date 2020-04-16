@@ -11,8 +11,14 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
     companion object {
         val DESCRIPTORS = arrayOf(
             AttributesDescriptor("Comment", FlatbuffersSyntaxHighlighter.COMMENT),
-            AttributesDescriptor("Declaration", FlatbuffersSyntaxHighlighter.CLASS_REFERENCE),
-            AttributesDescriptor("Object", FlatbuffersSyntaxHighlighter.CLASS_REFERENCE)
+            AttributesDescriptor("String", FlatbuffersSyntaxHighlighter.STRING),
+            AttributesDescriptor("Keyword", FlatbuffersSyntaxHighlighter.KEYWORD),
+            AttributesDescriptor("Type", FlatbuffersSyntaxHighlighter.TYPE),
+            AttributesDescriptor("Number", FlatbuffersSyntaxHighlighter.NUMBER),
+            AttributesDescriptor("Operator", FlatbuffersSyntaxHighlighter.OPERATOR),
+            //no identifier because the below types should cover identifiers
+            AttributesDescriptor("Class Name", FlatbuffersAnnotator.CLASS_NAME),
+            AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE)
         )
     }
 
