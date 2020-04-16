@@ -27,13 +27,15 @@ import com.intellij.psi.tree.IElementType
 class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
 
     companion object {
-        private fun attributeFromFallback(fallback: TextAttributesKey) = createTextAttributesKey("FLATBUFFERS_" + fallback, fallback)
+        private fun attributeFromFallback(fallback: TextAttributesKey, name: String?=null): TextAttributesKey {
+            return createTextAttributesKey(name ?: "FLATBUFFERS_" + fallback, fallback)
+        }
 
         val BAD_CHARACTER = attributeFromFallback(HighlighterColors.BAD_CHARACTER)
         val COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.LINE_COMMENT)
         val STRING = attributeFromFallback(DefaultLanguageHighlighterColors.STRING)
         val KEYWORD = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
-        val TYPE = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
+        val TYPE = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD, "FLATBUFFERS_TYPE")
         val NUMBER = attributeFromFallback(DefaultLanguageHighlighterColors.NUMBER)
         val OPERATOR = attributeFromFallback(DefaultLanguageHighlighterColors.OPERATION_SIGN)
         val IDENTIFIER = attributeFromFallback(DefaultLanguageHighlighterColors.IDENTIFIER)
@@ -51,7 +53,7 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
 
 
         // Here's some attributes that are used by the Annotator and not used in token highlights below
-        val CLASS_DECLARATION = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
+        val CLASS_NAME = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
         val CLASS_REFERENCE = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_REFERENCE)
     }
 

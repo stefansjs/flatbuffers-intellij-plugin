@@ -16,7 +16,7 @@ class FlatbuffersAnnotator: Annotator {
     fun applyFormatting(element: FlatbuffersNamedElement, holder: AnnotationHolder) {
         if(element is FlatbuffersTypeDecl) {
             val annotation = holder.createInfoAnnotation(element.ident, null)
-            annotation.textAttributes = FlatbuffersSyntaxHighlighter.CLASS_DECLARATION
+            annotation.textAttributes = FlatbuffersSyntaxHighlighter.CLASS_NAME
         }
     }
 }
