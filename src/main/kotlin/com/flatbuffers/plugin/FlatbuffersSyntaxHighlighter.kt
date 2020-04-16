@@ -27,7 +27,7 @@ import com.intellij.psi.tree.IElementType
 class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
 
     companion object {
-        private fun attributeFromFallback(fallback: TextAttributesKey, name: String?=null): TextAttributesKey {
+        fun attributeFromFallback(fallback: TextAttributesKey, name: String?=null): TextAttributesKey {
             return createTextAttributesKey(name ?: "FLATBUFFERS_" + fallback, fallback)
         }
 
@@ -50,11 +50,6 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
         val NUMBER_KEYS = arrayOf(NUMBER)
         val OPERATOR_KEYS = arrayOf(OPERATOR)
         val ID_KEYS = arrayOf(IDENTIFIER)
-
-
-        // Here's some attributes that are used by the Annotator and not used in token highlights below
-        val CLASS_NAME = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
-        val CLASS_REFERENCE = attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_REFERENCE)
     }
 
     override fun getTokenHighlights(token: IElementType?): Array<TextAttributesKey> {
