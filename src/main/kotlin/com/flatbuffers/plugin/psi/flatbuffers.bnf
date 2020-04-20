@@ -45,8 +45,7 @@ declaration ::= namespace_decl
 
 namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
-attribute_decl ::= ATTRIBUTE ident
-                 | string_constant SEMICOLON
+attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
 
 type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
               {mixin="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElementImpl"
