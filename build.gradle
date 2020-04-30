@@ -24,8 +24,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 intellij {
-    type 'CL'
-    version '2018.3.4'
+    version '2019.1.4'
 }
 patchPluginXml {
     changeNotes """Initial version of a .fbs schema file editor plugin for IntelliJ platform"""
