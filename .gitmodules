@@ -1,0 +1,3 @@
+[submodule "flatbuffers-idea-test-project"]
+	path = flatbuffers-idea-test-project
+	url = https://github.com/stefansjs/flatbuffers-idea-test-project.git
