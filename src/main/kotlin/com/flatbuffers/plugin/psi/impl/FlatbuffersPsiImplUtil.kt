@@ -15,32 +15,39 @@
  */
 package com.flatbuffers.plugin.psi.impl
 
+import com.flatbuffers.plugin.psi.FlatbuffersIdent
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
-import com.flatbuffers.plugin.psi.FlatbuffersTypes
 import com.flatbuffers.plugin.psi.createClass
-import com.intellij.psi.PsiElement
 
 
-/* Created by stefansullivan on 2019-02-21 */
+/* Created by stefansullivan on 2019-02-21
+ *
+ *  This util class uses overloading to implement a couple of common interfaces
+ *  Specifically, the FlatbuffersNamedElement interface requires the following methods
+ *    - getName(),
+ *    - setName() both belong to the PsiNamedElement interface
+ *    - getNameIdentifier() belongs to PsiNameIdentifierOwner
+ *
+ *  For any class that implements the FlatbuffersNamedElement interface, implementing those
+ *  three methods for the type, and then modifying flatbuffers.bnf to add the following metadata:
+ *    {methods=[getName setName getNameIdentifier]
+ *     implements="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement"}
+ */
 
-fun getClassName(element: FlatbuffersTypeDecl): String? {
-    val classNode = element.node.findChildByType(FlatbuffersTypes.IDENT) ?: return null
-    return classNode.text
+
+// FlatbuffersNamedElement implementations for FlatbuffersTypeDecl
+fun getNameIdentifier(element: FlatbuffersTypeDecl): FlatbuffersIdent {
+    return element.ident
 }
-
-fun getName(element: FlatbuffersTypeDecl) = getClassName(element)
-
+fun getName(element: FlatbuffersTypeDecl): String? {
+    return getNameIdentifier(element).text
+}
 fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl {
-    val classNode = element.node.findChildByType(FlatbuffersTypes.IDENT) ?: return element
+    val identifierNode = getNameIdentifier(element).node
 
-    val property = createClass(element.project, newName)
-    val newClassNode = property?.firstChild?.node ?: return element // That's a lot of null checking :/
-    element.node.replaceChild(classNode, newClassNode)
+    val type = createClass(element.project, newName)
+    val newClassNode = type?.firstChild?.node ?: return element // That's a lot of null checking :/
+    element.node.replaceChild(identifierNode, newClassNode)
 
     return element
-}
-
-fun getNameIdentifier(element: FlatbuffersTypeDecl): PsiElement? {
-    val keyNode = element.node.findChildByType(FlatbuffersTypes.IDENT) ?: return null
-    return keyNode.psi
 }

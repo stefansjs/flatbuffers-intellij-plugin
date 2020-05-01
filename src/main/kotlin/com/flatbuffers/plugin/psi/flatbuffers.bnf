@@ -51,7 +51,7 @@ type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
               {recoverWhile="recover_type"
                mixin="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement"
-               methods=[getClassName getName setName getNameIdentifier]}
+               methods=[getName setName getNameIdentifier]}
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
 enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY

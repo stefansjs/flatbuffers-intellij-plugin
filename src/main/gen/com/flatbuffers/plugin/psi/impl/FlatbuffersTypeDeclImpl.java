@@ -44,4 +44,22 @@ public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl impleme
     return findNotNullChildByClass(FlatbuffersMetadata.class);
   }
 
+  @Override
+  @Nullable
+  public String getName() {
+    return FlatbuffersPsiImplUtilKt.getName(this);
+  }
+
+  @Override
+  @NotNull
+  public FlatbuffersTypeDecl setName(@NotNull String newName) {
+    return FlatbuffersPsiImplUtilKt.setName(this, newName);
+  }
+
+  @Override
+  @NotNull
+  public FlatbuffersIdent getNameIdentifier() {
+    return FlatbuffersPsiImplUtilKt.getNameIdentifier(this);
+  }
+
 }

@@ -17,20 +17,13 @@ public interface FlatbuffersTypeDecl extends FlatbuffersNamedElement {
   @NotNull
   FlatbuffersMetadata getMetadata();
 
-  //WARNING: getClassName(...) is skipped
-  //matching getClassName(FlatbuffersTypeDecl, ...)
-  //methods are not found in FlatbuffersPsiImplUtilKt
+  @Nullable
+  String getName();
 
-  //WARNING: getName(...) is skipped
-  //matching getName(FlatbuffersTypeDecl, ...)
-  //methods are not found in FlatbuffersPsiImplUtilKt
+  @NotNull
+  FlatbuffersTypeDecl setName(@NotNull String newName);
 
-  //WARNING: setName(...) is skipped
-  //matching setName(FlatbuffersTypeDecl, ...)
-  //methods are not found in FlatbuffersPsiImplUtilKt
-
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(FlatbuffersTypeDecl, ...)
-  //methods are not found in FlatbuffersPsiImplUtilKt
+  @NotNull
+  FlatbuffersIdent getNameIdentifier();
 
 }
