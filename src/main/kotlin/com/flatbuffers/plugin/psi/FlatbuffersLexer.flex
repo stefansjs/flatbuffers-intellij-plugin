@@ -70,6 +70,7 @@ COMMENT="//"[^\r\n]*
   "uint64"             { return UINT64; }
   "float32"            { return FLOAT32; }
   "float64"            { return FLOAT64; }
+  "string"             { return STRING; }
   ","                  { return COMMA; }
   ":"                  { return COLON; }
   "="                  { return EQUALS; }
