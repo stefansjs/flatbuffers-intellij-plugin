@@ -33,5 +33,4 @@ patchPluginXml {
 sourceSets.main.java.srcDir 'src/main/gen'
 
 test {
-    useTestNG()
 }
