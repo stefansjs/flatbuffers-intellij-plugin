@@ -16,6 +16,7 @@
 
 package com.flatbuffers.plugin
 
+import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
 import com.flatbuffers.plugin.psi.FlatbuffersIdent
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
 import com.intellij.lang.annotation.AnnotationHolder
@@ -39,7 +40,9 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(element: FlatbuffersIdent, holder: AnnotationHolder) {
-        if(element.parent is FlatbuffersTypeDecl) {
+        if( element.parent is FlatbuffersTypeDecl ||
+            element.parent is FlatbuffersEnumDecl )
+        {
             val annotation = holder.createInfoAnnotation(element, null)
             val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(CLASS_NAME)
             annotation.enforcedTextAttributes = attributes
