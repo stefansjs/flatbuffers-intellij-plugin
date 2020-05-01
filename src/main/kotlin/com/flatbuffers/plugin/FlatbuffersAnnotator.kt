@@ -30,6 +30,7 @@ class FlatbuffersAnnotator: Annotator {
         // Here's some attributes that are used by the Annotator and not used in token highlights below
         val CLASS_NAME = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
         val CLASS_REFERENCE = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_REFERENCE)
+        val MEMBER = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.INSTANCE_FIELD)
     }
 
 

@@ -18,7 +18,8 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Operator", FlatbuffersSyntaxHighlighter.OPERATOR),
             //no identifier because the below types should cover identifiers
             AttributesDescriptor("Class Name", FlatbuffersAnnotator.CLASS_NAME),
-            AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE)
+            AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE),
+            AttributesDescriptor("Member", FlatbuffersAnnotator.MEMBER)
         )
     }
 
