@@ -4,9 +4,9 @@ namespace MyGame;
 
 attribute "priority";
 
-enum <info descr="null">Color</info> : byte { Red = 1, Green, Blue }
+enum <info descr="null">Color</info> : byte { <info descr="null">Red</info> = 1, <info descr="null">Green</info>, <info descr="null">Blue</info> }
 
-union <info descr="null">Any</info> { Monster, Weapon, Pickup }
+union <info descr="null">Any</info> { <info descr="null">Monster</info>, <info descr="null">Weapon</info>, <info descr="null">Pickup</info> }
 
 struct <info descr="null">Vec3</info> {
   <info descr="null">x</info>:float;

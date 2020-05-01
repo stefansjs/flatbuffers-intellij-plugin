@@ -17,6 +17,7 @@
 package com.flatbuffers.plugin
 
 import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
+import com.flatbuffers.plugin.psi.FlatbuffersEnumvalDecl
 import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
 import com.flatbuffers.plugin.psi.impl.getFieldName
@@ -48,6 +49,9 @@ class FlatbuffersAnnotator: Annotator {
             }
             is FlatbuffersFieldDecl -> {
                 applyFormatting(element, holder)
+            }
+            is FlatbuffersEnumvalDecl -> {
+                applyAttribute(element.ident, holder, ENUM_VALUE)
             }
         }
     }
