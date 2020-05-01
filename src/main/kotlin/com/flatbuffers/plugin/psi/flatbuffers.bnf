@@ -69,28 +69,32 @@ rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
 field_type ::= primitive
              | array_type
              | declared_type
-primitive ::= bool
-            | byte
-            | ubyte
-            | short
-            | ushort
-            | int
-            | uint
-            | float
-            | long
-            | ulong
-            | double
-            | int8
-            | uint8
-            | int16
-            | uint16
-            | int32
-            | uint32
-            | int64
-            | uint64
-            | float32
-            | float64
-            | string
+
+// make primitive private so that we don't start nesting keywords
+// in PSI elements. They're still just keywords
+primitive ::= int_type | float_type | string
+private int_type ::= bool
+                   | byte
+                   | ubyte
+                   | short
+                   | ushort
+                   | int
+                   | uint
+                   | long
+                   | ulong
+                   | int8
+                   | uint8
+                   | int16
+                   | uint16
+                   | int32
+                   | uint32
+                   | int64
+                   | uint64
+private float_type ::= float
+                     | double
+                     | float32
+                     | float64
+
 array_type ::= LBRACK (primitive | declared_type) RBRACK
 declared_type ::= ident (DOT ident)*
 

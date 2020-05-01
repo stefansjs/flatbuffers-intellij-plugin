@@ -490,6 +490,21 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // float
+  //                      | double
+  //                      | float32
+  //                      | float64
+  static boolean float_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_type")) return false;
+    boolean r;
+    r = consumeToken(b, FLOAT);
+    if (!r) r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, FLOAT32);
+    if (!r) r = consumeToken(b, FLOAT64);
+    return r;
+  }
+
+  /* ********************************************************** */
   // HEX_INTEGER
   public static boolean hex_integer_constant(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "hex_integer_constant")) return false;
@@ -536,6 +551,47 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && string_constant(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, INCL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // bool
+  //                    | byte
+  //                    | ubyte
+  //                    | short
+  //                    | ushort
+  //                    | int
+  //                    | uint
+  //                    | long
+  //                    | ulong
+  //                    | int8
+  //                    | uint8
+  //                    | int16
+  //                    | uint16
+  //                    | int32
+  //                    | uint32
+  //                    | int64
+  //                    | uint64
+  static boolean int_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_type")) return false;
+    boolean r;
+    r = consumeToken(b, BOOL);
+    if (!r) r = consumeToken(b, BYTE);
+    if (!r) r = consumeToken(b, UBYTE);
+    if (!r) r = consumeToken(b, SHORT);
+    if (!r) r = consumeToken(b, USHORT);
+    if (!r) r = consumeToken(b, INT);
+    if (!r) r = consumeToken(b, UINT);
+    if (!r) r = consumeToken(b, LONG);
+    if (!r) r = consumeToken(b, ULONG);
+    if (!r) r = consumeToken(b, INT8);
+    if (!r) r = consumeToken(b, UINT8);
+    if (!r) r = consumeToken(b, INT16);
+    if (!r) r = consumeToken(b, UINT16);
+    if (!r) r = consumeToken(b, INT32);
+    if (!r) r = consumeToken(b, UINT32);
+    if (!r) r = consumeToken(b, INT64);
+    if (!r) r = consumeToken(b, UINT64);
     return r;
   }
 
@@ -715,53 +771,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // bool
-  //             | byte
-  //             | ubyte
-  //             | short
-  //             | ushort
-  //             | int
-  //             | uint
-  //             | float
-  //             | long
-  //             | ulong
-  //             | double
-  //             | int8
-  //             | uint8
-  //             | int16
-  //             | uint16
-  //             | int32
-  //             | uint32
-  //             | int64
-  //             | uint64
-  //             | float32
-  //             | float64
-  //             | string
+  // int_type | float_type | string
   public static boolean primitive(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "primitive")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PRIMITIVE, "<primitive>");
-    r = consumeToken(b, BOOL);
-    if (!r) r = consumeToken(b, BYTE);
-    if (!r) r = consumeToken(b, UBYTE);
-    if (!r) r = consumeToken(b, SHORT);
-    if (!r) r = consumeToken(b, USHORT);
-    if (!r) r = consumeToken(b, INT);
-    if (!r) r = consumeToken(b, UINT);
-    if (!r) r = consumeToken(b, FLOAT);
-    if (!r) r = consumeToken(b, LONG);
-    if (!r) r = consumeToken(b, ULONG);
-    if (!r) r = consumeToken(b, DOUBLE);
-    if (!r) r = consumeToken(b, INT8);
-    if (!r) r = consumeToken(b, UINT8);
-    if (!r) r = consumeToken(b, INT16);
-    if (!r) r = consumeToken(b, UINT16);
-    if (!r) r = consumeToken(b, INT32);
-    if (!r) r = consumeToken(b, UINT32);
-    if (!r) r = consumeToken(b, INT64);
-    if (!r) r = consumeToken(b, UINT64);
-    if (!r) r = consumeToken(b, FLOAT32);
-    if (!r) r = consumeToken(b, FLOAT64);
+    r = int_type(b, l + 1);
+    if (!r) r = float_type(b, l + 1);
     if (!r) r = consumeToken(b, STRING);
     exit_section_(b, l, m, r, false, null);
     return r;
