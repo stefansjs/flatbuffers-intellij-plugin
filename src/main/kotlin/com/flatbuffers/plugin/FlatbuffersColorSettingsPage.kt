@@ -1,6 +1,7 @@
 package com.flatbuffers.plugin
 
 import com.flatbuffers.plugin.icons.FlatbuffersIcon
+import com.intellij.openapi.editor.colors.ColorKey
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.options.colors.AttributesDescriptor
 import com.intellij.openapi.options.colors.ColorDescriptor
@@ -21,6 +22,12 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE),
             AttributesDescriptor("Member", FlatbuffersAnnotator.MEMBER)
         )
+
+        val TAGS = mutableMapOf(
+            "type_name" to FlatbuffersAnnotator.CLASS_NAME
+            , "type_ref" to FlatbuffersAnnotator.CLASS_REFERENCE
+            , "member" to FlatbuffersAnnotator.MEMBER
+        )
     }
 
     override fun getIcon() = FlatbuffersIcon.ICON
@@ -29,7 +36,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
 
     override fun getAttributeDescriptors() = DESCRIPTORS
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY!!
-    override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>? = null
+    override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>? = TAGS
 
     override fun getDemoText() = """
         |// example IDL file
@@ -38,25 +45,25 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |
         |attribute "priority";
         |
-        |enum Color : byte { Red = 1, Green, Blue }
+        |enum <type_name>Color</type_name> : byte { Red = 1, Green, Blue }
         |
         |union Any { Monster, Weapon, Pickup }
         |
-        |struct Vec3 {
-        |  x:float;
-        |  y:float;
-        |  z:float;
+        |struct <type_name>Vec3</type_name> {
+        |  <member>x</member>:float;
+        |  <member>y</member>:float;
+        |  <member>z</member>:float;
         |}
         |
-        |table Monster {
-        |  pos:Vec3;
-        |  mana:short = 150;
-        |  hp:short = 100;
-        |  name:string;
-        |  friendly:bool = false (deprecated, priority: 1);
-        |  inventory:[ubyte];
-        |  color:Color = Blue;
-        |  test:Any;
+        |table <type_name>Monster</type_name> {
+        |  <member>pos</member>:<type_ref>Vec3</type_ref;
+        |  <member>mana</member>:short = 150;
+        |  <member>hp</member>:short = 100;
+        |  <member>name</member>:string;
+        |  <member>friendly</member>:bool = false (deprecated, priority: 1);
+        |  <member>inventory</member>:[ubyte];
+        |  <member>color</member>:<type_ref>Color</type_ref> = Blue;
+        |  <member>test</member>:<type_ref>Any</type_ref>;
         |}
         |
         |root_type Monster;
