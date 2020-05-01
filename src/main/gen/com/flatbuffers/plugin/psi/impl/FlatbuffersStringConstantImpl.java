@@ -28,8 +28,8 @@ public class FlatbuffersStringConstantImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @NotNull
-  public PsiElement getString() {
-    return findNotNullChildByType(STRING);
+  public PsiElement getStringLiteral() {
+    return findNotNullChildByType(STRING_LITERAL);
   }
 
 }

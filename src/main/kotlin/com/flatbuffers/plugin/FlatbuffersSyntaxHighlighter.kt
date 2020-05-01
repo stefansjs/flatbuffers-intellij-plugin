@@ -106,6 +106,7 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
                 token == FlatbuffersTypes.UINT64 ||
                 token == FlatbuffersTypes.FLOAT32 ||
                 token == FlatbuffersTypes.FLOAT64 ||
+                token == FlatbuffersTypes.STRING ||
                 token == FlatbuffersTypes.TRUE ||
                 token == FlatbuffersTypes.FALSE)
         {
@@ -119,7 +120,7 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
         {
             return NUMBER_KEYS
         }
-        else if(token == FlatbuffersTypes.STRING) {
+        else if(token == FlatbuffersTypes.STRING_LITERAL) {
             return STRING_KEYS
         }
         else if(token == FlatbuffersTypes.EQUALS) {

@@ -786,7 +786,7 @@ public class FlatbuffersLexer implements FlexLexer {
             // fall through
           case 72: break;
           case 17: 
-            { return STRING;
+            { return STRING_LITERAL;
             } 
             // fall through
           case 73: break;

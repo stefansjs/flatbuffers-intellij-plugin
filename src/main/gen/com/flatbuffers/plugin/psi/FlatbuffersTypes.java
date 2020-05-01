@@ -84,6 +84,7 @@ public interface FlatbuffersTypes {
   IElementType SHORT = new FlatbuffersTokenType("short");
   IElementType SPECIAL_FLOAT = new FlatbuffersTokenType("SPECIAL_FLOAT");
   IElementType STRING = new FlatbuffersTokenType("string");
+  IElementType STRING_LITERAL = new FlatbuffersTokenType("STRING_LITERAL");
   IElementType STRUCT = new FlatbuffersTokenType("STRUCT");
   IElementType TABLE = new FlatbuffersTokenType("TABLE");
   IElementType TRUE = new FlatbuffersTokenType("TRUE");

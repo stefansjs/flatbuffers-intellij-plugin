@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FlatbuffersStringConstant extends PsiElement {
 
   @NotNull
-  PsiElement getString();
+  PsiElement getStringLiteral();
 
 }

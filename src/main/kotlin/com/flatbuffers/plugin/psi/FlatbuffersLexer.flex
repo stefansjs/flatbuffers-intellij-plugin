@@ -25,7 +25,7 @@ import static com.flatbuffers.plugin.psi.FlatbuffersTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-STRING=\".*?\"
+STRING_LITERAL=\".*?\"
 IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
 DEC_INTEGER=[-+]?[0-9]+
 HEX_INTEGER=[-+]?0[xX][0-9a-fA-F]+
@@ -85,7 +85,7 @@ COMMENT="//"[^\r\n]*
 
   "true"               { return TRUE; }
   "false"              { return FALSE; }
-  {STRING}             { return STRING; }
+  {STRING_LITERAL}     { return STRING_LITERAL; }
   {DEC_INTEGER}        { return DEC_INTEGER; }
   {HEX_INTEGER}        { return HEX_INTEGER; }
   {DEC_FLOAT}          { return DEC_FLOAT; }

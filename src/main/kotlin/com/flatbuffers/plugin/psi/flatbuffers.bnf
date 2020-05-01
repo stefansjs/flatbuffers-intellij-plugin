@@ -15,7 +15,7 @@
   psiImplUtilClass="com.flatbuffers.plugin.psi.impl.FlatbuffersPsiImplUtilKt"
 
   tokens=[
-      STRING='regexp:".*?"'
+      STRING_LITERAL='regexp:".*?"'
       IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
 
       DEC_INTEGER = 'regexp:[-+]?\d+'
@@ -120,7 +120,7 @@ file_extension_decl ::= FILE_EXTENSION string_constant SEMICOLON
 
 file_identifier_decl ::= FILE_IDENTIFIER string_constant SEMICOLON
 
-string_constant ::= STRING
+string_constant ::= STRING_LITERAL
 
 ident ::= IDENTIFIER
 
