@@ -15,6 +15,7 @@
  */
 package com.flatbuffers.plugin.psi.impl
 
+import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
 import com.flatbuffers.plugin.psi.FlatbuffersIdent
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
 import com.flatbuffers.plugin.psi.createClass
@@ -50,4 +51,9 @@ fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl 
     element.node.replaceChild(identifierNode, newClassNode)
 
     return element
+}
+
+// Replicate the same for FlatbuffersEnumDecl
+fun getNameIdentifier(element: FlatbuffersEnumDecl): FlatbuffersIdent {
+    return element.ident
 }

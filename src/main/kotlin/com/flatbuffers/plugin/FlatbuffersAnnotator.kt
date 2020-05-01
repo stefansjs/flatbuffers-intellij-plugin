@@ -17,11 +17,9 @@
 package com.flatbuffers.plugin
 
 import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
-import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
-import com.flatbuffers.plugin.psi.FlatbuffersIdent
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
+import com.flatbuffers.plugin.psi.impl.getNameIdentifier
 import com.intellij.lang.annotation.AnnotationHolder
-import com.intellij.lang.annotation.Annotation
 import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.EditorColorsManager
@@ -38,25 +36,16 @@ class FlatbuffersAnnotator: Annotator {
 
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        if (element is FlatbuffersIdent) {
-            applyFormatting(element, holder)
+        if( element is FlatbuffersTypeDecl ) {
+            applyAttribute(element.nameIdentifier, holder, CLASS_NAME)
+        }
+        else if( element is FlatbuffersEnumDecl ) {
+            applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)
         }
     }
 
-    private fun applyFormatting(element: FlatbuffersIdent, holder: AnnotationHolder) {
-        if( element.parent is FlatbuffersTypeDecl ||
-            element.parent is FlatbuffersEnumDecl )
-        {
-            val annotation = holder.createInfoAnnotation(element, null)
-            applyAttribute(annotation, CLASS_NAME)
-        }
-        else if( element.parent is FlatbuffersFieldDecl ) {
-            val annotation = holder.createInfoAnnotation(element, null)
-            applyAttribute(annotation, MEMBER)
-        }
-    }
-
-    private fun applyAttribute(annotation: Annotation, textAttributesKey: TextAttributesKey) {
+    private fun applyAttribute(element: PsiElement, holder: AnnotationHolder, textAttributesKey: TextAttributesKey) {
+        val annotation = holder.createInfoAnnotation(element, null)
         val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(textAttributesKey)
         annotation.enforcedTextAttributes = attributes
     }
