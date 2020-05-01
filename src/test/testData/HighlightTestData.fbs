@@ -4,25 +4,25 @@ namespace MyGame;
 
 attribute "priority";
 
-enum Color : byte { Red = 1, Green, Blue }
+enum <info descr="null">Color</info> : byte { Red = 1, Green, Blue }
 
-union Any { Monster, Weapon, Pickup }
+union <info descr="null">Any</info> { Monster, Weapon, Pickup }
 
-struct Vec3 {
-  x:float;
-  y:float;
-  z:float;
+struct <info descr="null">Vec3</info> {
+  <info descr="null">x</info>:float;
+  <info descr="null">y</info>:float;
+  <info descr="null">z</info>:float;
 }
 
-table Monster {
-  pos:Vec3;
-  mana:short = 150;
-  hp:short = 100;
-  name:string;
-  friendly:bool = false (deprecated, priority: 1);
-  inventory:[ubyte];
-  color:Color = Blue;
-  test:Any;
+table <info descr="null">Monster</info> {
+  <info descr="null">pos</info>:<info descr="null">Vec3</info>;
+  <info descr="null">mana</info>:short = 150;
+  <info descr="null">hp</info>:short = 100;
+  <info descr="null">name</info>:string;
+  <info descr="null">friendly</info>:bool = false (deprecated, priority: 1);
+  <info descr="null">inventory</info>:[ubyte];
+  <info descr="null">color</info>:<info descr="null">Color</info> = Blue;
+  <info descr="null">test</info>:<info descr="null">Any</info>;
 }
 
 root_type Monster;
