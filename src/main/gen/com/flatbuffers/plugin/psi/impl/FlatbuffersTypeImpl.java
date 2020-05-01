@@ -27,15 +27,15 @@ public class FlatbuffersTypeImpl extends ASTWrapperPsiElement implements Flatbuf
   }
 
   @Override
-  @NotNull
-  public List<FlatbuffersIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
+  @Nullable
+  public FlatbuffersArrayType getArrayType() {
+    return findChildByClass(FlatbuffersArrayType.class);
   }
 
   @Override
   @Nullable
-  public FlatbuffersType getType() {
-    return findChildByClass(FlatbuffersType.class);
+  public FlatbuffersDeclaredType getDeclaredType() {
+    return findChildByClass(FlatbuffersDeclaredType.class);
   }
 
 }

@@ -36,6 +36,20 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // LBRACK type RBRACK
+  public static boolean array_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_type")) return false;
+    if (!nextTokenIs(b, LBRACK)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LBRACK);
+    r = r && type(b, l + 1);
+    r = r && consumeToken(b, RBRACK);
+    exit_section_(b, m, ARRAY_TYPE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // ATTRIBUTE ( ident | string_constant ) SEMICOLON
   public static boolean attribute_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_decl")) return false;
@@ -222,6 +236,41 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!r) r = rpc_decl(b, l + 1);
     if (!r) r = object(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ident (DOT ident)*
+  public static boolean declared_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declared_type")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ident(b, l + 1);
+    r = r && declared_type_1(b, l + 1);
+    exit_section_(b, m, DECLARED_TYPE, r);
+    return r;
+  }
+
+  // (DOT ident)*
+  private static boolean declared_type_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declared_type_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!declared_type_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "declared_type_1", c)) break;
+    }
+    return true;
+  }
+
+  // DOT ident
+  private static boolean declared_type_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declared_type_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DOT);
+    r = r && ident(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -832,8 +881,8 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   //        | float32
   //        | float64
   //        | string
-  //        | LBRACK type RBRACK
-  //        | ident (DOT ident)*
+  //        | array_type
+  //        | declared_type
   public static boolean type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type")) return false;
     boolean r;
@@ -860,54 +909,9 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FLOAT32);
     if (!r) r = consumeToken(b, FLOAT64);
     if (!r) r = consumeToken(b, STRING);
-    if (!r) r = type_22(b, l + 1);
-    if (!r) r = type_23(b, l + 1);
+    if (!r) r = array_type(b, l + 1);
+    if (!r) r = declared_type(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // LBRACK type RBRACK
-  private static boolean type_22(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_22")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBRACK);
-    r = r && type(b, l + 1);
-    r = r && consumeToken(b, RBRACK);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ident (DOT ident)*
-  private static boolean type_23(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_23")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = ident(b, l + 1);
-    r = r && type_23_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (DOT ident)*
-  private static boolean type_23_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_23_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!type_23_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "type_23_1", c)) break;
-    }
-    return true;
-  }
-
-  // DOT ident
-  private static boolean type_23_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_23_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, DOT);
-    r = r && ident(b, l + 1);
-    exit_section_(b, m, null, r);
     return r;
   }
 

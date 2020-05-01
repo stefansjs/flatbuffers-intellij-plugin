@@ -88,8 +88,10 @@ type ::= bool
        | float32
        | float64
        | string
-       | LBRACK type RBRACK
-       | ident (DOT ident)*
+       | array_type
+       | declared_type
+array_type ::= LBRACK type RBRACK
+declared_type ::= ident (DOT ident)*
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 

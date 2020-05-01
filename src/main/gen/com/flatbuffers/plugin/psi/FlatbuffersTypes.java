@@ -8,10 +8,12 @@ import com.flatbuffers.plugin.psi.impl.*;
 
 public interface FlatbuffersTypes {
 
+  IElementType ARRAY_TYPE = new FlatbuffersElementType("ARRAY_TYPE");
   IElementType ATTRIBUTE_DECL = new FlatbuffersElementType("ATTRIBUTE_DECL");
   IElementType BOOLEAN_CONSTANT = new FlatbuffersElementType("BOOLEAN_CONSTANT");
   IElementType DECIMAL_FLOAT_CONSTANT = new FlatbuffersElementType("DECIMAL_FLOAT_CONSTANT");
   IElementType DECLARATION = new FlatbuffersElementType("DECLARATION");
+  IElementType DECLARED_TYPE = new FlatbuffersElementType("DECLARED_TYPE");
   IElementType DEC_INTEGER_CONSTANT = new FlatbuffersElementType("DEC_INTEGER_CONSTANT");
   IElementType ENUMVAL_DECL = new FlatbuffersElementType("ENUMVAL_DECL");
   IElementType ENUM_DECL = new FlatbuffersElementType("ENUM_DECL");
@@ -97,7 +99,10 @@ public interface FlatbuffersTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ATTRIBUTE_DECL) {
+      if (type == ARRAY_TYPE) {
+        return new FlatbuffersArrayTypeImpl(node);
+      }
+      else if (type == ATTRIBUTE_DECL) {
         return new FlatbuffersAttributeDeclImpl(node);
       }
       else if (type == BOOLEAN_CONSTANT) {
@@ -108,6 +113,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == DECLARATION) {
         return new FlatbuffersDeclarationImpl(node);
+      }
+      else if (type == DECLARED_TYPE) {
+        return new FlatbuffersDeclaredTypeImpl(node);
       }
       else if (type == DEC_INTEGER_CONSTANT) {
         return new FlatbuffersDecIntegerConstantImpl(node);

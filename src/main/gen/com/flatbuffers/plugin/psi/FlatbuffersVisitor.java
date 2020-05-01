@@ -8,6 +8,10 @@ import com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement;
 
 public class FlatbuffersVisitor extends PsiElementVisitor {
 
+  public void visitArrayType(@NotNull FlatbuffersArrayType o) {
+    visitPsiElement(o);
+  }
+
   public void visitAttributeDecl(@NotNull FlatbuffersAttributeDecl o) {
     visitPsiElement(o);
   }
@@ -25,6 +29,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitDeclaration(@NotNull FlatbuffersDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDeclaredType(@NotNull FlatbuffersDeclaredType o) {
     visitPsiElement(o);
   }
 
