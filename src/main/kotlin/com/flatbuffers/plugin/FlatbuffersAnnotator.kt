@@ -50,6 +50,10 @@ class FlatbuffersAnnotator: Annotator {
             val annotation = holder.createInfoAnnotation(element, null)
             applyAttribute(annotation, CLASS_NAME)
         }
+        else if( element.parent is FlatbuffersFieldDecl ) {
+            val annotation = holder.createInfoAnnotation(element, null)
+            applyAttribute(annotation, MEMBER)
+        }
     }
 
     private fun applyAttribute(annotation: Annotation, textAttributesKey: TextAttributesKey) {
