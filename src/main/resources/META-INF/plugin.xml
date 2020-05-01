@@ -14,6 +14,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.flatbuffers.plugin.FlatbuffersFileTypeFactory"/>
+    <fileType name="Flatbuffers file" implementationClass="com.flatbuffers.plugin.FlatbuffersFileType" fieldName="INSTANCE" language="Flatbuffers" extensions="fbs"/>
     <colorSettingsPage implementation="com.flatbuffers.plugin.FlatbuffersColorSettingsPage"/>
     <lang.parserDefinition language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersParserDefinition"/>
     <lang.syntaxHighlighterFactory language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersSyntaxHighlighterFactory"/>
