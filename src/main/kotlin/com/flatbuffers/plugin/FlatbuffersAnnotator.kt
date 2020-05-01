@@ -34,6 +34,7 @@ class FlatbuffersAnnotator: Annotator {
         val CLASS_NAME = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
         val CLASS_REFERENCE = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_REFERENCE)
         val MEMBER = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+        val ENUM_VALUE = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.STATIC_FIELD)
     }
 
 
@@ -46,8 +47,16 @@ class FlatbuffersAnnotator: Annotator {
                 applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)
             }
             is FlatbuffersFieldDecl -> {
-                applyAttribute(getFieldName(element), holder, MEMBER)
+                applyFormatting(element, holder)
             }
+        }
+    }
+
+    private fun applyFormatting(element: FlatbuffersFieldDecl, holder: AnnotationHolder) {
+        applyAttribute(getFieldName(element), holder, MEMBER)
+        val declaredType = element.fieldType.declaredType
+        if( declaredType != null ) {
+            applyAttribute(declaredType.identList.last(), holder, CLASS_REFERENCE)
         }
     }
 
