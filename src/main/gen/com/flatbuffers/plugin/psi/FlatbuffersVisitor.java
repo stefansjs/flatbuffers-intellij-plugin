@@ -84,6 +84,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRecoverType(@NotNull FlatbuffersRecoverType o) {
+    visitPsiElement(o);
+  }
+
   public void visitRootDecl(@NotNull FlatbuffersRootDecl o) {
     visitPsiElement(o);
   }

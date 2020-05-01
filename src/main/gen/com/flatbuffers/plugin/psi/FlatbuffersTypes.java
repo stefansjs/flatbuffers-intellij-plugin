@@ -27,6 +27,7 @@ public interface FlatbuffersTypes {
   IElementType METADATA = new FlatbuffersElementType("METADATA");
   IElementType NAMESPACE_DECL = new FlatbuffersElementType("NAMESPACE_DECL");
   IElementType OBJECT = new FlatbuffersElementType("OBJECT");
+  IElementType RECOVER_TYPE = new FlatbuffersElementType("RECOVER_TYPE");
   IElementType ROOT_DECL = new FlatbuffersElementType("ROOT_DECL");
   IElementType RPC_DECL = new FlatbuffersElementType("RPC_DECL");
   IElementType RPC_METHOD = new FlatbuffersElementType("RPC_METHOD");
@@ -152,6 +153,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == OBJECT) {
         return new FlatbuffersObjectImpl(node);
+      }
+      else if (type == RECOVER_TYPE) {
+        return new FlatbuffersRecoverTypeImpl(node);
       }
       else if (type == ROOT_DECL) {
         return new FlatbuffersRootDeclImpl(node);

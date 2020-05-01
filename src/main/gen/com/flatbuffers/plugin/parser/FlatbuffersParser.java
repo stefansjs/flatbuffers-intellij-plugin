@@ -36,38 +36,25 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ATTRIBUTE ident
-  //                  | string_constant SEMICOLON
+  // ATTRIBUTE ( ident | string_constant ) SEMICOLON
   public static boolean attribute_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_decl")) return false;
-    if (!nextTokenIs(b, "<attribute decl>", ATTRIBUTE, STRING)) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ATTRIBUTE_DECL, "<attribute decl>");
-    r = attribute_decl_0(b, l + 1);
-    if (!r) r = attribute_decl_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ATTRIBUTE ident
-  private static boolean attribute_decl_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "attribute_decl_0")) return false;
+    if (!nextTokenIs(b, ATTRIBUTE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ATTRIBUTE);
-    r = r && ident(b, l + 1);
-    exit_section_(b, m, null, r);
+    r = r && attribute_decl_1(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, ATTRIBUTE_DECL, r);
     return r;
   }
 
-  // string_constant SEMICOLON
+  // ident | string_constant
   private static boolean attribute_decl_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_decl_1")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = string_constant(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, null, r);
+    r = ident(b, l + 1);
+    if (!r) r = string_constant(b, l + 1);
     return r;
   }
 
@@ -655,6 +642,28 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // !(TABLE|STRUCT|metadata|COMMENT)
+  public static boolean recover_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_type")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_, RECOVER_TYPE, "<recover type>");
+    r = !recover_type_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // TABLE|STRUCT|metadata|COMMENT
+  private static boolean recover_type_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_type_0")) return false;
+    boolean r;
+    r = consumeToken(b, TABLE);
+    if (!r) r = consumeToken(b, STRUCT);
+    if (!r) r = metadata(b, l + 1);
+    if (!r) r = consumeToken(b, COMMENT);
+    return r;
+  }
+
+  /* ********************************************************** */
   // ROOT_TYPE ident SEMICOLON
   public static boolean root_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_decl")) return false;
@@ -906,7 +915,6 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   // ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
   public static boolean type_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl")) return false;
-    if (!nextTokenIs(b, "<type decl>", STRUCT, TABLE)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_DECL, "<type decl>");
     r = type_decl_0(b, l + 1);
@@ -915,7 +923,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, LCURLY);
     r = r && type_decl_4(b, l + 1);
     r = r && consumeToken(b, RCURLY);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, l, m, r, false, recover_type_parser_);
     return r;
   }
 
@@ -968,4 +976,9 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  static final Parser recover_type_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return recover_type(b, l + 1);
+    }
+  };
 }
