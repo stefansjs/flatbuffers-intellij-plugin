@@ -38,14 +38,16 @@ class FlatbuffersAnnotator: Annotator {
 
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        if( element is FlatbuffersTypeDecl ) {
-            applyAttribute(element.nameIdentifier, holder, CLASS_NAME)
-        }
-        else if( element is FlatbuffersEnumDecl ) {
-            applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)
-        }
-        else if( element is FlatbuffersFieldDecl ) {
-            applyAttribute(getFieldName(element), holder, MEMBER)
+        when (element) {
+            is FlatbuffersTypeDecl -> {
+                applyAttribute(element.nameIdentifier, holder, CLASS_NAME)
+            }
+            is FlatbuffersEnumDecl -> {
+                applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)
+            }
+            is FlatbuffersFieldDecl -> {
+                applyAttribute(getFieldName(element), holder, MEMBER)
+            }
         }
     }
 
