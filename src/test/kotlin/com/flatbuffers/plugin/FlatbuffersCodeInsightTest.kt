@@ -22,7 +22,7 @@ class FlatbuffersCodeInsightTest: LightCodeInsightFixtureTestCase() {
     override fun getTestDataPath() = "src/test/testData"
 
     fun testAnnotator() {
-        myFixture.configureByFiles("AnnotatorTestData.kt", "DefaultTestData.fbs")
+        myFixture.configureByFiles("DefaultTestData.fbs")
         myFixture.checkHighlighting(false, false, true, true)
     }
 }
