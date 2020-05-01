@@ -17,12 +17,15 @@
 package com.flatbuffers.plugin
 
 import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
+import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
 import com.flatbuffers.plugin.psi.FlatbuffersIdent
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
 import com.intellij.lang.annotation.AnnotationHolder
+import com.intellij.lang.annotation.Annotation
 import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.EditorColorsManager
+import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.psi.PsiElement
 
 class FlatbuffersAnnotator: Annotator {
@@ -45,8 +48,12 @@ class FlatbuffersAnnotator: Annotator {
             element.parent is FlatbuffersEnumDecl )
         {
             val annotation = holder.createInfoAnnotation(element, null)
-            val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(CLASS_NAME)
-            annotation.enforcedTextAttributes = attributes
+            applyAttribute(annotation, CLASS_NAME)
         }
+    }
+
+    private fun applyAttribute(annotation: Annotation, textAttributesKey: TextAttributesKey) {
+        val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(textAttributesKey)
+        annotation.enforcedTextAttributes = attributes
     }
 }
