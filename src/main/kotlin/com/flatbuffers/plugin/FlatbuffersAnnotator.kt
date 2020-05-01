@@ -17,7 +17,9 @@
 package com.flatbuffers.plugin
 
 import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
+import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
+import com.flatbuffers.plugin.psi.impl.getFieldName
 import com.flatbuffers.plugin.psi.impl.getNameIdentifier
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -41,6 +43,9 @@ class FlatbuffersAnnotator: Annotator {
         }
         else if( element is FlatbuffersEnumDecl ) {
             applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)
+        }
+        else if( element is FlatbuffersFieldDecl ) {
+            applyAttribute(getFieldName(element), holder, MEMBER)
         }
     }
 
