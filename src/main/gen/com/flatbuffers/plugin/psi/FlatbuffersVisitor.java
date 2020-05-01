@@ -48,6 +48,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFieldType(@NotNull FlatbuffersFieldType o) {
+    visitPsiElement(o);
+  }
+
   public void visitFileExtensionDecl(@NotNull FlatbuffersFileExtensionDecl o) {
     visitPsiElement(o);
   }
@@ -92,6 +96,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPrimitive(@NotNull FlatbuffersPrimitive o) {
+    visitPsiElement(o);
+  }
+
   public void visitRecoverType(@NotNull FlatbuffersRecoverType o) {
     visitPsiElement(o);
   }
@@ -121,10 +129,6 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitStringConstant(@NotNull FlatbuffersStringConstant o) {
-    visitPsiElement(o);
-  }
-
-  public void visitType(@NotNull FlatbuffersType o) {
     visitPsiElement(o);
   }
 

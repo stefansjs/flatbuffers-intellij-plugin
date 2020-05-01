@@ -27,9 +27,15 @@ public class FlatbuffersArrayTypeImpl extends ASTWrapperPsiElement implements Fl
   }
 
   @Override
-  @NotNull
-  public FlatbuffersType getType() {
-    return findNotNullChildByClass(FlatbuffersType.class);
+  @Nullable
+  public FlatbuffersDeclaredType getDeclaredType() {
+    return findChildByClass(FlatbuffersDeclaredType.class);
+  }
+
+  @Override
+  @Nullable
+  public FlatbuffersPrimitive getPrimitive() {
+    return findChildByClass(FlatbuffersPrimitive.class);
   }
 
 }

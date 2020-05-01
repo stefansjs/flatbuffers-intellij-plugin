@@ -54,43 +54,44 @@ type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
                methods=[getName setName getNameIdentifier]}
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
-enum_decl ::= ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
+enum_decl ::= ( ENUM ident ( COLON primitive )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
 root_decl ::= ROOT_TYPE ident SEMICOLON
 
-field_decl ::= ident COLON type ( EQUALS (scalar|ident) )? metadata SEMICOLON
+field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
 
 rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
 
 rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
 
-type ::= bool
-       | byte
-       | ubyte
-       | short
-       | ushort
-       | int
-       | uint
-       | float
-       | long
-       | ulong
-       | double
-       | int8
-       | uint8
-       | int16
-       | uint16
-       | int32
-       | uint32
-       | int64
-       | uint64
-       | float32
-       | float64
-       | string
-       | array_type
-       | declared_type
-array_type ::= LBRACK type RBRACK
+field_type ::= primitive
+             | array_type
+             | declared_type
+primitive ::= bool
+            | byte
+            | ubyte
+            | short
+            | ushort
+            | int
+            | uint
+            | float
+            | long
+            | ulong
+            | double
+            | int8
+            | uint8
+            | int16
+            | uint16
+            | int32
+            | uint32
+            | int64
+            | uint64
+            | float32
+            | float64
+            | string
+array_type ::= LBRACK (primitive | declared_type) RBRACK
 declared_type ::= ident (DOT ident)*
 
 enumval_decl ::= ident ( EQUALS integer_constant )?

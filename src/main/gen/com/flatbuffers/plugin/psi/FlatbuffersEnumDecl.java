@@ -17,6 +17,6 @@ public interface FlatbuffersEnumDecl extends PsiElement {
   FlatbuffersMetadata getMetadata();
 
   @Nullable
-  FlatbuffersType getType();
+  FlatbuffersPrimitive getPrimitive();
 
 }

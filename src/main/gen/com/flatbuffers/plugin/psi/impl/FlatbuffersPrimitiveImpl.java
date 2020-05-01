@@ -11,31 +11,19 @@ import static com.flatbuffers.plugin.psi.FlatbuffersTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.flatbuffers.plugin.psi.*;
 
-public class FlatbuffersTypeImpl extends ASTWrapperPsiElement implements FlatbuffersType {
+public class FlatbuffersPrimitiveImpl extends ASTWrapperPsiElement implements FlatbuffersPrimitive {
 
-  public FlatbuffersTypeImpl(@NotNull ASTNode node) {
+  public FlatbuffersPrimitiveImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitType(this);
+    visitor.visitPrimitive(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersArrayType getArrayType() {
-    return findChildByClass(FlatbuffersArrayType.class);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersDeclaredType getDeclaredType() {
-    return findChildByClass(FlatbuffersDeclaredType.class);
   }
 
 }

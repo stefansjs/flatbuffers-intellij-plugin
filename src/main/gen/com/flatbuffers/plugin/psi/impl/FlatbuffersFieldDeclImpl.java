@@ -28,6 +28,12 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
 
   @Override
   @NotNull
+  public FlatbuffersFieldType getFieldType() {
+    return findNotNullChildByClass(FlatbuffersFieldType.class);
+  }
+
+  @Override
+  @NotNull
   public List<FlatbuffersIdent> getIdentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
   }
@@ -42,12 +48,6 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
   @Nullable
   public FlatbuffersScalar getScalar() {
     return findChildByClass(FlatbuffersScalar.class);
-  }
-
-  @Override
-  @NotNull
-  public FlatbuffersType getType() {
-    return findNotNullChildByClass(FlatbuffersType.class);
   }
 
 }

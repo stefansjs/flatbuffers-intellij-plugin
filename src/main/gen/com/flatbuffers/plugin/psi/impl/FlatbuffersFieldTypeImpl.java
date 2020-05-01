@@ -11,14 +11,14 @@ import static com.flatbuffers.plugin.psi.FlatbuffersTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.flatbuffers.plugin.psi.*;
 
-public class FlatbuffersEnumDeclImpl extends ASTWrapperPsiElement implements FlatbuffersEnumDecl {
+public class FlatbuffersFieldTypeImpl extends ASTWrapperPsiElement implements FlatbuffersFieldType {
 
-  public FlatbuffersEnumDeclImpl(@NotNull ASTNode node) {
+  public FlatbuffersFieldTypeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitEnumDecl(this);
+    visitor.visitFieldType(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,15 @@ public class FlatbuffersEnumDeclImpl extends ASTWrapperPsiElement implements Fla
   }
 
   @Override
-  @NotNull
-  public List<FlatbuffersEnumvalDecl> getEnumvalDeclList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersEnumvalDecl.class);
+  @Nullable
+  public FlatbuffersArrayType getArrayType() {
+    return findChildByClass(FlatbuffersArrayType.class);
   }
 
   @Override
-  @NotNull
-  public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
-  }
-
-  @Override
-  @NotNull
-  public FlatbuffersMetadata getMetadata() {
-    return findNotNullChildByClass(FlatbuffersMetadata.class);
+  @Nullable
+  public FlatbuffersDeclaredType getDeclaredType() {
+    return findChildByClass(FlatbuffersDeclaredType.class);
   }
 
   @Override

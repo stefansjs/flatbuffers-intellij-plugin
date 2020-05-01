@@ -36,16 +36,25 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACK type RBRACK
+  // LBRACK (primitive | declared_type) RBRACK
   public static boolean array_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "array_type")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACK);
-    r = r && type(b, l + 1);
+    r = r && array_type_1(b, l + 1);
     r = r && consumeToken(b, RBRACK);
     exit_section_(b, m, ARRAY_TYPE, r);
+    return r;
+  }
+
+  // primitive | declared_type
+  private static boolean array_type_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_type_1")) return false;
+    boolean r;
+    r = primitive(b, l + 1);
+    if (!r) r = declared_type(b, l + 1);
     return r;
   }
 
@@ -275,7 +284,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( ENUM ident ( COLON type )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
+  // ( ENUM ident ( COLON primitive )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
   public static boolean enum_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl")) return false;
     if (!nextTokenIs(b, "<enum decl>", ENUM, UNION)) return false;
@@ -290,7 +299,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ENUM ident ( COLON type )? | union ident
+  // ENUM ident ( COLON primitive )? | union ident
   private static boolean enum_decl_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl_0")) return false;
     boolean r;
@@ -301,7 +310,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ENUM ident ( COLON type )?
+  // ENUM ident ( COLON primitive )?
   private static boolean enum_decl_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl_0_0")) return false;
     boolean r;
@@ -313,20 +322,20 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ( COLON type )?
+  // ( COLON primitive )?
   private static boolean enum_decl_0_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl_0_0_2")) return false;
     enum_decl_0_0_2_0(b, l + 1);
     return true;
   }
 
-  // COLON type
+  // COLON primitive
   private static boolean enum_decl_0_0_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl_0_0_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COLON);
-    r = r && type(b, l + 1);
+    r = r && primitive(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -381,7 +390,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident COLON type ( EQUALS (scalar|ident) )? metadata SEMICOLON
+  // ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
   public static boolean field_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -389,7 +398,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = ident(b, l + 1);
     r = r && consumeToken(b, COLON);
-    r = r && type(b, l + 1);
+    r = r && field_type(b, l + 1);
     r = r && field_decl_3(b, l + 1);
     r = r && metadata(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
@@ -421,6 +430,21 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     boolean r;
     r = scalar(b, l + 1);
     if (!r) r = ident(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // primitive
+  //              | array_type
+  //              | declared_type
+  public static boolean field_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "field_type")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_TYPE, "<field type>");
+    r = primitive(b, l + 1);
+    if (!r) r = array_type(b, l + 1);
+    if (!r) r = declared_type(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -691,6 +715,59 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // bool
+  //             | byte
+  //             | ubyte
+  //             | short
+  //             | ushort
+  //             | int
+  //             | uint
+  //             | float
+  //             | long
+  //             | ulong
+  //             | double
+  //             | int8
+  //             | uint8
+  //             | int16
+  //             | uint16
+  //             | int32
+  //             | uint32
+  //             | int64
+  //             | uint64
+  //             | float32
+  //             | float64
+  //             | string
+  public static boolean primitive(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "primitive")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, PRIMITIVE, "<primitive>");
+    r = consumeToken(b, BOOL);
+    if (!r) r = consumeToken(b, BYTE);
+    if (!r) r = consumeToken(b, UBYTE);
+    if (!r) r = consumeToken(b, SHORT);
+    if (!r) r = consumeToken(b, USHORT);
+    if (!r) r = consumeToken(b, INT);
+    if (!r) r = consumeToken(b, UINT);
+    if (!r) r = consumeToken(b, FLOAT);
+    if (!r) r = consumeToken(b, LONG);
+    if (!r) r = consumeToken(b, ULONG);
+    if (!r) r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, INT8);
+    if (!r) r = consumeToken(b, UINT8);
+    if (!r) r = consumeToken(b, INT16);
+    if (!r) r = consumeToken(b, UINT16);
+    if (!r) r = consumeToken(b, INT32);
+    if (!r) r = consumeToken(b, UINT32);
+    if (!r) r = consumeToken(b, INT64);
+    if (!r) r = consumeToken(b, UINT64);
+    if (!r) r = consumeToken(b, FLOAT32);
+    if (!r) r = consumeToken(b, FLOAT64);
+    if (!r) r = consumeToken(b, STRING);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // !(TABLE|STRUCT|metadata|COMMENT)
   public static boolean recover_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "recover_type")) return false;
@@ -855,63 +932,6 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, STRING);
     exit_section_(b, m, STRING_CONSTANT, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // bool
-  //        | byte
-  //        | ubyte
-  //        | short
-  //        | ushort
-  //        | int
-  //        | uint
-  //        | float
-  //        | long
-  //        | ulong
-  //        | double
-  //        | int8
-  //        | uint8
-  //        | int16
-  //        | uint16
-  //        | int32
-  //        | uint32
-  //        | int64
-  //        | uint64
-  //        | float32
-  //        | float64
-  //        | string
-  //        | array_type
-  //        | declared_type
-  public static boolean type(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE, "<type>");
-    r = consumeToken(b, BOOL);
-    if (!r) r = consumeToken(b, BYTE);
-    if (!r) r = consumeToken(b, UBYTE);
-    if (!r) r = consumeToken(b, SHORT);
-    if (!r) r = consumeToken(b, USHORT);
-    if (!r) r = consumeToken(b, INT);
-    if (!r) r = consumeToken(b, UINT);
-    if (!r) r = consumeToken(b, FLOAT);
-    if (!r) r = consumeToken(b, LONG);
-    if (!r) r = consumeToken(b, ULONG);
-    if (!r) r = consumeToken(b, DOUBLE);
-    if (!r) r = consumeToken(b, INT8);
-    if (!r) r = consumeToken(b, UINT8);
-    if (!r) r = consumeToken(b, INT16);
-    if (!r) r = consumeToken(b, UINT16);
-    if (!r) r = consumeToken(b, INT32);
-    if (!r) r = consumeToken(b, UINT32);
-    if (!r) r = consumeToken(b, INT64);
-    if (!r) r = consumeToken(b, UINT64);
-    if (!r) r = consumeToken(b, FLOAT32);
-    if (!r) r = consumeToken(b, FLOAT64);
-    if (!r) r = consumeToken(b, STRING);
-    if (!r) r = array_type(b, l + 1);
-    if (!r) r = declared_type(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

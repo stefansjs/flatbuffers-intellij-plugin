@@ -5,12 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FlatbuffersType extends PsiElement {
+public interface FlatbuffersFieldType extends PsiElement {
 
   @Nullable
   FlatbuffersArrayType getArrayType();
 
   @Nullable
   FlatbuffersDeclaredType getDeclaredType();
+
+  @Nullable
+  FlatbuffersPrimitive getPrimitive();
 
 }

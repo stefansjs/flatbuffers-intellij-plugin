@@ -18,6 +18,7 @@ public interface FlatbuffersTypes {
   IElementType ENUMVAL_DECL = new FlatbuffersElementType("ENUMVAL_DECL");
   IElementType ENUM_DECL = new FlatbuffersElementType("ENUM_DECL");
   IElementType FIELD_DECL = new FlatbuffersElementType("FIELD_DECL");
+  IElementType FIELD_TYPE = new FlatbuffersElementType("FIELD_TYPE");
   IElementType FILE_EXTENSION_DECL = new FlatbuffersElementType("FILE_EXTENSION_DECL");
   IElementType FILE_IDENTIFIER_DECL = new FlatbuffersElementType("FILE_IDENTIFIER_DECL");
   IElementType FLOAT_CONSTANT = new FlatbuffersElementType("FLOAT_CONSTANT");
@@ -29,6 +30,7 @@ public interface FlatbuffersTypes {
   IElementType METADATA = new FlatbuffersElementType("METADATA");
   IElementType NAMESPACE_DECL = new FlatbuffersElementType("NAMESPACE_DECL");
   IElementType OBJECT = new FlatbuffersElementType("OBJECT");
+  IElementType PRIMITIVE = new FlatbuffersElementType("PRIMITIVE");
   IElementType RECOVER_TYPE = new FlatbuffersElementType("RECOVER_TYPE");
   IElementType ROOT_DECL = new FlatbuffersElementType("ROOT_DECL");
   IElementType RPC_DECL = new FlatbuffersElementType("RPC_DECL");
@@ -37,7 +39,6 @@ public interface FlatbuffersTypes {
   IElementType SINGLE_VALUE = new FlatbuffersElementType("SINGLE_VALUE");
   IElementType SPECIAL_FLOAT_CONSTANT = new FlatbuffersElementType("SPECIAL_FLOAT_CONSTANT");
   IElementType STRING_CONSTANT = new FlatbuffersElementType("STRING_CONSTANT");
-  IElementType TYPE = new FlatbuffersElementType("TYPE");
   IElementType TYPE_DECL = new FlatbuffersElementType("TYPE_DECL");
   IElementType VALUE = new FlatbuffersElementType("VALUE");
 
@@ -129,6 +130,9 @@ public interface FlatbuffersTypes {
       else if (type == FIELD_DECL) {
         return new FlatbuffersFieldDeclImpl(node);
       }
+      else if (type == FIELD_TYPE) {
+        return new FlatbuffersFieldTypeImpl(node);
+      }
       else if (type == FILE_EXTENSION_DECL) {
         return new FlatbuffersFileExtensionDeclImpl(node);
       }
@@ -162,6 +166,9 @@ public interface FlatbuffersTypes {
       else if (type == OBJECT) {
         return new FlatbuffersObjectImpl(node);
       }
+      else if (type == PRIMITIVE) {
+        return new FlatbuffersPrimitiveImpl(node);
+      }
       else if (type == RECOVER_TYPE) {
         return new FlatbuffersRecoverTypeImpl(node);
       }
@@ -185,9 +192,6 @@ public interface FlatbuffersTypes {
       }
       else if (type == STRING_CONSTANT) {
         return new FlatbuffersStringConstantImpl(node);
-      }
-      else if (type == TYPE) {
-        return new FlatbuffersTypeImpl(node);
       }
       else if (type == TYPE_DECL) {
         return new FlatbuffersTypeDeclImpl(node);
