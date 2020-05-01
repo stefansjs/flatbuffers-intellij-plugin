@@ -1,10 +1,27 @@
+/*
+ * Copyright (c) 2020. Stefan Sullivan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.flatbuffers.plugin
 
+import com.flatbuffers.plugin.psi.FlatbuffersIdent
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
-import com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
+import com.intellij.openapi.editor.colors.EditorColorsManager
 import com.intellij.psi.PsiElement
 
 class FlatbuffersAnnotator: Annotator {
@@ -16,15 +33,16 @@ class FlatbuffersAnnotator: Annotator {
 
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        if (element is FlatbuffersNamedElement) {
+        if (element is FlatbuffersIdent) {
             applyFormatting(element, holder)
         }
     }
 
-    fun applyFormatting(element: FlatbuffersNamedElement, holder: AnnotationHolder) {
-        if(element is FlatbuffersTypeDecl) {
-            val annotation = holder.createInfoAnnotation(element.ident, null)
-            annotation.textAttributes = CLASS_NAME
+    private fun applyFormatting(element: FlatbuffersIdent, holder: AnnotationHolder) {
+        if(element.parent is FlatbuffersTypeDecl) {
+            val annotation = holder.createInfoAnnotation(element, null)
+            val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(CLASS_NAME)
+            annotation.enforcedTextAttributes = attributes
         }
     }
 }
