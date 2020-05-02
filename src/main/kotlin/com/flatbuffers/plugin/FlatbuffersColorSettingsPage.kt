@@ -21,12 +21,14 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Class Name", FlatbuffersAnnotator.CLASS_NAME),
             AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE),
             AttributesDescriptor("Member", FlatbuffersAnnotator.MEMBER)
+            , AttributesDescriptor("Enum constant", FlatbuffersAnnotator.ENUM_VALUE)
         )
 
         val TAGS = mutableMapOf(
             "type_name" to FlatbuffersAnnotator.CLASS_NAME
             , "type_ref" to FlatbuffersAnnotator.CLASS_REFERENCE
             , "member" to FlatbuffersAnnotator.MEMBER
+            , "enum_val" to FlatbuffersAnnotator.ENUM_VALUE
         )
     }
 
@@ -45,7 +47,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |
         |attribute "priority";
         |
-        |enum <type_name>Color</type_name> : byte { Red = 1, Green, Blue }
+        |enum <type_name>Color</type_name> : byte { <enum_val>Red</enum_val> = 1, <enum_val>Green</enum_val>, <enum_val>Blue</enum_val> }
         |
         |union Any { Monster, Weapon, Pickup }
         |
