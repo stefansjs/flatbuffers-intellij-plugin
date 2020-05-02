@@ -19,6 +19,7 @@ package com.flatbuffers.plugin
 import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
 import com.flatbuffers.plugin.psi.FlatbuffersEnumvalDecl
 import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
+import com.flatbuffers.plugin.psi.FlatbuffersNamespaceDecl
 import com.flatbuffers.plugin.psi.FlatbuffersRootDecl
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
 import com.flatbuffers.plugin.psi.impl.getFieldName
@@ -38,6 +39,8 @@ class FlatbuffersAnnotator: Annotator {
         val CLASS_REFERENCE = createTextAttributesKey("FLATBUFFERS_CLASS_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE)
         val MEMBER = createTextAttributesKey("FLATBUFFERS_INSTANCE_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
         val ENUM_VALUE = createTextAttributesKey("FLATBUFFERS_STATIC_FIELD", DefaultLanguageHighlighterColors.STATIC_FIELD)
+        val NAMESPACE_NAME = createTextAttributesKey("FLATBUFFERS_NAMESPACE", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val NAMESPACE_REF = createTextAttributesKey("FLATBUFFERS_NAMESPACE_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE)
     }
 
 
@@ -58,6 +61,9 @@ class FlatbuffersAnnotator: Annotator {
             is FlatbuffersRootDecl -> {
                 applyAttribute(element.ident, holder, CLASS_REFERENCE)
             }
+            is FlatbuffersNamespaceDecl -> {
+                applyFormatting(element, holder)
+            }
         }
     }
 
@@ -65,8 +71,14 @@ class FlatbuffersAnnotator: Annotator {
         applyAttribute(getFieldName(element), holder, MEMBER)
         val declaredType = element.fieldType.declaredType
         if( declaredType != null ) {
-            applyAttribute(declaredType.identList.last(), holder, CLASS_REFERENCE)
+            val parts = declaredType.identList
+            applyAttribute(parts.last(), holder, CLASS_REFERENCE)
+            parts.subList(0, parts.lastIndex).map { applyAttribute(it, holder, NAMESPACE_REF) }
         }
+    }
+
+    private fun applyFormatting(element: FlatbuffersNamespaceDecl, holder: AnnotationHolder) {
+        element.identList.map { applyAttribute(it, holder, NAMESPACE_NAME) }
     }
 
     private fun applyAttribute(element: PsiElement, holder: AnnotationHolder, textAttributesKey: TextAttributesKey) {

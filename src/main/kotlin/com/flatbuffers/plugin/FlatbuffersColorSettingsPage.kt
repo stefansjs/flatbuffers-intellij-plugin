@@ -22,6 +22,8 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE),
             AttributesDescriptor("Member", FlatbuffersAnnotator.MEMBER)
             , AttributesDescriptor("Enum constant", FlatbuffersAnnotator.ENUM_VALUE)
+            , AttributesDescriptor("Namespace", FlatbuffersAnnotator.NAMESPACE_NAME)
+            , AttributesDescriptor("Namespace reference", FlatbuffersAnnotator.NAMESPACE_REF)
         )
 
         val TAGS = mutableMapOf(
@@ -29,6 +31,8 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             , "type_ref" to FlatbuffersAnnotator.CLASS_REFERENCE
             , "member" to FlatbuffersAnnotator.MEMBER
             , "enum_val" to FlatbuffersAnnotator.ENUM_VALUE
+            , "namespace" to FlatbuffersAnnotator.NAMESPACE_NAME
+            , "namespace_ref" to FlatbuffersAnnotator.NAMESPACE_REF
         )
     }
 
@@ -43,7 +47,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
     override fun getDemoText() = """
         |// example IDL file
         |
-        |namespace MyGame;
+        |namespace <namespace>MyGame</namespace>;
         |
         |attribute "priority";
         |
@@ -65,7 +69,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |  <member>friendly</member>:bool = false (deprecated, priority: 1);
         |  <member>inventory</member>:[ubyte];
         |  <member>color</member>:<type_ref>Color</type_ref> = Blue;
-        |  <member>test</member>:<type_ref>Any</type_ref>;
+        |  <member>test</member>:<namespace_ref>MyGame</namespace_ref>.<type_ref>Any</type_ref>;
         |}
         |
         |root_type <type_ref>Monster</type_ref>;
