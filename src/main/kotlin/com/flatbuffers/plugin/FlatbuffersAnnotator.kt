@@ -38,6 +38,7 @@ class FlatbuffersAnnotator: Annotator {
         val CLASS_REFERENCE = createTextAttributesKey("FLATBUFFERS_CLASS_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE)
         val MEMBER = createTextAttributesKey("FLATBUFFERS_INSTANCE_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
         val ENUM_VALUE = createTextAttributesKey("FLATBUFFERS_STATIC_FIELD", DefaultLanguageHighlighterColors.STATIC_FIELD)
+        val ENUM_REFERENCE = createTextAttributesKey("FLATBUFFERS_ENUM_REFERENCE", DefaultLanguageHighlighterColors.CONSTANT)
         val NAMESPACE_NAME = createTextAttributesKey("FLATBUFFERS_NAMESPACE", DefaultLanguageHighlighterColors.CLASS_NAME)
         val NAMESPACE_REF = createTextAttributesKey("FLATBUFFERS_NAMESPACE_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE)
     }
@@ -73,6 +74,11 @@ class FlatbuffersAnnotator: Annotator {
             val parts = declaredType.identList
             applyAttribute(parts.last(), holder, CLASS_REFERENCE)
             parts.subList(0, parts.lastIndex).map { applyAttribute(it, holder, NAMESPACE_REF) }
+        }
+        if( element.identList.size > 1 ) {
+            // according to the grammar there should either be a constant or identifier after an equal sign.
+            // There's currently no possibility of anything else
+            applyAttribute(element.identList[1], holder, ENUM_REFERENCE)
         }
     }
 

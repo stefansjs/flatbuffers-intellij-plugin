@@ -22,6 +22,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Class Reference", FlatbuffersAnnotator.CLASS_REFERENCE),
             AttributesDescriptor("Member", FlatbuffersAnnotator.MEMBER)
             , AttributesDescriptor("Enum constant", FlatbuffersAnnotator.ENUM_VALUE)
+            , AttributesDescriptor("Enum reference", FlatbuffersAnnotator.ENUM_REFERENCE)
             , AttributesDescriptor("Namespace", FlatbuffersAnnotator.NAMESPACE_NAME)
             , AttributesDescriptor("Namespace reference", FlatbuffersAnnotator.NAMESPACE_REF)
         )
@@ -31,6 +32,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             , "type_ref" to FlatbuffersAnnotator.CLASS_REFERENCE
             , "member" to FlatbuffersAnnotator.MEMBER
             , "enum_val" to FlatbuffersAnnotator.ENUM_VALUE
+            , "enum_ref" to FlatbuffersAnnotator.ENUM_REFERENCE
             , "namespace" to FlatbuffersAnnotator.NAMESPACE_NAME
             , "namespace_ref" to FlatbuffersAnnotator.NAMESPACE_REF
         )
@@ -68,7 +70,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |  <member>name</member>:string;
         |  <member>friendly</member>:bool = false (deprecated, priority: 1);
         |  <member>inventory</member>:[ubyte];
-        |  <member>color</member>:<type_ref>Color</type_ref> = Blue;
+        |  <member>color</member>:<type_ref>Color</type_ref> = <enum_ref>Blue</enum_ref>;
         |  <member>test</member>:<namespace_ref>MyGame</namespace_ref>.<type_ref>Any</type_ref>;
         |}
         |
