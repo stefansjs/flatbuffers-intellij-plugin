@@ -19,6 +19,7 @@ package com.flatbuffers.plugin
 import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
 import com.flatbuffers.plugin.psi.FlatbuffersEnumvalDecl
 import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
+import com.flatbuffers.plugin.psi.FlatbuffersRootDecl
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
 import com.flatbuffers.plugin.psi.impl.getFieldName
 import com.flatbuffers.plugin.psi.impl.getNameIdentifier
@@ -27,15 +28,16 @@ import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.EditorColorsManager
 import com.intellij.openapi.editor.colors.TextAttributesKey
+import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
 import com.intellij.psi.PsiElement
 
 class FlatbuffersAnnotator: Annotator {
     companion object {
         // Here's some attributes that are used by the Annotator and not used in token highlights below
-        val CLASS_NAME = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_NAME)
-        val CLASS_REFERENCE = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.CLASS_REFERENCE)
-        val MEMBER = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.INSTANCE_FIELD)
-        val ENUM_VALUE = FlatbuffersSyntaxHighlighter.attributeFromFallback(DefaultLanguageHighlighterColors.STATIC_FIELD)
+        val CLASS_NAME = createTextAttributesKey("FLATBUFFERS_CLASS_NAME", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val CLASS_REFERENCE = createTextAttributesKey("FLATBUFFERS_CLASS_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE)
+        val MEMBER = createTextAttributesKey("FLATBUFFERS_INSTANCE_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+        val ENUM_VALUE = createTextAttributesKey("FLATBUFFERS_STATIC_FIELD", DefaultLanguageHighlighterColors.STATIC_FIELD)
     }
 
 
