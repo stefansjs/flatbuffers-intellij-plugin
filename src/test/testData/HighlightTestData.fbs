@@ -25,4 +25,4 @@ table <info descr="null">Monster</info> {
   <info descr="null">test</info>:<info descr="null">Any</info>;
 }
 
-root_type Monster;
+root_type <info descr="null">Monster</info>;

@@ -55,6 +55,9 @@ class FlatbuffersAnnotator: Annotator {
             is FlatbuffersEnumvalDecl -> {
                 applyAttribute(element.ident, holder, ENUM_VALUE)
             }
+            is FlatbuffersRootDecl -> {
+                applyAttribute(element.ident, holder, CLASS_REFERENCE)
+            }
         }
     }
 
