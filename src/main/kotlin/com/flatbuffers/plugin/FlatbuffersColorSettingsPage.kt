@@ -64,7 +64,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |}
         |
         |table <type_name>Monster</type_name> {
-        |  <member>pos</member>:<type_ref>Vec3</type_ref;
+        |  <member>pos</member>:<type_ref>Vec3</type_ref>;
         |  <member>mana</member>:short = 150;
         |  <member>hp</member>:short = 100;
         |  <member>name</member>:string;
