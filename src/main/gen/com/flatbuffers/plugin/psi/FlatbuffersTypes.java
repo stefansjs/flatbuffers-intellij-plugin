@@ -40,6 +40,8 @@ public interface FlatbuffersTypes {
   IElementType SPECIAL_FLOAT_CONSTANT = new FlatbuffersElementType("SPECIAL_FLOAT_CONSTANT");
   IElementType STRING_CONSTANT = new FlatbuffersElementType("STRING_CONSTANT");
   IElementType TYPE_DECL = new FlatbuffersElementType("TYPE_DECL");
+  IElementType UNIONVAL_DECL = new FlatbuffersElementType("UNIONVAL_DECL");
+  IElementType UNION_DECL = new FlatbuffersElementType("UNION_DECL");
   IElementType VALUE = new FlatbuffersElementType("VALUE");
 
   IElementType ATTRIBUTE = new FlatbuffersTokenType("ATTRIBUTE");
@@ -196,6 +198,12 @@ public interface FlatbuffersTypes {
       }
       else if (type == TYPE_DECL) {
         return new FlatbuffersTypeDeclImpl(node);
+      }
+      else if (type == UNIONVAL_DECL) {
+        return new FlatbuffersUnionvalDeclImpl(node);
+      }
+      else if (type == UNION_DECL) {
+        return new FlatbuffersUnionDeclImpl(node);
       }
       else if (type == VALUE) {
         return new FlatbuffersValueImpl(node);

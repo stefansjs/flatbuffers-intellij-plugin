@@ -34,4 +34,7 @@ public interface FlatbuffersDeclaration extends PsiElement {
   @Nullable
   FlatbuffersTypeDecl getTypeDecl();
 
+  @Nullable
+  FlatbuffersUnionDecl getUnionDecl();
+
 }

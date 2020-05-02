@@ -80,4 +80,10 @@ public class FlatbuffersDeclarationImpl extends ASTWrapperPsiElement implements 
     return findChildByClass(FlatbuffersTypeDecl.class);
   }
 
+  @Override
+  @Nullable
+  public FlatbuffersUnionDecl getUnionDecl() {
+    return findChildByClass(FlatbuffersUnionDecl.class);
+  }
+
 }

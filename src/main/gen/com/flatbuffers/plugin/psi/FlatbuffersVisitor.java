@@ -136,6 +136,14 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitUnionDecl(@NotNull FlatbuffersUnionDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUnionvalDecl(@NotNull FlatbuffersUnionvalDecl o) {
+    visitPsiElement(o);
+  }
+
   public void visitValue(@NotNull FlatbuffersValue o) {
     visitPsiElement(o);
   }

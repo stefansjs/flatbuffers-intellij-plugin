@@ -36,6 +36,7 @@ incl ::= INCLUDE string_constant SEMICOLON
 declaration ::= namespace_decl
               | type_decl
               | enum_decl
+              | union_decl
               | root_decl
               | file_extension_decl
               | file_identifier_decl
@@ -54,9 +55,13 @@ type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
                methods=[getName setName getNameIdentifier]}
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
-enum_decl ::= ( ENUM ident ( COLON primitive )? | union ident ) metadata LCURLY commasep_enumval_decl? RCURLY
+enum_decl ::= ( ENUM ident ( COLON primitive )? ) metadata LCURLY commasep_enumval_decl? RCURLY
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
+
+union_decl ::= union ident LCURLY commasep_unionval_decl? RCURLY
+
+private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
 root_decl ::= ROOT_TYPE ident SEMICOLON
 
@@ -99,6 +104,8 @@ array_type ::= LBRACK (primitive | declared_type) RBRACK
 declared_type ::= ident (DOT ident)*
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
+
+unionval_decl ::= ident ( COLON ident )?
 
 metadata ::= ( LPAREN metadata_value ( COMMA metadata_value )* RPAREN )?
 
