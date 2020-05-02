@@ -60,7 +60,3 @@ fun getNameIdentifier(element: FlatbuffersEnumDecl): FlatbuffersIdent {
 }
 
 
-// just give myself helpers for dealing with field declarations
-fun getFieldName(element: FlatbuffersFieldDecl): FlatbuffersIdent {
-    return element.identList[0]
-}

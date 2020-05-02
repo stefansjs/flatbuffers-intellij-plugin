@@ -22,7 +22,6 @@ import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
 import com.flatbuffers.plugin.psi.FlatbuffersNamespaceDecl
 import com.flatbuffers.plugin.psi.FlatbuffersRootDecl
 import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
-import com.flatbuffers.plugin.psi.impl.getFieldName
 import com.flatbuffers.plugin.psi.impl.getNameIdentifier
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -68,7 +67,7 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(element: FlatbuffersFieldDecl, holder: AnnotationHolder) {
-        applyAttribute(getFieldName(element), holder, MEMBER)
+        applyAttribute(element.identList[0], holder, MEMBER)
         val declaredType = element.fieldType.declaredType
         if( declaredType != null ) {
             val parts = declaredType.identList
