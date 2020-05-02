@@ -15,6 +15,7 @@ public interface FlatbuffersTypes {
   IElementType DECLARATION = new FlatbuffersElementType("DECLARATION");
   IElementType DECLARED_TYPE = new FlatbuffersElementType("DECLARED_TYPE");
   IElementType DEC_INTEGER_CONSTANT = new FlatbuffersElementType("DEC_INTEGER_CONSTANT");
+  IElementType DOCUMENTATION = new FlatbuffersElementType("DOCUMENTATION");
   IElementType ENUMVAL_DECL = new FlatbuffersElementType("ENUMVAL_DECL");
   IElementType ENUM_DECL = new FlatbuffersElementType("ENUM_DECL");
   IElementType FIELD_DECL = new FlatbuffersElementType("FIELD_DECL");
@@ -52,6 +53,7 @@ public interface FlatbuffersTypes {
   IElementType COMMENT = new FlatbuffersTokenType("COMMENT");
   IElementType DEC_FLOAT = new FlatbuffersTokenType("DEC_FLOAT");
   IElementType DEC_INTEGER = new FlatbuffersTokenType("DEC_INTEGER");
+  IElementType DOCLINE = new FlatbuffersTokenType("DOCLINE");
   IElementType DOT = new FlatbuffersTokenType("DOT");
   IElementType DOUBLE = new FlatbuffersTokenType("double");
   IElementType ENUM = new FlatbuffersTokenType("ENUM");
@@ -123,6 +125,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == DEC_INTEGER_CONSTANT) {
         return new FlatbuffersDecIntegerConstantImpl(node);
+      }
+      else if (type == DOCUMENTATION) {
+        return new FlatbuffersDocumentationImpl(node);
       }
       else if (type == ENUMVAL_DECL) {
         return new FlatbuffersEnumvalDeclImpl(node);

@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface FlatbuffersEnumDecl extends PsiElement {
 
+  @Nullable
+  FlatbuffersDocumentation getDocumentation();
+
   @NotNull
   List<FlatbuffersEnumvalDecl> getEnumvalDeclList();
 

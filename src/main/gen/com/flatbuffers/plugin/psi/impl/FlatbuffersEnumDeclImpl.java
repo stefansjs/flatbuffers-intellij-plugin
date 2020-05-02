@@ -27,6 +27,12 @@ public class FlatbuffersEnumDeclImpl extends ASTWrapperPsiElement implements Fla
   }
 
   @Override
+  @Nullable
+  public FlatbuffersDocumentation getDocumentation() {
+    return findChildByClass(FlatbuffersDocumentation.class);
+  }
+
+  @Override
   @NotNull
   public List<FlatbuffersEnumvalDecl> getEnumvalDeclList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersEnumvalDecl.class);

@@ -25,7 +25,8 @@
       HEX_FLOAT = 'regexp:[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F]+))([pP][-+]?\d+)'
       SPECIAL_FLOAT = 'regexp:[-+]?(nan|inf|infinity)'
 
-      COMMENT = 'regexp://[^\r\n]*'
+      DOCLINE = 'regexp:///[^\r\n]*'
+      COMMENT = 'regexp://[^\r\n/]*'
   ]
 }
 
@@ -48,18 +49,19 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
 attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
 
-type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+type_decl ::= documentation?
+              ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
               {recoverWhile="recover_type"
                mixin="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]}
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
-enum_decl ::= ( ENUM ident ( COLON primitive )? ) metadata LCURLY commasep_enumval_decl? RCURLY
+enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
-union_decl ::= union ident LCURLY commasep_unionval_decl? RCURLY
+union_decl ::= documentation? union ident LCURLY commasep_unionval_decl? RCURLY
 
 private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
@@ -126,6 +128,8 @@ private commasep_value ::= ( value ( COMMA value )* )?
 file_extension_decl ::= FILE_EXTENSION string_constant SEMICOLON
 
 file_identifier_decl ::= FILE_IDENTIFIER string_constant SEMICOLON
+
+documentation ::= DOCLINE*
 
 string_constant ::= STRING_LITERAL
 

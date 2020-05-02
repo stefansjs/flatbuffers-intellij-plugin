@@ -36,6 +36,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDocumentation(@NotNull FlatbuffersDocumentation o) {
+    visitPsiElement(o);
+  }
+
   public void visitEnumDecl(@NotNull FlatbuffersEnumDecl o) {
     visitPsiElement(o);
   }

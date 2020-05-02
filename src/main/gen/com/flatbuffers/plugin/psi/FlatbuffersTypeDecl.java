@@ -8,6 +8,9 @@ import com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement;
 
 public interface FlatbuffersTypeDecl extends FlatbuffersNamedElement {
 
+  @Nullable
+  FlatbuffersDocumentation getDocumentation();
+
   @NotNull
   List<FlatbuffersFieldDecl> getFieldDeclList();
 

@@ -329,43 +329,55 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( ENUM ident ( COLON primitive )? ) metadata LCURLY commasep_enumval_decl? RCURLY
+  // DOCLINE*
+  public static boolean documentation(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "documentation")) return false;
+    Marker m = enter_section_(b, l, _NONE_, DOCUMENTATION, "<documentation>");
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, DOCLINE)) break;
+      if (!empty_element_parsed_guard_(b, "documentation", c)) break;
+    }
+    exit_section_(b, l, m, true, false, null);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
   public static boolean enum_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl")) return false;
-    if (!nextTokenIs(b, ENUM)) return false;
+    if (!nextTokenIs(b, "<enum decl>", DOCLINE, ENUM)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, ENUM_DECL, "<enum decl>");
     r = enum_decl_0(b, l + 1);
+    r = r && consumeToken(b, ENUM);
+    r = r && ident(b, l + 1);
+    r = r && enum_decl_3(b, l + 1);
     r = r && metadata(b, l + 1);
     r = r && consumeToken(b, LCURLY);
-    r = r && enum_decl_3(b, l + 1);
+    r = r && enum_decl_6(b, l + 1);
     r = r && consumeToken(b, RCURLY);
-    exit_section_(b, m, ENUM_DECL, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // ENUM ident ( COLON primitive )?
+  // documentation?
   private static boolean enum_decl_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ENUM);
-    r = r && ident(b, l + 1);
-    r = r && enum_decl_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    documentation(b, l + 1);
+    return true;
   }
 
   // ( COLON primitive )?
-  private static boolean enum_decl_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_decl_0_2")) return false;
-    enum_decl_0_2_0(b, l + 1);
+  private static boolean enum_decl_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_decl_3")) return false;
+    enum_decl_3_0(b, l + 1);
     return true;
   }
 
   // COLON primitive
-  private static boolean enum_decl_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_decl_0_2_0")) return false;
+  private static boolean enum_decl_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_decl_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COLON);
@@ -375,8 +387,8 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   // commasep_enumval_decl?
-  private static boolean enum_decl_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_decl_3")) return false;
+  private static boolean enum_decl_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_decl_6")) return false;
     commasep_enumval_decl(b, l + 1);
     return true;
   }
@@ -975,24 +987,33 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+  // documentation?
+  //               ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
   public static boolean type_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_DECL, "<type decl>");
     r = type_decl_0(b, l + 1);
+    r = r && type_decl_1(b, l + 1);
     r = r && ident(b, l + 1);
     r = r && metadata(b, l + 1);
     r = r && consumeToken(b, LCURLY);
-    r = r && type_decl_4(b, l + 1);
+    r = r && type_decl_5(b, l + 1);
     r = r && consumeToken(b, RCURLY);
     exit_section_(b, l, m, r, false, recover_type_parser_);
     return r;
   }
 
-  // TABLE | STRUCT
+  // documentation?
   private static boolean type_decl_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl_0")) return false;
+    documentation(b, l + 1);
+    return true;
+  }
+
+  // TABLE | STRUCT
+  private static boolean type_decl_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_decl_1")) return false;
     boolean r;
     r = consumeToken(b, TABLE);
     if (!r) r = consumeToken(b, STRUCT);
@@ -1000,39 +1021,47 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   // field_decl+
-  private static boolean type_decl_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_decl_4")) return false;
+  private static boolean type_decl_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_decl_5")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = field_decl(b, l + 1);
     while (r) {
       int c = current_position_(b);
       if (!field_decl(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "type_decl_4", c)) break;
+      if (!empty_element_parsed_guard_(b, "type_decl_5", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // union ident LCURLY commasep_unionval_decl? RCURLY
+  // documentation? union ident LCURLY commasep_unionval_decl? RCURLY
   public static boolean union_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "union_decl")) return false;
-    if (!nextTokenIs(b, UNION)) return false;
+    if (!nextTokenIs(b, "<union decl>", DOCLINE, UNION)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, UNION);
+    Marker m = enter_section_(b, l, _NONE_, UNION_DECL, "<union decl>");
+    r = union_decl_0(b, l + 1);
+    r = r && consumeToken(b, UNION);
     r = r && ident(b, l + 1);
     r = r && consumeToken(b, LCURLY);
-    r = r && union_decl_3(b, l + 1);
+    r = r && union_decl_4(b, l + 1);
     r = r && consumeToken(b, RCURLY);
-    exit_section_(b, m, UNION_DECL, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // documentation?
+  private static boolean union_decl_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "union_decl_0")) return false;
+    documentation(b, l + 1);
+    return true;
+  }
+
   // commasep_unionval_decl?
-  private static boolean union_decl_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "union_decl_3")) return false;
+  private static boolean union_decl_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "union_decl_4")) return false;
     commasep_unionval_decl(b, l + 1);
     return true;
   }

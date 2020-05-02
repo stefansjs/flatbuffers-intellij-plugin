@@ -27,6 +27,12 @@ public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl impleme
   }
 
   @Override
+  @Nullable
+  public FlatbuffersDocumentation getDocumentation() {
+    return findChildByClass(FlatbuffersDocumentation.class);
+  }
+
+  @Override
   @NotNull
   public List<FlatbuffersFieldDecl> getFieldDeclList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersFieldDecl.class);

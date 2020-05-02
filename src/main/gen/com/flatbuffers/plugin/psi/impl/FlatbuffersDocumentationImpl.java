@@ -11,37 +11,19 @@ import static com.flatbuffers.plugin.psi.FlatbuffersTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.flatbuffers.plugin.psi.*;
 
-public class FlatbuffersUnionDeclImpl extends ASTWrapperPsiElement implements FlatbuffersUnionDecl {
+public class FlatbuffersDocumentationImpl extends ASTWrapperPsiElement implements FlatbuffersDocumentation {
 
-  public FlatbuffersUnionDeclImpl(@NotNull ASTNode node) {
+  public FlatbuffersDocumentationImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitUnionDecl(this);
+    visitor.visitDocumentation(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersDocumentation getDocumentation() {
-    return findChildByClass(FlatbuffersDocumentation.class);
-  }
-
-  @Override
-  @NotNull
-  public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
-  }
-
-  @Override
-  @NotNull
-  public List<FlatbuffersUnionvalDecl> getUnionvalDeclList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersUnionvalDecl.class);
   }
 
 }
