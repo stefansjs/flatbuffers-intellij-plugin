@@ -23,6 +23,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             AttributesDescriptor("Member", FlatbuffersAnnotator.MEMBER)
             , AttributesDescriptor("Enum constant", FlatbuffersAnnotator.ENUM_VALUE)
             , AttributesDescriptor("Enum reference", FlatbuffersAnnotator.ENUM_REFERENCE)
+            , AttributesDescriptor("Union alias", FlatbuffersAnnotator.UNION_ALIAS)
             , AttributesDescriptor("Namespace", FlatbuffersAnnotator.NAMESPACE_NAME)
             , AttributesDescriptor("Namespace reference", FlatbuffersAnnotator.NAMESPACE_REF)
         )
@@ -33,6 +34,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
             , "member" to FlatbuffersAnnotator.MEMBER
             , "enum_val" to FlatbuffersAnnotator.ENUM_VALUE
             , "enum_ref" to FlatbuffersAnnotator.ENUM_REFERENCE
+            , "alias" to FlatbuffersAnnotator.UNION_ALIAS
             , "namespace" to FlatbuffersAnnotator.NAMESPACE_NAME
             , "namespace_ref" to FlatbuffersAnnotator.NAMESPACE_REF
         )
@@ -43,7 +45,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
     override fun getDisplayName() = FlatbuffersLanguage.displayName
 
     override fun getAttributeDescriptors() = DESCRIPTORS
-    override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY!!
+    override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
     override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>? = TAGS
 
     override fun getDemoText() = """
@@ -55,7 +57,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |
         |enum <type_name>Color</type_name> : byte { <enum_val>Red</enum_val> = 1, <enum_val>Green</enum_val>, <enum_val>Blue</enum_val> }
         |
-        |union Any { Monster, Weapon, Pickup }
+        |union Any { <alias>mon</alias>:<type_ref>Monster</type_ref>, <type_ref>Weapon</type_ref>, <type_ref>Pickup</type_ref> }
         |
         |struct <type_name>Vec3</type_name> {
         |  <member>x</member>:float;
