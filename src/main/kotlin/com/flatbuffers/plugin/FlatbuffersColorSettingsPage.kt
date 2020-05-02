@@ -66,6 +66,6 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |  <member>test</member>:<type_ref>Any</type_ref>;
         |}
         |
-        |root_type Monster;
+        |root_type <type_ref>Monster</type_ref>;
         |""".trimMargin()
 }
