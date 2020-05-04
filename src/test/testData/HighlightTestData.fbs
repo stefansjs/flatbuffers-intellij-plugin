@@ -1,6 +1,6 @@
 // example IDL file
 
-namespace MyGame;
+namespace <info descr="null">MyGame</info>;
 
 attribute "priority";
 
@@ -21,7 +21,7 @@ table <info descr="null">Monster</info> {
   <info descr="null">name</info>:string;
   <info descr="null">friendly</info>:bool = false (deprecated, priority: 1);
   <info descr="null">inventory</info>:[ubyte];
-  <info descr="null">color</info>:<info descr="null">Color</info> = Blue;
+  <info descr="null">color</info>:<info descr="null">Color</info> = <info descr="null">Blue</info>;
   <info descr="null">test</info>:<info descr="null">Any</info>;
 }
 
