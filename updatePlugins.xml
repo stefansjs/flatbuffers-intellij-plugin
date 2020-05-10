@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugins>
+    <!-- Version 0.1.1 https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/tag/v0.1.1 -->
+    <plugin id="io.github.stefansjs.flatbuffersplugin" url="https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/download/v0.1.1/flatbuffers-plugin-0.1.1.zip">
+        <idea-version since-build="173.*" until-build="201.*"/>
+    </plugin>
+</plugins>
