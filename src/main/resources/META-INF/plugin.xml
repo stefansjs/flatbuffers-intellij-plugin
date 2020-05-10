@@ -13,12 +13,12 @@
   <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <fileTypeFactory implementation="com.flatbuffers.plugin.FlatbuffersFileTypeFactory"/>
-    <fileType name="Flatbuffers file" implementationClass="com.flatbuffers.plugin.FlatbuffersFileType" fieldName="INSTANCE" language="Flatbuffers" extensions="fbs"/>
-    <colorSettingsPage implementation="com.flatbuffers.plugin.FlatbuffersColorSettingsPage"/>
-    <lang.parserDefinition language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersParserDefinition"/>
-    <lang.syntaxHighlighterFactory language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersSyntaxHighlighterFactory"/>
-    <annotator language="Flatbuffers" implementationClass="com.flatbuffers.plugin.FlatbuffersAnnotator"/>
+    <fileTypeFactory implementation="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileTypeFactory"/>
+<!--    <fileType name="Flatbuffers file" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType" fieldName="INSTANCE" language="Flatbuffers" extensions="fbs"/>-->
+    <colorSettingsPage implementation="io.github.stefansjs.flatbuffersplugin.FlatbuffersColorSettingsPage"/>
+    <lang.parserDefinition language="Flatbuffers" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersParserDefinition"/>
+    <lang.syntaxHighlighterFactory language="Flatbuffers" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersSyntaxHighlighterFactory"/>
+    <annotator language="Flatbuffers" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersAnnotator"/>
   </extensions>
 
   <actions>

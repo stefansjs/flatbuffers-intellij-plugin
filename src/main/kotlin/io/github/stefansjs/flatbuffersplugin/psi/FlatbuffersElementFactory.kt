@@ -1,6 +1,6 @@
-package com.flatbuffers.plugin.psi
+package io.github.stefansjs.flatbuffersplugin.psi
 
-import com.flatbuffers.plugin.FlatbuffersFileType
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
 import com.intellij.openapi.project.Project
 import com.intellij.psi.*
 

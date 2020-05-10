@@ -13,13 +13,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin.psi.impl
+package io.github.stefansjs.flatbuffersplugin.psi.impl
 
-import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
-import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
-import com.flatbuffers.plugin.psi.FlatbuffersIdent
-import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
-import com.flatbuffers.plugin.psi.createClass
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersFieldDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersIdent
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
+import io.github.stefansjs.flatbuffersplugin.psi.createClass
 
 
 /* Created by stefansullivan on 2019-02-21
@@ -33,7 +33,7 @@ import com.flatbuffers.plugin.psi.createClass
  *  For any class that implements the FlatbuffersNamedElement interface, implementing those
  *  three methods for the type, and then modifying flatbuffers.bnf to add the following metadata:
  *    {methods=[getName setName getNameIdentifier]
- *     implements="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement"}
+ *     implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"}
  */
 
 

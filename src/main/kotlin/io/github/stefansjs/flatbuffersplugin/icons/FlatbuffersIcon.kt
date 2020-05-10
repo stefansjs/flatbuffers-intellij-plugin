@@ -13,17 +13,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin.psi
+package io.github.stefansjs.flatbuffersplugin.icons
 
-import com.flatbuffers.plugin.FlatbuffersFileType
-import com.flatbuffers.plugin.FlatbuffersLanguage
-import com.intellij.extapi.psi.PsiFileBase
-import com.intellij.openapi.fileTypes.FileType
-import com.intellij.psi.FileViewProvider
+import com.intellij.openapi.util.IconLoader
+
+
 
 /* Created by stefansullivan on 2019-02-15 */
-class FlatbuffersFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FlatbuffersLanguage) {
-    override fun getFileType() = FlatbuffersFileType
-
-    override fun toString() = "Flatbuffers File"
+object FlatbuffersIcon {
+    val ICON = IconLoader.getIcon("icons/fbs-icon-small.png")
 }

@@ -13,12 +13,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin.psi
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer
-import com.intellij.openapi.fileTypes.FileTypeFactory
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersLanguage
+import com.intellij.psi.tree.IElementType
 
 /* Created by stefansullivan on 2019-02-15 */
-class FlatbuffersFileTypeFactory: FileTypeFactory() {
-    override fun createFileTypes(fileTypeConsumer: FileTypeConsumer) = fileTypeConsumer.consume(FlatbuffersFileType)
-}
+class FlatbuffersElementType(debugName: String): IElementType(debugName, FlatbuffersLanguage)

@@ -13,9 +13,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin
 
-import com.flatbuffers.plugin.psi.FlatbuffersTypes
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey

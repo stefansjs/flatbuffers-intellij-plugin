@@ -1,4 +1,4 @@
-package com.flatbuffers.plugin.psi.ref
+package io.github.stefansjs.flatbuffersplugin.psi.ref
 
 import com.flatbuffers.plugin.icons.FlatbuffersIcon
 import com.flatbuffers.plugin.util.findClasses

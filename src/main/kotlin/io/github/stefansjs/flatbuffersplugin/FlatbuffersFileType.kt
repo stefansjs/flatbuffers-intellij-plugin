@@ -1,6 +1,6 @@
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin
 
-import com.flatbuffers.plugin.icons.FlatbuffersIcon
+import io.github.stefansjs.flatbuffersplugin.icons.FlatbuffersIcon
 import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin
 
 import com.intellij.testFramework.ParsingTestCase
 

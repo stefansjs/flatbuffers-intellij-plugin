@@ -1,4 +1,4 @@
-package com.flatbuffers.plugin.psi.ref
+package io.github.stefansjs.flatbuffersplugin.psi.ref
 
 import com.intellij.psi.PsiNameIdentifierOwner
 

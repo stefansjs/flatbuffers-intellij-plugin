@@ -13,11 +13,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin
 
-import com.flatbuffers.plugin.parser.FlatbuffersParser
-import com.flatbuffers.plugin.psi.FlatbuffersFile
-import com.flatbuffers.plugin.psi.FlatbuffersTypes
+import io.github.stefansjs.flatbuffersplugin.parser.FlatbuffersParser
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersFile
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.openapi.project.Project

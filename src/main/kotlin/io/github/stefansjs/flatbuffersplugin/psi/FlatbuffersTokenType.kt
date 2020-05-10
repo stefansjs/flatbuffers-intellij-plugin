@@ -13,10 +13,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin.psi
+package io.github.stefansjs.flatbuffersplugin.psi
 
-import com.flatbuffers.plugin.FlatbuffersLanguage
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersLanguage
 import com.intellij.psi.tree.IElementType
 
 /* Created by stefansullivan on 2019-02-15 */
-class FlatbuffersElementType(debugName: String): IElementType(debugName, FlatbuffersLanguage)
+class FlatbuffersTokenType(debugName: String): IElementType(debugName, FlatbuffersLanguage) {
+    override fun toString(): String {
+        return "flatbuffers." + super.toString()
+    }
+}

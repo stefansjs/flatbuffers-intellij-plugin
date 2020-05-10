@@ -13,10 +13,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin
 
-import com.flatbuffers.plugin.lexer.FlatbuffersLexer
-import com.intellij.lexer.FlexAdapter
+import com.intellij.openapi.fileTypes.FileTypeConsumer
+import com.intellij.openapi.fileTypes.FileTypeFactory
 
 /* Created by stefansullivan on 2019-02-15 */
-class FlatbuffersLexerAdapter: FlexAdapter(FlatbuffersLexer())
+class FlatbuffersFileTypeFactory: FileTypeFactory() {
+    override fun createFileTypes(fileTypeConsumer: FileTypeConsumer) = fileTypeConsumer.consume(FlatbuffersFileType)
+}

@@ -13,9 +13,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin.psi
 
-import com.intellij.lang.Language
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersLanguage
+import com.intellij.extapi.psi.PsiFileBase
+import com.intellij.openapi.fileTypes.FileType
+import com.intellij.psi.FileViewProvider
 
 /* Created by stefansullivan on 2019-02-15 */
-object FlatbuffersLanguage: Language("Flatbuffers")
+class FlatbuffersFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FlatbuffersLanguage) {
+    override fun getFileType() = FlatbuffersFileType
+
+    override fun toString() = "Flatbuffers File"
+}

@@ -13,13 +13,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin.icons
+package io.github.stefansjs.flatbuffersplugin
 
-import com.intellij.openapi.util.IconLoader
-
-
+import io.github.stefansjs.flatbuffersplugin.lexer.FlatbuffersLexer
+import com.intellij.lexer.FlexAdapter
 
 /* Created by stefansullivan on 2019-02-15 */
-object FlatbuffersIcon {
-    val ICON = IconLoader.getIcon("icons/fbs-icon-small.png")
-}
+class FlatbuffersLexerAdapter: FlexAdapter(FlatbuffersLexer())

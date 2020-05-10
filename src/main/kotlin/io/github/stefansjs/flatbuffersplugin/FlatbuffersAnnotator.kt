@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.flatbuffers.plugin
+package io.github.stefansjs.flatbuffersplugin
 
-import com.flatbuffers.plugin.psi.FlatbuffersEnumDecl
-import com.flatbuffers.plugin.psi.FlatbuffersEnumvalDecl
-import com.flatbuffers.plugin.psi.FlatbuffersFieldDecl
-import com.flatbuffers.plugin.psi.FlatbuffersNamespaceDecl
-import com.flatbuffers.plugin.psi.FlatbuffersRootDecl
-import com.flatbuffers.plugin.psi.FlatbuffersTypeDecl
-import com.flatbuffers.plugin.psi.FlatbuffersUnionDecl
-import com.flatbuffers.plugin.psi.FlatbuffersUnionvalDecl
-import com.flatbuffers.plugin.psi.impl.getNameIdentifier
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumvalDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersFieldDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersNamespaceDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersRootDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionvalDecl
+import io.github.stefansjs.flatbuffersplugin.psi.impl.getNameIdentifier
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
@@ -50,7 +50,7 @@ class FlatbuffersAnnotator: Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         when (element) {
             is FlatbuffersTypeDecl -> {
-                applyAttribute(element.nameIdentifier, holder, CLASS_NAME)
+                applyAttribute(element.ident, holder, CLASS_NAME)
             }
             is FlatbuffersEnumDecl -> {
                 applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)

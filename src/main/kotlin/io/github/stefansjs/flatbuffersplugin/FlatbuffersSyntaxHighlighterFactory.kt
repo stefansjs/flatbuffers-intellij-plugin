@@ -13,14 +13,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.flatbuffers.plugin.psi
+package io.github.stefansjs.flatbuffersplugin
 
-import com.flatbuffers.plugin.FlatbuffersLanguage
-import com.intellij.psi.tree.IElementType
+import com.intellij.openapi.fileTypes.SyntaxHighlighter
+import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 
 /* Created by stefansullivan on 2019-02-15 */
-class FlatbuffersTokenType(debugName: String): IElementType(debugName, FlatbuffersLanguage) {
-    override fun toString(): String {
-        return "flatbuffers." + super.toString()
-    }
+class FlatbuffersSyntaxHighlighterFactory: SyntaxHighlighterFactory() {
+    override fun getSyntaxHighlighter(p0: Project?, p1: VirtualFile?) = FlatbuffersSyntaxHighlighter()
 }
