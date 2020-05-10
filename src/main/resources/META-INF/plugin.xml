@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>io.github.stefansjs.flatbuffersplugin</id>
   <name>Flatbuffers Support</name>
-  <vendor email="stefan.sullivan@gmail.com" url="https://github.com/stefansjs">Stefan Sullivan</vendor>
+  <vendor email="stefan.sullivan@gmail.com" url="https://stefansjs.github.io/flatbuffers-intellij-plugin/">Stefan Sullivan</vendor>
 
   <description>Provides parsing and editing support for flatbuffers schema files</description>
 
