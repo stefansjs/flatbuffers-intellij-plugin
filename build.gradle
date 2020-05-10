@@ -28,6 +28,8 @@ intellij {
 }
 patchPluginXml {
     changeNotes """Initial version of a .fbs schema file editor plugin for IntelliJ platform"""
+    sinceBuild '173.*'
+    untilBuild '201.*'
 }
 
 sourceSets.main.java.srcDir 'src/main/gen'
