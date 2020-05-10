@@ -1,5 +1,5 @@
 <idea-plugin>
-  <id>com.flatbuffers.plugin</id>
+  <id>io.github.stefansjs.flatbuffersplugin</id>
   <name>Flatbuffers Support</name>
   <vendor email="stefan.sullivan@gmail.com" url="https://github.com/stefansjs">Stefan Sullivan</vendor>
 
