@@ -1,18 +1,18 @@
 {
-  parserClass="com.flatbuffers.plugin.parser.FlatbuffersParser"
+  parserClass="io.github.stefansjs.flatbuffersplugin.parser.FlatbuffersParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="Flatbuffers"
   psiImplClassSuffix="Impl"
-  psiPackage="com.flatbuffers.plugin.psi"
-  psiImplPackage="com.flatbuffers.plugin.psi.impl"
+  psiPackage="io.github.stefansjs.flatbuffersplugin.psi"
+  psiImplPackage="io.github.stefansjs.flatbuffersplugin.psi.impl"
 
-  elementTypeHolderClass="com.flatbuffers.plugin.psi.FlatbuffersTypes"
-  elementTypeClass="com.flatbuffers.plugin.psi.FlatbuffersElementType"
-  tokenTypeClass="com.flatbuffers.plugin.psi.FlatbuffersTokenType"
+  elementTypeHolderClass="io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes"
+  elementTypeClass="io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersElementType"
+  tokenTypeClass="io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTokenType"
 
-  psiImplUtilClass="com.flatbuffers.plugin.psi.impl.FlatbuffersPsiImplUtilKt"
+  psiImplUtilClass="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersPsiImplUtilKt"
 
   tokens=[
       STRING_LITERAL='regexp:".*?"'
@@ -52,8 +52,8 @@ attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
 type_decl ::= documentation?
               ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
               {recoverWhile="recover_type"
-               mixin="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElementImpl"
-               implements="com.flatbuffers.plugin.psi.ref.FlatbuffersNamedElement"
+               mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]}
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
