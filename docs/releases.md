@@ -45,8 +45,8 @@ This release provides an initial version of a flatbuffers editing plugin for Int
   - [ ] Update the markdown title with the upcoming version
   - [ ] Update the markdown body with a brief summary
   - [ ] Update the markdown description with release notes for the current release
-- [ ] update build.gradle with the new version number
 - [ ] update plugin.xml with release notes
+- [ ] update build.gradle with the RC version number (e.g. v123.123-rc1)
 - [ ] build the plugin with the buildPlugin task in gradle
 - [ ] create a new release candidate page on github using https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/new
   - [ ] add a tag with the name `v<Release Number>-rc1` following the release branch
@@ -57,18 +57,20 @@ This release provides an initial version of a flatbuffers editing plugin for Int
 - [ ] update the `updatePlugins.xml` to refer to the github asset url from 
       https://github.com/stefansjs/flatbuffers-intellij-plugin/releases 
 - [ ] Test the plugin in an installed IDE
+  - [ ] push to release
   - [ ] add https://github.com/stefansjs/flatbuffers-intellij-plugin/raw/release/updatePlugins.xml as a plugin repository
   - [ ] QA the updated plugin in the IDE
   - [ ] Make any necessary bugfix changes on the release branch
     - [ ] First update build.gradle's version by incrementing the rc number (e.g. `version 'vM.m.b-rcN+1'`)
     - [ ] **Add** do **not delete** a new RC by executing the `buildPlugin` task and uploading it to the release
     - [ ] update `updatePlugins.xml` with the new RC 
-    - [ ] Repeat until final QA signoff
+    - [ ] Repeat until Quality has been Assured
 - [ ] Remove rc from the version string in build.gradle
 - [ ] Build and upload the final binary to the github release
 - [ ] Update `updatePlugins.xml` with the github link
+- [ ] push to release
 - [ ] Make a final release on github with the build artifact and publish it
-- [ ] Publish the plugin on any additional plugin repositories
+- [ ] Publish the plugin on JetBrains Hub https://plugins.jetbrains.com/plugin/14326-flatbuffers-support
 - [ ] merge to master
 - [ ] Increment the version in build.gradle to the next pre-release version
 ```
