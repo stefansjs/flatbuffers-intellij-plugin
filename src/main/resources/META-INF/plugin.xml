@@ -5,6 +5,12 @@
 
   <description>Provides parsing and editing support for flatbuffers schema files</description>
 
+  <change-notes>
+    Bugfixes:
+
+    - Fix for loading icons in 2019.2+ versions
+  </change-notes>
+
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="182.3684.101"/>
 
