@@ -4,4 +4,8 @@
     <plugin id="io.github.stefansjs.flatbuffersplugin" url="https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/download/v0.1.1/flatbuffers-plugin-0.1.1.zip">
         <idea-version since-build="173.*" until-build="201.*"/>
     </plugin>
+    <!-- Version 0.1.2 https://github.com/stefansjs/flatbuffers-intellij-plugin/tree/0.1.2-rc1 -->
+    <plugin id="io.github.stefansjs.flatbuffersplugin" url="https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/download/0.1.2-rc1/flatbuffers-plugin-0.1.2-rc1.zip">
+        <idea-version since-build="182.3684.101"/>
+    </plugin>
 </plugins>
