@@ -1,7 +1,6 @@
 package io.github.stefansjs.flatbuffersplugin
 
 import io.github.stefansjs.flatbuffersplugin.icons.FlatbuffersIcon
-import com.intellij.openapi.editor.colors.ColorKey
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.options.colors.AttributesDescriptor
 import com.intellij.openapi.options.colors.ColorDescriptor
@@ -40,7 +39,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         )
     }
 
-    override fun getIcon() = FlatbuffersIcon.ICON
+    override fun getIcon() = FlatbuffersIcon.FILE
     override fun getHighlighter() = FlatbuffersSyntaxHighlighter()
     override fun getDisplayName() = FlatbuffersLanguage.displayName
 
