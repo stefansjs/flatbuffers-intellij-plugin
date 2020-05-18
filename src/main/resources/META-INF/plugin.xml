@@ -6,7 +6,7 @@
   <description>Provides parsing and editing support for flatbuffers schema files</description>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173.0"/>
+  <idea-version since-build="182.3684.101"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
@@ -14,7 +14,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileTypeFactory"/>
-<!--    <fileType name="Flatbuffers file" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType" fieldName="INSTANCE" language="Flatbuffers" extensions="fbs"/>-->
+    <fileType name="Flatbuffers file" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType" fieldName="INSTANCE" language="Flatbuffers" extensions="fbs"/>
     <colorSettingsPage implementation="io.github.stefansjs.flatbuffersplugin.FlatbuffersColorSettingsPage"/>
     <lang.parserDefinition language="Flatbuffers" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersParserDefinition"/>
     <lang.syntaxHighlighterFactory language="Flatbuffers" implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersSyntaxHighlighterFactory"/>
