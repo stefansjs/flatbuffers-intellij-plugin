@@ -3,7 +3,7 @@
   <name>Flatbuffers Support</name>
   <vendor email="stefan.sullivan@gmail.com" url="https://stefansjs.github.io/flatbuffers-intellij-plugin/">Stefan Sullivan</vendor>
 
-  <description>Provides parsing and editing support for flatbuffers schema files</description>
+  <description>Editing support for flatbuffers schema files (.fbs)</description>
 
   <change-notes>
     Bugfixes:
