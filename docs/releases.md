@@ -39,14 +39,15 @@ This release provides an initial version of a flatbuffers editing plugin for Int
 ## Checklist
 
 - [ ] checkout the release branch
+- [ ] merge origin/master
 - [ ] create markdown file in `docs/releases/v<Release Number>.md` for the potential new release with the new version
  number
   - [ ] Update the markdown title with the upcoming version
   - [ ] Update the markdown body with a brief summary
   - [ ] Update the markdown description with release notes for the current release
 - [ ] update build.gradle with the new version number
-- [ ] update build.gradle with release notes in `patchPluginXml.releaseNotes`
-- [ ] build the plugin with the buildPlugin task in build.gradle
+- [ ] update plugin.xml with release notes
+- [ ] build the plugin with the buildPlugin task in gradle
 - [ ] create a new release candidate page on github using https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/new
   - [ ] add a tag with the name `v<Release Number>-rc1` following the release branch
   - [ ] upload the zip file from `build/distributions/flatbuffers-plugin-<Release Number>.zip` to the release page

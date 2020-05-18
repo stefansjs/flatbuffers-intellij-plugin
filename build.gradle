@@ -23,13 +23,11 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
 intellij {
     version '2019.1.4'
-}
-patchPluginXml {
-    changeNotes """Initial version of a .fbs schema file editor plugin for IntelliJ platform"""
-    sinceBuild '173.*'
-    untilBuild '201.*'
+    downloadSources true
+    updateSinceUntilBuild false
 }
 
 sourceSets.main.java.srcDir 'src/main/gen'
