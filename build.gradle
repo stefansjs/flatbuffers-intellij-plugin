@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.stefansjs.flatbuffersplugin'
-version '0.1.2-alpha'
+version '0.1.2-rc1'
 
 repositories {
     mavenCentral()
