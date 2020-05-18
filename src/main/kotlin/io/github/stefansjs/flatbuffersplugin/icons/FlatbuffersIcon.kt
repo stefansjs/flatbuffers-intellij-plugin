@@ -21,5 +21,5 @@ import com.intellij.openapi.util.IconLoader
 
 /* Created by stefansullivan on 2019-02-15 */
 object FlatbuffersIcon {
-    val ICON = IconLoader.getIcon("icons/fbs-icon-small.png")
+    val FILE = IconLoader.getIcon("/icons/fbs_file_icon.png")
 }
