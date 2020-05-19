@@ -8,9 +8,14 @@ import com.intellij.util.ProcessingContext
 
 class KeywordProvider: CompletionProvider<CompletionParameters>()
 {
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet)
+    val allKeywords = listOf("include", "namespace", "table", "struct", "attribute", "enum", "union", "root_type",
+                             "rpc_service", "file_extension", "file_identifier", "true", "false",
+                             "bool", "byte", "ubyte", "short", "ushort", "int", "uint", "long", "ulong", "int8",
+                             "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64", "float", "double",
+                             "float32", "float64")
+
+    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet)
     {
-        result.addElement(LookupElementBuilder.create("table"))
-        result.addElement(LookupElementBuilder.create("struct"))
+        result.addAllElements(allKeywords.map { LookupElementBuilder.create(it) })
     }
 }
