@@ -65,12 +65,16 @@ fun getNameIdentifier(element: FlatbuffersEnumDecl): FlatbuffersIdent {
 }
 
 
-fun findTypes(project: Project, typeName: String): ArrayList<FlatbuffersTypeDecl> {
+fun findTypes(project: Project, typeName: String? =null): ArrayList<FlatbuffersTypeDecl> {
     val results = ArrayList<FlatbuffersTypeDecl>()
     for(virtualFile in FileTypeIndex.getFiles(FlatbuffersFileType, GlobalSearchScope.allScope(project))) {
         val fbFile = PsiManager.getInstance(project).findFile(virtualFile)
         val declarations = PsiTreeUtil.findChildrenOfType(fbFile, FlatbuffersTypeDecl::class.java)
-        results.addAll(declarations.filter { typeName == it.name })
+        if(typeName == null) {
+            results.addAll(declarations)
+        } else {
+            results.addAll(declarations.filter { typeName == it.name })
+        }
     }
     return results
 }
