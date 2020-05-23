@@ -15,8 +15,13 @@
  */
 package io.github.stefansjs.flatbuffersplugin.psi.impl
 
+import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiManager
+import com.intellij.psi.search.FileTypeIndex
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersFieldDecl
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersIdent
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
 import io.github.stefansjs.flatbuffersplugin.psi.createClass
@@ -60,3 +65,12 @@ fun getNameIdentifier(element: FlatbuffersEnumDecl): FlatbuffersIdent {
 }
 
 
+fun findTypes(project: Project, typeName: String): ArrayList<FlatbuffersTypeDecl> {
+    val results = ArrayList<FlatbuffersTypeDecl>()
+    for(virtualFile in FileTypeIndex.getFiles(FlatbuffersFileType, GlobalSearchScope.allScope(project))) {
+        val fbFile = PsiManager.getInstance(project).findFile(virtualFile)
+        val declarations = PsiTreeUtil.findChildrenOfType(fbFile, FlatbuffersTypeDecl::class.java)
+        results.addAll(declarations.filter { typeName == it.name })
+    }
+    return results
+}
