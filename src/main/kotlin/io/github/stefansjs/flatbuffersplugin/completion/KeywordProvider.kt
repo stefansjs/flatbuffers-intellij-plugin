@@ -8,11 +8,13 @@ import com.intellij.util.ProcessingContext
 
 class KeywordProvider: CompletionProvider<CompletionParameters>()
 {
-    val allKeywords = listOf("include", "namespace", "table", "struct", "attribute", "enum", "union", "root_type",
-                             "rpc_service", "file_extension", "file_identifier", "true", "false",
-                             "bool", "byte", "ubyte", "short", "ushort", "int", "uint", "long", "ulong", "int8",
-                             "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64", "float", "double",
-                             "float32", "float64")
+    val declarationKeywords = listOf("include", "namespace", "table", "struct", "attribute", "enum", "union", "root_type",
+                                     "rpc_service", "file_extension", "file_identifier")
+    val typeKeywords = listOf("bool", "byte", "ubyte", "short", "ushort", "int", "uint", "long", "ulong", "int8",
+                              "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64", "float", "double",
+                              "float32", "float64")
+    val valueKeywords = listOf("true", "false")
+    val allKeywords = declarationKeywords + typeKeywords + valueKeywords
 
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet)
     {
