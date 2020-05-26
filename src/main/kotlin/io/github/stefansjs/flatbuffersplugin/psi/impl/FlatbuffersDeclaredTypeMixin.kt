@@ -10,7 +10,7 @@ abstract class FlatbuffersDeclaredTypeMixin(node: ASTNode): FlatbuffersDeclaredT
     override fun getReference(): PsiReference? {
         if(identList.size == 0) return null
 
-        val typeName = identList.last()
+        val typeName = identList.last() ?: return null
         return FlatbuffersTypeReference(typeName)
     }
 }
