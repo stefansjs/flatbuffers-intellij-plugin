@@ -49,8 +49,7 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
 attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
 
-type_decl ::= documentation?
-              ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
               {recoverWhile="recover_type"
                mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"

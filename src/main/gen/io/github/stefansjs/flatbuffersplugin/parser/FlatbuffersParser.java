@@ -987,33 +987,24 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // documentation?
-  //               ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+  // ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
   public static boolean type_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_DECL, "<type decl>");
     r = type_decl_0(b, l + 1);
-    r = r && type_decl_1(b, l + 1);
     r = r && ident(b, l + 1);
     r = r && metadata(b, l + 1);
     r = r && consumeToken(b, LCURLY);
-    r = r && type_decl_5(b, l + 1);
+    r = r && type_decl_4(b, l + 1);
     r = r && consumeToken(b, RCURLY);
     exit_section_(b, l, m, r, false, recover_type_parser_);
     return r;
   }
 
-  // documentation?
+  // TABLE | STRUCT
   private static boolean type_decl_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl_0")) return false;
-    documentation(b, l + 1);
-    return true;
-  }
-
-  // TABLE | STRUCT
-  private static boolean type_decl_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_decl_1")) return false;
     boolean r;
     r = consumeToken(b, TABLE);
     if (!r) r = consumeToken(b, STRUCT);
@@ -1021,15 +1012,15 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   // field_decl+
-  private static boolean type_decl_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_decl_5")) return false;
+  private static boolean type_decl_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_decl_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = field_decl(b, l + 1);
     while (r) {
       int c = current_position_(b);
       if (!field_decl(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "type_decl_5", c)) break;
+      if (!empty_element_parsed_guard_(b, "type_decl_4", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
