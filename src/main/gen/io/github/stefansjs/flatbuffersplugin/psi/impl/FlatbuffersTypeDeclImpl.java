@@ -45,7 +45,7 @@ public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl impleme
   }
 
   @Override
-  @Nullable
+  @NotNull
   public String getName() {
     return FlatbuffersPsiImplUtilKt.getName(this);
   }
