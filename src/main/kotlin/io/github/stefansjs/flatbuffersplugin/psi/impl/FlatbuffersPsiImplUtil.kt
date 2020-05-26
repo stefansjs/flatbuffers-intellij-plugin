@@ -23,7 +23,6 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersIdent
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
 import io.github.stefansjs.flatbuffersplugin.psi.createClass
 
@@ -44,13 +43,10 @@ import io.github.stefansjs.flatbuffersplugin.psi.createClass
 
 
 // FlatbuffersNamedElement implementations for FlatbuffersTypeDecl
-fun getNameIdentifier(element: FlatbuffersTypeDecl): FlatbuffersIdent {
-    return element.ident
-}
-fun getName(element: FlatbuffersTypeDecl): String? {
-    return getNameIdentifier(element).text
-}
-fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl {
+fun getNameIdentifier(element: FlatbuffersTypeDecl) = element.ident
+fun getName(element: FlatbuffersTypeDecl): String = getNameIdentifier(element).text
+fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl
+{
     val identifierNode = getNameIdentifier(element).node
 
     val type = createClass(element.project, newName)
@@ -61,9 +57,7 @@ fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl 
 }
 
 // Replicate the same for FlatbuffersEnumDecl
-fun getNameIdentifier(element: FlatbuffersEnumDecl): FlatbuffersIdent {
-    return element.ident
-}
+fun getNameIdentifier(element: FlatbuffersEnumDecl) = element.ident
 
 
 fun findTypes(project: Project, typeName: String?=null): List<FlatbuffersTypeDecl>
