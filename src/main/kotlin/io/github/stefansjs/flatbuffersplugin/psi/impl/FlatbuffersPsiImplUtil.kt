@@ -24,7 +24,9 @@ import com.intellij.psi.util.PsiTreeUtil
 import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionDecl
 import io.github.stefansjs.flatbuffersplugin.psi.createClass
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement
 
 
 /* Created by stefansullivan on 2019-02-21
@@ -42,12 +44,10 @@ import io.github.stefansjs.flatbuffersplugin.psi.createClass
  */
 
 
-// FlatbuffersNamedElement implementations for FlatbuffersTypeDecl
-fun getNameIdentifier(element: FlatbuffersTypeDecl) = element.ident
-fun getName(element: FlatbuffersTypeDecl): String = getNameIdentifier(element).text
-fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl
+// Named element generics
+fun <T : FlatbuffersNamedElement> setName(element: T, newName: String): FlatbuffersNamedElement
 {
-    val identifierNode = getNameIdentifier(element).node
+    val identifierNode = element.nameIdentifier!!.node
 
     val type = createClass(element.project, newName)
     val newClassNode = type?.firstChild?.node ?: return element // That's a lot of null checking :/
@@ -56,14 +56,27 @@ fun setName(element: FlatbuffersTypeDecl, newName: String): FlatbuffersTypeDecl
     return element
 }
 
+// FlatbuffersNamedElement implementations for FlatbuffersTypeDecl
+fun getNameIdentifier(element: FlatbuffersTypeDecl) = element.ident
+fun getName(element: FlatbuffersTypeDecl) = element.ident.text
+fun setName(element: FlatbuffersTypeDecl, newName: String) = setName<FlatbuffersTypeDecl>(element, newName)
+
 // Replicate the same for FlatbuffersEnumDecl
 fun getNameIdentifier(element: FlatbuffersEnumDecl) = element.ident
+fun getName(element: FlatbuffersEnumDecl) = element.ident.text
+fun setName(element: FlatbuffersEnumDecl, newName: String) = setName<FlatbuffersEnumDecl>(element, newName)
+
+// and for union decl
+fun getNameIdentifier(element: FlatbuffersUnionDecl) = element.ident
+fun getName(element: FlatbuffersUnionDecl) = element.ident.text
+fun setName(element: FlatbuffersUnionDecl, newName: String) = setName<FlatbuffersUnionDecl>(element, newName)
 
 
-fun findTypes(project: Project, typeName: String?=null): List<FlatbuffersTypeDecl>
+// Reference resolvers. Based (conveniently) on the above getName implementations
+fun findTypes(project: Project, typeName: String?=null): List<FlatbuffersNamedElement>
 {
     // Try the current file first
-    val results = ArrayList<FlatbuffersTypeDecl>()
+    val results = ArrayList<FlatbuffersNamedElement>()
     for(virtualFile in FileTypeIndex.getFiles(FlatbuffersFileType, GlobalSearchScope.allScope(project))) {
         val fbFile = PsiManager.getInstance(project).findFile(virtualFile)
         if(fbFile != null) {
@@ -73,9 +86,12 @@ fun findTypes(project: Project, typeName: String?=null): List<FlatbuffersTypeDec
     return results
 }
 
-fun findTypes(file: PsiFile, typeName: String? = null): List<FlatbuffersTypeDecl>
+fun findTypes(file: PsiFile, typeName: String? = null): List<FlatbuffersNamedElement>
 {
-    var declarations = PsiTreeUtil.findChildrenOfType(file, FlatbuffersTypeDecl::class.java)
+    var declarations = PsiTreeUtil.findChildrenOfAnyType(file,
+                                                         FlatbuffersTypeDecl::class.java,
+                                                         FlatbuffersUnionDecl::class.java,
+                                                         FlatbuffersEnumDecl::class.java)
     if (typeName != null) {
         declarations = declarations.filter { typeName == it.name }
     }
