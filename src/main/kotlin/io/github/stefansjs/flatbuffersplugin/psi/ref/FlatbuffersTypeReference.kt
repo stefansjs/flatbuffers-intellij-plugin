@@ -16,7 +16,7 @@ class FlatbuffersTypeReference(element: PsiElement):
     override fun resolve(): PsiElement? {
         // Try and find the declaration locally first. IIUC flatbuffers only allows one declaratino per namespace,
         // which means finding more than one result is actually an error
-        val localDeclarations = findTypes(element.containingFile)
+        val localDeclarations = findTypes(element.containingFile, element.text)
         if (localDeclarations.size == 1) {
             return localDeclarations[0]
         }
