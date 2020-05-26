@@ -4,8 +4,9 @@ package io.github.stefansjs.flatbuffersplugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
-public interface FlatbuffersEnumDecl extends PsiElement {
+public interface FlatbuffersEnumDecl extends FlatbuffersNamedElement {
 
   @Nullable
   FlatbuffersDocumentation getDocumentation();
@@ -21,5 +22,13 @@ public interface FlatbuffersEnumDecl extends PsiElement {
 
   @Nullable
   FlatbuffersPrimitive getPrimitive();
+
+  String getName();
+
+  @NotNull
+  FlatbuffersNamedElement setName(@NotNull String newName);
+
+  @NotNull
+  FlatbuffersIdent getNameIdentifier();
 
 }

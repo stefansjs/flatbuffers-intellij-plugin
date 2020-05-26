@@ -41,7 +41,7 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumDecl(@NotNull FlatbuffersEnumDecl o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitEnumvalDecl(@NotNull FlatbuffersEnumvalDecl o) {
@@ -141,7 +141,7 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitUnionDecl(@NotNull FlatbuffersUnionDecl o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitUnionvalDecl(@NotNull FlatbuffersUnionvalDecl o) {

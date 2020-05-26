@@ -57,10 +57,18 @@ type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
 enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
+              {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+               methods=[getName setName getNameIdentifier]
+               }
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
 union_decl ::= documentation? union ident LCURLY commasep_unionval_decl? RCURLY
+              {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+               methods=[getName setName getNameIdentifier]
+               }
 
 private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
