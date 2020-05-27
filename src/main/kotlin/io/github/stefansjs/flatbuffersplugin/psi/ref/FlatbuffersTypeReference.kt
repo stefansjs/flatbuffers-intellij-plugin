@@ -7,7 +7,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementResolveResult
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.ResolveResult
-import io.github.stefansjs.flatbuffersplugin.icons.FlatbuffersIcon.FILE
 import io.github.stefansjs.flatbuffersplugin.psi.impl.findTypes
 
 class FlatbuffersTypeReference(element: PsiElement):
@@ -38,7 +37,7 @@ class FlatbuffersTypeReference(element: PsiElement):
         val declarations = findTypes(element.project)
         val variants = declarations.filter { it.name != null && it.name!!.isNotEmpty() }
         return variants.map {
-            LookupElementBuilder.create(it).withIcon(FILE).withTypeText(it.containingFile.name)
+            LookupElementBuilder.create(it).withTypeText(it.containingFile.name)
         }.toTypedArray()
     }
 }
