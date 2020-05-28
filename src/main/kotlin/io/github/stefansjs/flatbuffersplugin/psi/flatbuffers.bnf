@@ -72,7 +72,7 @@ union_decl ::= documentation? union ident LCURLY commasep_unionval_decl? RCURLY
 
 private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
-root_decl ::= ROOT_TYPE ident SEMICOLON
+root_decl ::= ROOT_TYPE declared_type SEMICOLON
 
 field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
 

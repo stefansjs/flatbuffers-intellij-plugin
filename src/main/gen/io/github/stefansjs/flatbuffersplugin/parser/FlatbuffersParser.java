@@ -841,14 +841,14 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ROOT_TYPE ident SEMICOLON
+  // ROOT_TYPE declared_type SEMICOLON
   public static boolean root_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_decl")) return false;
     if (!nextTokenIs(b, ROOT_TYPE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ROOT_TYPE);
-    r = r && ident(b, l + 1);
+    r = r && declared_type(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, ROOT_DECL, r);
     return r;
