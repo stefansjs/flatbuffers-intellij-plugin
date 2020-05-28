@@ -20,9 +20,9 @@ class FlatbuffersTypeReference(element: PsiElement):
             return localDeclarations[0]
         }
 
-        val resolveResult = multiResolve()
+        val resolveResult = findTypes(element.project, element.text)
         if (resolveResult.size == 1){
-            return resolveResult[0].element
+            return resolveResult[0]
         }
 
         return null
