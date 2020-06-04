@@ -23,9 +23,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
-            key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-            restore-keys: |
-              ${{ runner.os }}-gradle-caches-
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-caches-
 
       - name: Gradle Test
         run: |
