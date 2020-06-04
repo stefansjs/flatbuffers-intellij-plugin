@@ -22,9 +22,7 @@ jobs:
             ${{ runner.os }}-gradle-caches-
 
       - name: Gradle Test
-        run: |
-          chmod +x gradlew
-          ./gradlew test
+        run: ./gradlew test
 
       - name: Publish Results
         uses: actions/upload-artifact@v2
