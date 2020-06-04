@@ -2,7 +2,7 @@ name: test
 on: push
 
 jobs:
-  test:
+  unit tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,4 +14,12 @@ jobs:
           java-version: 1.8
 
       - name: Gradle Test
-        run: chmod +x gradlew && ./gradlew test
+        run: |
+          chmod +x gradlew
+          ./gradlew test
+
+      - name: Publish Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: build/test-results/**/*.xml
