@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FlatbuffersRootDecl extends PsiElement {
 
   @NotNull
-  FlatbuffersIdent getIdent();
+  FlatbuffersDeclaredType getDeclaredType();
 
 }

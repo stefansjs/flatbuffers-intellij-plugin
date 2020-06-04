@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
 public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl implements FlatbuffersTypeDecl {
 
@@ -24,12 +25,6 @@ public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl impleme
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersDocumentation getDocumentation() {
-    return findChildByClass(FlatbuffersDocumentation.class);
   }
 
   @Override
@@ -51,14 +46,13 @@ public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl impleme
   }
 
   @Override
-  @Nullable
   public String getName() {
     return FlatbuffersPsiImplUtilKt.getName(this);
   }
 
   @Override
   @NotNull
-  public FlatbuffersTypeDecl setName(@NotNull String newName) {
+  public FlatbuffersNamedElement setName(@NotNull String newName) {
     return FlatbuffersPsiImplUtilKt.setName(this, newName);
   }
 

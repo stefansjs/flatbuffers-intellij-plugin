@@ -49,8 +49,7 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 
 attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
 
-type_decl ::= documentation?
-              ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
               {recoverWhile="recover_type"
                mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
@@ -58,14 +57,22 @@ type_decl ::= documentation?
 recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
 enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
+              {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+               methods=[getName setName getNameIdentifier]
+               }
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
 union_decl ::= documentation? union ident LCURLY commasep_unionval_decl? RCURLY
+              {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+               methods=[getName setName getNameIdentifier]
+               }
 
 private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
-root_decl ::= ROOT_TYPE ident SEMICOLON
+root_decl ::= ROOT_TYPE declared_type SEMICOLON
 
 field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
 
@@ -104,6 +111,8 @@ private float_type ::= float
 
 array_type ::= LBRACK (primitive | declared_type) RBRACK
 declared_type ::= ident (DOT ident)*
+                  {mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersDeclaredTypeMixin"
+                  }
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 

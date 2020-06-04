@@ -8,9 +8,6 @@ import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
 public interface FlatbuffersTypeDecl extends FlatbuffersNamedElement {
 
-  @Nullable
-  FlatbuffersDocumentation getDocumentation();
-
   @NotNull
   List<FlatbuffersFieldDecl> getFieldDeclList();
 
@@ -20,11 +17,10 @@ public interface FlatbuffersTypeDecl extends FlatbuffersNamedElement {
   @NotNull
   FlatbuffersMetadata getMetadata();
 
-  @Nullable
   String getName();
 
   @NotNull
-  FlatbuffersTypeDecl setName(@NotNull String newName);
+  FlatbuffersNamedElement setName(@NotNull String newName);
 
   @NotNull
   FlatbuffersIdent getNameIdentifier();

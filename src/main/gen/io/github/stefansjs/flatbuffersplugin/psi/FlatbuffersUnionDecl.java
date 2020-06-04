@@ -4,8 +4,9 @@ package io.github.stefansjs.flatbuffersplugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
-public interface FlatbuffersUnionDecl extends PsiElement {
+public interface FlatbuffersUnionDecl extends FlatbuffersNamedElement {
 
   @Nullable
   FlatbuffersDocumentation getDocumentation();
@@ -15,5 +16,13 @@ public interface FlatbuffersUnionDecl extends PsiElement {
 
   @NotNull
   List<FlatbuffersUnionvalDecl> getUnionvalDeclList();
+
+  String getName();
+
+  @NotNull
+  FlatbuffersNamedElement setName(@NotNull String newName);
+
+  @NotNull
+  FlatbuffersIdent getNameIdentifier();
 
 }

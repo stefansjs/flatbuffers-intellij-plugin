@@ -28,8 +28,8 @@ public class FlatbuffersRootDeclImpl extends ASTWrapperPsiElement implements Fla
 
   @Override
   @NotNull
-  public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
+  public FlatbuffersDeclaredType getDeclaredType() {
+    return findNotNullChildByClass(FlatbuffersDeclaredType.class);
   }
 
 }

@@ -16,6 +16,7 @@
 
 package io.github.stefansjs.flatbuffersplugin
 
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersDeclaredType
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumvalDecl
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersFieldDecl
@@ -68,7 +69,7 @@ class FlatbuffersAnnotator: Annotator {
                 applyFormatting(element, holder)
             }
             is FlatbuffersRootDecl -> {
-                applyAttribute(element.ident, holder, CLASS_REFERENCE)
+                applyAttribute(element.declaredType, holder, CLASS_REFERENCE)
             }
             is FlatbuffersNamespaceDecl -> {
                 applyFormatting(element, holder)
@@ -78,17 +79,20 @@ class FlatbuffersAnnotator: Annotator {
 
     private fun applyFormatting(element: FlatbuffersFieldDecl, holder: AnnotationHolder) {
         applyAttribute(element.identList[0], holder, MEMBER)
-        val declaredType = element.fieldType.declaredType
-        if( declaredType != null ) {
-            val parts = declaredType.identList
-            applyAttribute(parts.last(), holder, CLASS_REFERENCE)
-            parts.subList(0, parts.lastIndex).map { applyAttribute(it, holder, NAMESPACE_REF) }
-        }
+        applyFormatting(element.fieldType.declaredType, holder)
         if( element.identList.size > 1 ) {
             // according to the grammar there should either be a constant or identifier after an equal sign.
             // There's currently no possibility of anything else
             applyAttribute(element.identList[1], holder, ENUM_REFERENCE)
         }
+    }
+
+    private fun applyFormatting(declaredType: FlatbuffersDeclaredType?, holder: AnnotationHolder) {
+        if (declaredType == null) return
+
+        val parts = declaredType.identList
+        applyAttribute(parts.last(), holder, CLASS_REFERENCE)
+        parts.subList(0, parts.lastIndex).map { applyAttribute(it, holder, NAMESPACE_REF) }
     }
 
     private fun applyFormatting(element: FlatbuffersUnionvalDecl, holder: AnnotationHolder) {
