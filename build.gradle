@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.stefansjs.flatbuffersplugin'
-version "0.1.3-${getBuildNumber()}"
+version "0.1.4-alpha-${getBuildNumber()}"
 
 repositories {
     mavenCentral()
@@ -48,6 +48,6 @@ String getBuildNumber() {
     if(System.getenv("GITHUB_RUN_NUMBER") != null) {
         System.getenv("GITHUB_RUN_NUMBER")
     } else {
-        "dev-${getGitHash()}"
+        "${getGitHash()}"
     }
 }
