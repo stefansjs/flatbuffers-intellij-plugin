@@ -1,4 +1,4 @@
-name: test
+name: build
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-caches-
 
-      - name: Gradle Test
+      - name: Build Plugin
         run: ./gradlew test check verifyPlugin buildPlugin
 
       - name: Publish Results
