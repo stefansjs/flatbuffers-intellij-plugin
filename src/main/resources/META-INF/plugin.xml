@@ -6,9 +6,11 @@
   <description>Editing support for flatbuffers schema files (.fbs)</description>
 
   <change-notes>
-    Bugfixes:
+    <![CDATA[v0.1.3
 
-    - Fix for loading icons in 2019.2+ versions
+This release provides new features!
+- local reference highlighting
+- basic keyword and reference autocomplete]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
