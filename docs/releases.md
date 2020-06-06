@@ -46,11 +46,11 @@ This release provides an initial version of a flatbuffers editing plugin for Int
   - [ ] Update the markdown body with a brief summary
   - [ ] Update the markdown description with release notes for the current release
 - [ ] update plugin.xml with release notes
-- [ ] update build.gradle with the RC version number (e.g. v123.123-rc1)
-- [ ] build the plugin with the buildPlugin task in gradle
+- [ ] update build.gradle with the RC version number (i.e. change alpha to beta)
+- [ ] Push. Download the built artificat from github https://github.com/stefansjs/flatbuffers-intellij-plugin/actions?query=workflow%3Abuild
 - [ ] create a new release candidate page on github using https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/new
-  - [ ] add a tag with the name `v<Release Number>-rc1` following the release branch
-  - [ ] upload the zip file from `build/distributions/flatbuffers-plugin-<Release Number>.zip` to the release page
+  - [ ] add a tag with the name `v<Release Number>-beta` following the release branch
+  - [ ] Upload `flatbuffers-plugin-<Release Number>.zip` to the release page
   - [ ] Add a summary and description of features/bugfixes from the release .md file
   - [ ] Check the pre-release checkbox
   - [ ] Publish. Don't worry, you can continue to edit the release
@@ -61,16 +61,15 @@ This release provides an initial version of a flatbuffers editing plugin for Int
   - [ ] add https://github.com/stefansjs/flatbuffers-intellij-plugin/raw/release/updatePlugins.xml as a plugin repository
   - [ ] QA the updated plugin in the IDE
   - [ ] Make any necessary bugfix changes on the release branch
-    - [ ] First update build.gradle's version by incrementing the rc number (e.g. `version 'vM.m.b-rcN+1'`)
-    - [ ] **Add** do **not delete** a new RC by executing the `buildPlugin` task and uploading it to the release
+    - [ ] Push any necessary changes
     - [ ] update `updatePlugins.xml` with the new RC 
+    - [ ] **Add** do **not delete** a new RC by executing the `buildPlugin` task and uploading it to the release
     - [ ] Repeat until Quality has been Assured
-- [ ] Remove rc from the version string in build.gradle
-- [ ] Build and upload the final binary to the github release
-- [ ] Update `updatePlugins.xml` with the github link
+- [ ] Remove beta from the version string in build.gradle
 - [ ] push to release
+- [ ] Add the final binary to the github release
 - [ ] Make a final release on github with the build artifact and publish it
 - [ ] Publish the plugin on JetBrains Hub https://plugins.jetbrains.com/plugin/14326-flatbuffers-support
 - [ ] merge to master
-- [ ] Increment the version in build.gradle to the next pre-release version
+- [ ] Increment the version in build.gradle to the next alpha version
 ```
