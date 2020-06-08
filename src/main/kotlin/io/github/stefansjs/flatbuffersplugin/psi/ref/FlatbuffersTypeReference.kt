@@ -2,12 +2,21 @@ package io.github.stefansjs.flatbuffersplugin.psi.ref
 
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementResolveResult
+import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.ResolveResult
-import io.github.stefansjs.flatbuffersplugin.psi.impl.findTypes
+import com.intellij.psi.search.FileTypeIndex
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
+import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionDecl
 
 class FlatbuffersTypeReference(element: PsiElement):
     PsiReferenceBase<PsiElement>(element, TextRange(0, element.textLength))
@@ -40,4 +49,31 @@ class FlatbuffersTypeReference(element: PsiElement):
             LookupElementBuilder.create(it).withTypeText(it.containingFile.name)
         }.toTypedArray()
     }
+
+}
+
+// Reference resolvers. Based (conveniently) on the above getName implementations
+private fun findTypes(project: Project, typeName: String?=null): List<FlatbuffersNamedElement>
+{
+    // Try the current file first
+    val results = ArrayList<FlatbuffersNamedElement>()
+    for(virtualFile in FileTypeIndex.getFiles(FlatbuffersFileType, GlobalSearchScope.allScope(project))) {
+        val fbFile = PsiManager.getInstance(project).findFile(virtualFile)
+        if(fbFile != null) {
+            results.addAll(findTypes(fbFile, typeName))
+        }
+    }
+    return results
+}
+
+private fun findTypes(file: PsiFile, typeName: String? = null): List<FlatbuffersNamedElement>
+{
+    var declarations = PsiTreeUtil.findChildrenOfAnyType(file,
+                                                         FlatbuffersTypeDecl::class.java,
+                                                         FlatbuffersUnionDecl::class.java,
+                                                         FlatbuffersEnumDecl::class.java)
+    if (typeName != null) {
+        declarations = declarations.filter { typeName == it.name }
+    }
+    return declarations.toList()
 }
