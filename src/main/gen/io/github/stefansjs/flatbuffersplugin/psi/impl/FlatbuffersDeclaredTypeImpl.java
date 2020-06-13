@@ -27,8 +27,14 @@ public class FlatbuffersDeclaredTypeImpl extends FlatbuffersDeclaredTypeMixin im
 
   @Override
   @NotNull
-  public List<FlatbuffersIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
+  public FlatbuffersDeclaredNamespace getDeclaredNamespace() {
+    return findNotNullChildByClass(FlatbuffersDeclaredNamespace.class);
+  }
+
+  @Override
+  @NotNull
+  public FlatbuffersIdent getIdent() {
+    return findNotNullChildByClass(FlatbuffersIdent.class);
   }
 
 }

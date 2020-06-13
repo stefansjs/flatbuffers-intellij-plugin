@@ -110,9 +110,10 @@ private float_type ::= float
                      | float64
 
 array_type ::= LBRACK (primitive | declared_type) RBRACK
-declared_type ::= ident (DOT ident)*
+declared_type ::= declared_namespace ident
                   {mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersDeclaredTypeMixin"
                   }
+declared_namespace ::= (ident DOT)*
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 

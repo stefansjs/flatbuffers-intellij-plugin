@@ -11,19 +11,25 @@ import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
 
-public class FlatbuffersRecoverTypeImpl extends ASTWrapperPsiElement implements FlatbuffersRecoverType {
+public class FlatbuffersDeclaredNamespaceImpl extends ASTWrapperPsiElement implements FlatbuffersDeclaredNamespace {
 
-  public FlatbuffersRecoverTypeImpl(@NotNull ASTNode node) {
+  public FlatbuffersDeclaredNamespaceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitRecoverType(this);
+    visitor.visitDeclaredNamespace(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<FlatbuffersIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
   }
 
 }
