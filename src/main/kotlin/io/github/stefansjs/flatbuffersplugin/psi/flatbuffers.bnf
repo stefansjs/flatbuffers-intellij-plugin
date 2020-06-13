@@ -46,20 +46,22 @@ declaration ::= namespace_decl
               | object
 
 namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
+                   {pin=2}
 
 attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
+                   {pin=2}
 
 type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
-              {recoverWhile="recover_type"
+              {pin=2
                mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]}
-recover_type ::= !(TABLE|STRUCT|metadata|COMMENT)
 
 enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
               {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]
+               pin=ident
                }
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
@@ -68,15 +70,19 @@ union_decl ::= documentation? union ident LCURLY commasep_unionval_decl? RCURLY
               {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]
+               pin=ident
                }
 
 private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
 root_decl ::= ROOT_TYPE declared_type SEMICOLON
+              {pin=declared_type}
 
 field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
+               {pin=1}
 
 rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
+             {pin=ident}
 
 rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
 

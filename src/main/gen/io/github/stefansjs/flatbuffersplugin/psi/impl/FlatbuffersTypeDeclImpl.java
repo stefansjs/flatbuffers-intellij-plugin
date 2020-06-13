@@ -40,9 +40,9 @@ public class FlatbuffersTypeDeclImpl extends FlatbuffersNamedElementImpl impleme
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersMetadata getMetadata() {
-    return findNotNullChildByClass(FlatbuffersMetadata.class);
+    return findChildByClass(FlatbuffersMetadata.class);
   }
 
   @Override

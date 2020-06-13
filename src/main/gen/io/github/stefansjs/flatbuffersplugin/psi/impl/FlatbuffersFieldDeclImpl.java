@@ -27,9 +27,9 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersFieldType getFieldType() {
-    return findNotNullChildByClass(FlatbuffersFieldType.class);
+    return findChildByClass(FlatbuffersFieldType.class);
   }
 
   @Override
@@ -39,9 +39,9 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersMetadata getMetadata() {
-    return findNotNullChildByClass(FlatbuffersMetadata.class);
+    return findChildByClass(FlatbuffersMetadata.class);
   }
 
   @Override
