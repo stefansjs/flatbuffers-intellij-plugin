@@ -44,6 +44,17 @@ declaration ::= namespace_decl
               | attribute_decl
               | rpc_decl
               | object
+              {recoverWhile=decl_recover}
+private decl_recover ::= !(NAMESPACE |
+                           TABLE |
+                           STRUCT |
+                           ENUM |
+                           UNION |
+                           ROOT_TYPE |
+                           FILE_EXTENSION |
+                           FILE_IDENTIFIER |
+                           ATTRIBUTE |
+                           RPC_SERVICE)
 
 namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
                    {pin=2}

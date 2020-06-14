@@ -266,6 +266,52 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // !(NAMESPACE |
+  //                            TABLE |
+  //                            STRUCT |
+  //                            ENUM |
+  //                            UNION |
+  //                            ROOT_TYPE |
+  //                            FILE_EXTENSION |
+  //                            FILE_IDENTIFIER |
+  //                            ATTRIBUTE |
+  //                            RPC_SERVICE)
+  static boolean decl_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "decl_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !decl_recover_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // NAMESPACE |
+  //                            TABLE |
+  //                            STRUCT |
+  //                            ENUM |
+  //                            UNION |
+  //                            ROOT_TYPE |
+  //                            FILE_EXTENSION |
+  //                            FILE_IDENTIFIER |
+  //                            ATTRIBUTE |
+  //                            RPC_SERVICE
+  private static boolean decl_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "decl_recover_0")) return false;
+    boolean r;
+    r = consumeToken(b, NAMESPACE);
+    if (!r) r = consumeToken(b, TABLE);
+    if (!r) r = consumeToken(b, STRUCT);
+    if (!r) r = consumeToken(b, ENUM);
+    if (!r) r = consumeToken(b, UNION);
+    if (!r) r = consumeToken(b, ROOT_TYPE);
+    if (!r) r = consumeToken(b, FILE_EXTENSION);
+    if (!r) r = consumeToken(b, FILE_IDENTIFIER);
+    if (!r) r = consumeToken(b, ATTRIBUTE);
+    if (!r) r = consumeToken(b, RPC_SERVICE);
+    return r;
+  }
+
+  /* ********************************************************** */
   // namespace_decl
   //               | type_decl
   //               | enum_decl
@@ -290,7 +336,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!r) r = attribute_decl(b, l + 1);
     if (!r) r = rpc_decl(b, l + 1);
     if (!r) r = object(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, l, m, r, false, decl_recover_parser_);
     return r;
   }
 
@@ -1120,4 +1166,9 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  static final Parser decl_recover_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return decl_recover(b, l + 1);
+    }
+  };
 }
