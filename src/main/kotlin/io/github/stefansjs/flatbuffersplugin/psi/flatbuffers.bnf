@@ -51,13 +51,13 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
                    {pin=2}
 
-type_decl ::= ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+type_decl ::= ( TABLE | STRUCT ) ident metadata? LCURLY field_decl+ RCURLY
               {pin=2
                mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]}
 
-enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
+enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata? LCURLY commasep_enumval_decl? RCURLY
               {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
                methods=[getName setName getNameIdentifier]
@@ -78,13 +78,13 @@ private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 root_decl ::= ROOT_TYPE declared_type SEMICOLON
               {pin=declared_type}
 
-field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
+field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata? SEMICOLON
                {pin=1}
 
 rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
              {pin=ident}
 
-rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
+rpc_method ::= ident LPAREN ident RPAREN COLON ident metadata? SEMICOLON
 
 field_type ::= primitive
              | array_type
@@ -124,7 +124,7 @@ enumval_decl ::= ident ( EQUALS integer_constant )?
 
 unionval_decl ::= ident ( COLON ident )?
 
-metadata ::= ( LPAREN metadata_value ( COMMA metadata_value )* RPAREN )?
+metadata ::= LPAREN metadata_value ( COMMA metadata_value )* RPAREN
 
 private metadata_value ::= ident ( COLON single_value )?
 

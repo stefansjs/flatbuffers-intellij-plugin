@@ -344,7 +344,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
+  // documentation? ENUM ident ( COLON primitive )? metadata? LCURLY commasep_enumval_decl? RCURLY
   public static boolean enum_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl")) return false;
     if (!nextTokenIs(b, "<enum decl>", DOCLINE, ENUM)) return false;
@@ -355,7 +355,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && ident(b, l + 1);
     p = r; // pin = ident
     r = r && report_error_(b, enum_decl_3(b, l + 1));
-    r = p && report_error_(b, metadata(b, l + 1)) && r;
+    r = p && report_error_(b, enum_decl_4(b, l + 1)) && r;
     r = p && report_error_(b, consumeToken(b, LCURLY)) && r;
     r = p && report_error_(b, enum_decl_6(b, l + 1)) && r;
     r = p && consumeToken(b, RCURLY) && r;
@@ -386,6 +386,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && primitive(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // metadata?
+  private static boolean enum_decl_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_decl_4")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   // commasep_enumval_decl?
@@ -427,7 +434,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
+  // ident COLON field_type ( EQUALS (scalar|ident) )? metadata? SEMICOLON
   public static boolean field_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -438,7 +445,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && report_error_(b, consumeToken(b, COLON));
     r = p && report_error_(b, field_type(b, l + 1)) && r;
     r = p && report_error_(b, field_decl_3(b, l + 1)) && r;
-    r = p && report_error_(b, metadata(b, l + 1)) && r;
+    r = p && report_error_(b, field_decl_4(b, l + 1)) && r;
     r = p && consumeToken(b, SEMICOLON) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -469,6 +476,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = scalar(b, l + 1);
     if (!r) r = ident(b, l + 1);
     return r;
+  }
+
+  // metadata?
+  private static boolean field_decl_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "field_decl_4")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -862,7 +876,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
+  // ident LPAREN ident RPAREN COLON ident metadata? SEMICOLON
   public static boolean rpc_method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rpc_method")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -873,10 +887,17 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && ident(b, l + 1);
     r = r && consumeTokens(b, 0, RPAREN, COLON);
     r = r && ident(b, l + 1);
-    r = r && metadata(b, l + 1);
+    r = r && rpc_method_6(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, RPC_METHOD, r);
     return r;
+  }
+
+  // metadata?
+  private static boolean rpc_method_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "rpc_method_6")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -963,7 +984,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+  // ( TABLE | STRUCT ) ident metadata? LCURLY field_decl+ RCURLY
   public static boolean type_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl")) return false;
     if (!nextTokenIs(b, "<type decl>", STRUCT, TABLE)) return false;
@@ -972,7 +993,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = type_decl_0(b, l + 1);
     r = r && ident(b, l + 1);
     p = r; // pin = 2
-    r = r && report_error_(b, metadata(b, l + 1));
+    r = r && report_error_(b, type_decl_2(b, l + 1));
     r = p && report_error_(b, consumeToken(b, LCURLY)) && r;
     r = p && report_error_(b, type_decl_4(b, l + 1)) && r;
     r = p && consumeToken(b, RCURLY) && r;
@@ -987,6 +1008,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, TABLE);
     if (!r) r = consumeToken(b, STRUCT);
     return r;
+  }
+
+  // metadata?
+  private static boolean type_decl_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_decl_2")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   // field_decl+
