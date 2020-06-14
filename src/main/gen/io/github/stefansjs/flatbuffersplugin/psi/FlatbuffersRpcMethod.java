@@ -10,7 +10,7 @@ public interface FlatbuffersRpcMethod extends PsiElement {
   @NotNull
   List<FlatbuffersIdent> getIdentList();
 
-  @NotNull
+  @Nullable
   FlatbuffersMetadata getMetadata();
 
 }

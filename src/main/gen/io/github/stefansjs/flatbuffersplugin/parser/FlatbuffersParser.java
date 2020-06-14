@@ -63,13 +63,14 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   public static boolean attribute_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_decl")) return false;
     if (!nextTokenIs(b, ATTRIBUTE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ATTRIBUTE_DECL, null);
     r = consumeToken(b, ATTRIBUTE);
     r = r && attribute_decl_1(b, l + 1);
+    p = r; // pin = 2
     r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, ATTRIBUTE_DECL, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // ident | string_constant
@@ -265,6 +266,52 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // !(NAMESPACE |
+  //                            TABLE |
+  //                            STRUCT |
+  //                            ENUM |
+  //                            UNION |
+  //                            ROOT_TYPE |
+  //                            FILE_EXTENSION |
+  //                            FILE_IDENTIFIER |
+  //                            ATTRIBUTE |
+  //                            RPC_SERVICE)
+  static boolean decl_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "decl_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !decl_recover_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // NAMESPACE |
+  //                            TABLE |
+  //                            STRUCT |
+  //                            ENUM |
+  //                            UNION |
+  //                            ROOT_TYPE |
+  //                            FILE_EXTENSION |
+  //                            FILE_IDENTIFIER |
+  //                            ATTRIBUTE |
+  //                            RPC_SERVICE
+  private static boolean decl_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "decl_recover_0")) return false;
+    boolean r;
+    r = consumeToken(b, NAMESPACE);
+    if (!r) r = consumeToken(b, TABLE);
+    if (!r) r = consumeToken(b, STRUCT);
+    if (!r) r = consumeToken(b, ENUM);
+    if (!r) r = consumeToken(b, UNION);
+    if (!r) r = consumeToken(b, ROOT_TYPE);
+    if (!r) r = consumeToken(b, FILE_EXTENSION);
+    if (!r) r = consumeToken(b, FILE_IDENTIFIER);
+    if (!r) r = consumeToken(b, ATTRIBUTE);
+    if (!r) r = consumeToken(b, RPC_SERVICE);
+    return r;
+  }
+
+  /* ********************************************************** */
   // namespace_decl
   //               | type_decl
   //               | enum_decl
@@ -289,7 +336,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!r) r = attribute_decl(b, l + 1);
     if (!r) r = rpc_decl(b, l + 1);
     if (!r) r = object(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, l, m, r, false, decl_recover_parser_);
     return r;
   }
 
@@ -343,22 +390,23 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // documentation? ENUM ident ( COLON primitive )? metadata LCURLY commasep_enumval_decl? RCURLY
+  // documentation? ENUM ident ( COLON primitive )? metadata? LCURLY commasep_enumval_decl? RCURLY
   public static boolean enum_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_decl")) return false;
     if (!nextTokenIs(b, "<enum decl>", DOCLINE, ENUM)) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ENUM_DECL, "<enum decl>");
     r = enum_decl_0(b, l + 1);
     r = r && consumeToken(b, ENUM);
     r = r && ident(b, l + 1);
-    r = r && enum_decl_3(b, l + 1);
-    r = r && metadata(b, l + 1);
-    r = r && consumeToken(b, LCURLY);
-    r = r && enum_decl_6(b, l + 1);
-    r = r && consumeToken(b, RCURLY);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = ident
+    r = r && report_error_(b, enum_decl_3(b, l + 1));
+    r = p && report_error_(b, enum_decl_4(b, l + 1)) && r;
+    r = p && report_error_(b, consumeToken(b, LCURLY)) && r;
+    r = p && report_error_(b, enum_decl_6(b, l + 1)) && r;
+    r = p && consumeToken(b, RCURLY) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // documentation?
@@ -384,6 +432,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && primitive(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // metadata?
+  private static boolean enum_decl_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_decl_4")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   // commasep_enumval_decl?
@@ -425,20 +480,21 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident COLON field_type ( EQUALS (scalar|ident) )? metadata SEMICOLON
+  // ident COLON field_type ( EQUALS (scalar|ident) )? metadata? SEMICOLON
   public static boolean field_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_DECL, null);
     r = ident(b, l + 1);
-    r = r && consumeToken(b, COLON);
-    r = r && field_type(b, l + 1);
-    r = r && field_decl_3(b, l + 1);
-    r = r && metadata(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, FIELD_DECL, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, COLON));
+    r = p && report_error_(b, field_type(b, l + 1)) && r;
+    r = p && report_error_(b, field_decl_3(b, l + 1)) && r;
+    r = p && report_error_(b, field_decl_4(b, l + 1)) && r;
+    r = p && consumeToken(b, SEMICOLON) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // ( EQUALS (scalar|ident) )?
@@ -466,6 +522,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = scalar(b, l + 1);
     if (!r) r = ident(b, l + 1);
     return r;
+  }
+
+  // metadata?
+  private static boolean field_decl_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "field_decl_4")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -644,42 +707,34 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( LPAREN metadata_value ( COMMA metadata_value )* RPAREN )?
+  // LPAREN metadata_value ( COMMA metadata_value )* RPAREN
   public static boolean metadata(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "metadata")) return false;
-    Marker m = enter_section_(b, l, _NONE_, METADATA, "<metadata>");
-    metadata_0(b, l + 1);
-    exit_section_(b, l, m, true, false, null);
-    return true;
-  }
-
-  // LPAREN metadata_value ( COMMA metadata_value )* RPAREN
-  private static boolean metadata_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "metadata_0")) return false;
+    if (!nextTokenIs(b, LPAREN)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LPAREN);
     r = r && metadata_value(b, l + 1);
-    r = r && metadata_0_2(b, l + 1);
+    r = r && metadata_2(b, l + 1);
     r = r && consumeToken(b, RPAREN);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, METADATA, r);
     return r;
   }
 
   // ( COMMA metadata_value )*
-  private static boolean metadata_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "metadata_0_2")) return false;
+  private static boolean metadata_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "metadata_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!metadata_0_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "metadata_0_2", c)) break;
+      if (!metadata_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "metadata_2", c)) break;
     }
     return true;
   }
 
   // COMMA metadata_value
-  private static boolean metadata_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "metadata_0_2_0")) return false;
+  private static boolean metadata_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "metadata_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -724,14 +779,15 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   public static boolean namespace_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "namespace_decl")) return false;
     if (!nextTokenIs(b, NAMESPACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, NAMESPACE_DECL, null);
     r = consumeToken(b, NAMESPACE);
     r = r && ident(b, l + 1);
-    r = r && namespace_decl_2(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, NAMESPACE_DECL, r);
-    return r;
+    p = r; // pin = 2
+    r = r && report_error_(b, namespace_decl_2(b, l + 1));
+    r = p && consumeToken(b, SEMICOLON) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // ( DOT ident )*
@@ -819,39 +875,18 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(TABLE|STRUCT|metadata|COMMENT)
-  public static boolean recover_type(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "recover_type")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_, RECOVER_TYPE, "<recover type>");
-    r = !recover_type_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // TABLE|STRUCT|metadata|COMMENT
-  private static boolean recover_type_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "recover_type_0")) return false;
-    boolean r;
-    r = consumeToken(b, TABLE);
-    if (!r) r = consumeToken(b, STRUCT);
-    if (!r) r = metadata(b, l + 1);
-    if (!r) r = consumeToken(b, COMMENT);
-    return r;
-  }
-
-  /* ********************************************************** */
   // ROOT_TYPE declared_type SEMICOLON
   public static boolean root_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_decl")) return false;
     if (!nextTokenIs(b, ROOT_TYPE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ROOT_DECL, null);
     r = consumeToken(b, ROOT_TYPE);
     r = r && declared_type(b, l + 1);
+    p = r; // pin = declared_type
     r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, ROOT_DECL, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -859,15 +894,16 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   public static boolean rpc_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rpc_decl")) return false;
     if (!nextTokenIs(b, RPC_SERVICE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RPC_DECL, null);
     r = consumeToken(b, RPC_SERVICE);
     r = r && ident(b, l + 1);
-    r = r && consumeToken(b, LCURLY);
-    r = r && rpc_decl_3(b, l + 1);
-    r = r && consumeToken(b, RCURLY);
-    exit_section_(b, m, RPC_DECL, r);
-    return r;
+    p = r; // pin = ident
+    r = r && report_error_(b, consumeToken(b, LCURLY));
+    r = p && report_error_(b, rpc_decl_3(b, l + 1)) && r;
+    r = p && consumeToken(b, RCURLY) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // rpc_method+
@@ -886,7 +922,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident LPAREN ident RPAREN COLON ident metadata SEMICOLON
+  // ident LPAREN ident RPAREN COLON ident metadata? SEMICOLON
   public static boolean rpc_method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rpc_method")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -897,10 +933,17 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && ident(b, l + 1);
     r = r && consumeTokens(b, 0, RPAREN, COLON);
     r = r && ident(b, l + 1);
-    r = r && metadata(b, l + 1);
+    r = r && rpc_method_6(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, RPC_METHOD, r);
     return r;
+  }
+
+  // metadata?
+  private static boolean rpc_method_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "rpc_method_6")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -987,19 +1030,21 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( TABLE | STRUCT ) ident metadata LCURLY field_decl+ RCURLY
+  // ( TABLE | STRUCT ) ident metadata? LCURLY field_decl+ RCURLY
   public static boolean type_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_decl")) return false;
-    boolean r;
+    if (!nextTokenIs(b, "<type decl>", STRUCT, TABLE)) return false;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, TYPE_DECL, "<type decl>");
     r = type_decl_0(b, l + 1);
     r = r && ident(b, l + 1);
-    r = r && metadata(b, l + 1);
-    r = r && consumeToken(b, LCURLY);
-    r = r && type_decl_4(b, l + 1);
-    r = r && consumeToken(b, RCURLY);
-    exit_section_(b, l, m, r, false, recover_type_parser_);
-    return r;
+    p = r; // pin = 2
+    r = r && report_error_(b, type_decl_2(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LCURLY)) && r;
+    r = p && report_error_(b, type_decl_4(b, l + 1)) && r;
+    r = p && consumeToken(b, RCURLY) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // TABLE | STRUCT
@@ -1009,6 +1054,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, TABLE);
     if (!r) r = consumeToken(b, STRUCT);
     return r;
+  }
+
+  // metadata?
+  private static boolean type_decl_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_decl_2")) return false;
+    metadata(b, l + 1);
+    return true;
   }
 
   // field_decl+
@@ -1031,16 +1083,17 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   public static boolean union_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "union_decl")) return false;
     if (!nextTokenIs(b, "<union decl>", DOCLINE, UNION)) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, UNION_DECL, "<union decl>");
     r = union_decl_0(b, l + 1);
     r = r && consumeToken(b, UNION);
     r = r && ident(b, l + 1);
-    r = r && consumeToken(b, LCURLY);
-    r = r && union_decl_4(b, l + 1);
-    r = r && consumeToken(b, RCURLY);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = ident
+    r = r && report_error_(b, consumeToken(b, LCURLY));
+    r = p && report_error_(b, union_decl_4(b, l + 1)) && r;
+    r = p && consumeToken(b, RCURLY) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // documentation?
@@ -1113,9 +1166,9 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  static final Parser recover_type_parser_ = new Parser() {
+  static final Parser decl_recover_parser_ = new Parser() {
     public boolean parse(PsiBuilder b, int l) {
-      return recover_type(b, l + 1);
+      return decl_recover(b, l + 1);
     }
   };
 }
