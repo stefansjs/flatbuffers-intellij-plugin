@@ -4,12 +4,15 @@ namespace MyGame;
 
 attribute "priority";
 
+// regular one-line comment
 enum NoValues {}
 enum Color : byte { Red = 1, Green, Blue }
 
+/// documentation comment
 union NoTypes {}
 union Any { Monster, Weapon, Pickup }
 
+/* c-style block comment */
 struct EmptyStruct {}
 struct Vec3 {
   x:float;
