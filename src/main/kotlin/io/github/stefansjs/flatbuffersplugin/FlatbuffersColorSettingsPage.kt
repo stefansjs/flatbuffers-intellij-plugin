@@ -11,6 +11,7 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
     companion object {
         val DESCRIPTORS = arrayOf(
             AttributesDescriptor("Comment", FlatbuffersSyntaxHighlighter.COMMENT),
+            AttributesDescriptor("Comment Block", FlatbuffersSyntaxHighlighter.BLOCK_COMMENT),
             AttributesDescriptor("String", FlatbuffersSyntaxHighlighter.STRING),
             AttributesDescriptor("Keyword", FlatbuffersSyntaxHighlighter.KEYWORD),
             AttributesDescriptor("Type", FlatbuffersSyntaxHighlighter.TYPE),
@@ -51,6 +52,8 @@ class FlatbuffersColorSettingsPage: ColorSettingsPage {
         |// example IDL file
         |
         |namespace <namespace>MyGame</namespace>;
+        |
+        |/* Declaring a namespace creates a scope for further declarations */
         |
         |attribute "priority";
         |
