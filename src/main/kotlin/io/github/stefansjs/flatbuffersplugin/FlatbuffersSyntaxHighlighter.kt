@@ -33,6 +33,7 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
 
         val BAD_CHARACTER = attributeFromFallback(HighlighterColors.BAD_CHARACTER)
         val COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.LINE_COMMENT)
+        val BLOCK_COMMENT = attributeFromFallback(DefaultLanguageHighlighterColors.BLOCK_COMMENT)
         val STRING = attributeFromFallback(DefaultLanguageHighlighterColors.STRING)
         val KEYWORD = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD)
         val TYPE = attributeFromFallback(DefaultLanguageHighlighterColors.KEYWORD, "FLATBUFFERS_TYPE")
@@ -44,6 +45,7 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
         val EMPTY_KEYS = emptyArray<TextAttributesKey>()
         val BAD_CHARACTERS_KEYS = arrayOf(BAD_CHARACTER)
         val COMMENT_KEYS = arrayOf(COMMENT)
+        val BLOCK_COMMENT_KEYS = arrayOf(BLOCK_COMMENT)
         val STRING_KEYS = arrayOf(STRING)
         val KEYWORD_KEYS = arrayOf(KEYWORD)
         val TYPE_KEYS = arrayOf(TYPE)
@@ -60,6 +62,10 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
         else if(token == FlatbuffersTypes.COMMENT)
         {
             return COMMENT_KEYS
+        }
+        else if(token == FlatbuffersTypes.BLOCK_COMMENT)
+        {
+            return BLOCK_COMMENT_KEYS
         }
         else if(token == FlatbuffersTypes.IDENTIFIER)
         {

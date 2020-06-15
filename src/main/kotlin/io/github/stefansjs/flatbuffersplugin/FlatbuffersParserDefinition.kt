@@ -29,7 +29,7 @@ import com.intellij.psi.tree.TokenSet
 /* Created by stefansullivan on 2019-02-15 */
 class FlatbuffersParserDefinition: ParserDefinition {
     val WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE)
-    val COMMENTS = TokenSet.create(FlatbuffersTypes.COMMENT)
+    val COMMENTS = TokenSet.create(FlatbuffersTypes.COMMENT, FlatbuffersTypes.BLOCK_COMMENT)
     val STRING_LITERAL = TokenSet.create(FlatbuffersTypes.STRING_CONSTANT)
 
     val FILE = IFileElementType(FlatbuffersLanguage)
