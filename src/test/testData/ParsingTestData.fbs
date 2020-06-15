@@ -4,8 +4,11 @@ namespace MyGame;
 
 attribute "priority";
 
+/* Adding a block comment should have no effect on parsing results */
 enum Color : byte { Red = 1, Green, Blue }
 
+/* If the lexer is too greedy it will swallow up all block comments into one big block.
+   The parser/lexer should be able to handle real code between block comments */
 union Any { Monster, Weapon, Pickup }
 
 struct Vec3 {

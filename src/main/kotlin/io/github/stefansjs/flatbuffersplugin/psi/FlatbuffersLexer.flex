@@ -34,7 +34,7 @@ HEX_FLOAT=[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F
 SPECIAL_FLOAT=[-+]?(nan|inf|infinity)
 DOCLINE="///"[^\r\n/]*
 COMMENT="//"[^\r\n]*
-BLOCK_COMMENT="/*"(.|\n)*"*/"
+BLOCK_COMMENT="/*" !([^]* "*/" [^]*) ("*/")?
 
 
 %%
