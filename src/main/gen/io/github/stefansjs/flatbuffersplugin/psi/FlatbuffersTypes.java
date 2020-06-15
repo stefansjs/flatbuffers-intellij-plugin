@@ -45,6 +45,7 @@ public interface FlatbuffersTypes {
   IElementType VALUE = new FlatbuffersElementType("VALUE");
 
   IElementType ATTRIBUTE = new FlatbuffersTokenType("ATTRIBUTE");
+  IElementType BLOCK_COMMENT = new FlatbuffersTokenType("BLOCK_COMMENT");
   IElementType BOOL = new FlatbuffersTokenType("bool");
   IElementType BYTE = new FlatbuffersTokenType("byte");
   IElementType COLON = new FlatbuffersTokenType("COLON");

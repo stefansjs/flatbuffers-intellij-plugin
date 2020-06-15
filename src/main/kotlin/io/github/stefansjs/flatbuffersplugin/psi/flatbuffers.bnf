@@ -27,6 +27,7 @@
 
       DOCLINE = 'regexp:///[^\r\n]*'
       COMMENT = 'regexp://[^\r\n/]*'
+      BLOCK_COMMENT = 'regexp:/\*(.|\n)*\*/'
   ]
 }
 
