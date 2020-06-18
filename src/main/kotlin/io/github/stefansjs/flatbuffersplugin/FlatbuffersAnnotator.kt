@@ -79,7 +79,7 @@ class FlatbuffersAnnotator: Annotator {
 
     private fun applyFormatting(element: FlatbuffersFieldDecl, holder: AnnotationHolder) {
         applyAttribute(element.identList[0], holder, MEMBER)
-        applyFormatting(element.fieldType.declaredType, holder)
+        applyFormatting(element.fieldType?.declaredType, holder)
         if( element.identList.size > 1 ) {
             // according to the grammar there should either be a constant or identifier after an equal sign.
             // There's currently no possibility of anything else

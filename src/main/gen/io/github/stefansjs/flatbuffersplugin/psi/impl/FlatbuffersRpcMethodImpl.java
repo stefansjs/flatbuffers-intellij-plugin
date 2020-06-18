@@ -33,9 +33,9 @@ public class FlatbuffersRpcMethodImpl extends ASTWrapperPsiElement implements Fl
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersMetadata getMetadata() {
-    return findNotNullChildByClass(FlatbuffersMetadata.class);
+    return findChildByClass(FlatbuffersMetadata.class);
   }
 
 }

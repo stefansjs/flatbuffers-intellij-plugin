@@ -7,13 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface FlatbuffersFieldDecl extends PsiElement {
 
-  @NotNull
+  @Nullable
   FlatbuffersFieldType getFieldType();
 
   @NotNull
   List<FlatbuffersIdent> getIdentList();
 
-  @NotNull
+  @Nullable
   FlatbuffersMetadata getMetadata();
 
   @Nullable

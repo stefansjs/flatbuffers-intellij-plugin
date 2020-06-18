@@ -14,7 +14,7 @@ public interface FlatbuffersTypeDecl extends FlatbuffersNamedElement {
   @NotNull
   FlatbuffersIdent getIdent();
 
-  @NotNull
+  @Nullable
   FlatbuffersMetadata getMetadata();
 
   String getName();

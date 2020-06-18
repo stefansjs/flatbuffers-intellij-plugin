@@ -4,19 +4,23 @@ namespace MyGame;
 
 attribute "priority";
 
-/* Adding a block comment should have no effect on parsing results */
+// regular one-line comment
+enum NoValues {}
 enum Color : byte { Red = 1, Green, Blue }
 
-/* If the lexer is too greedy it will swallow up all block comments into one big block.
-   The parser/lexer should be able to handle real code between block comments */
+/// documentation comment
+union NoTypes {}
 union Any { Monster, Weapon, Pickup }
 
+/* c-style block comment */
+struct EmptyStruct {}
 struct Vec3 {
   x:float;
   y:float;
   z:float;
 }
 
+table EmptyTable {}
 table Monster {
   pos:Vec3;
   mana:short = 150;
@@ -27,5 +31,14 @@ table Monster {
   color:Color = Blue;
   test:Any;
 }
+
+
+multiple identifiers with a semicolon;
+
+
+tab BadKeyword {
+  one:int = 1;
+}
+
 
 root_type Monster;

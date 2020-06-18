@@ -34,6 +34,8 @@ HEX_FLOAT=[-+]?0[xX](([.][0-9a-fA-F]+)|([0-9a-fA-F]+[.][0-9a-fA-F]*)|([0-9a-fA-F
 SPECIAL_FLOAT=[-+]?(nan|inf|infinity)
 DOCLINE="///"[^\r\n/]*
 COMMENT="//"[^\r\n]*
+BLOCK_COMMENT="/*" !([^]* "*/" [^]*) ("*/")?
+
 
 %%
 <YYINITIAL> {
@@ -94,6 +96,7 @@ COMMENT="//"[^\r\n]*
   {HEX_FLOAT}          { return HEX_FLOAT; }
   {SPECIAL_FLOAT}      { return SPECIAL_FLOAT; }
   {COMMENT}            { return COMMENT; }
+  {BLOCK_COMMENT}      { return BLOCK_COMMENT; }
   {IDENTIFIER}         { return IDENTIFIER; }
 
 }

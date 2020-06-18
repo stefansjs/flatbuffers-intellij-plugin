@@ -17,7 +17,7 @@ public interface FlatbuffersEnumDecl extends FlatbuffersNamedElement {
   @NotNull
   FlatbuffersIdent getIdent();
 
-  @NotNull
+  @Nullable
   FlatbuffersMetadata getMetadata();
 
   @Nullable
