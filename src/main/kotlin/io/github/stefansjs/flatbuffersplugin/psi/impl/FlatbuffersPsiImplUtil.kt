@@ -71,29 +71,3 @@ fun getNameIdentifier(element: FlatbuffersUnionDecl) = element.ident
 fun getName(element: FlatbuffersUnionDecl) = element.ident.text
 fun setName(element: FlatbuffersUnionDecl, newName: String) = setName<FlatbuffersUnionDecl>(element, newName)
 
-
-// Reference resolvers. Based (conveniently) on the above getName implementations
-fun findTypes(project: Project, typeName: String?=null): List<FlatbuffersNamedElement>
-{
-    // Try the current file first
-    val results = ArrayList<FlatbuffersNamedElement>()
-    for(virtualFile in FileTypeIndex.getFiles(FlatbuffersFileType, GlobalSearchScope.allScope(project))) {
-        val fbFile = PsiManager.getInstance(project).findFile(virtualFile)
-        if(fbFile != null) {
-            results.addAll(findTypes(fbFile, typeName))
-        }
-    }
-    return results
-}
-
-fun findTypes(file: PsiFile, typeName: String? = null): List<FlatbuffersNamedElement>
-{
-    var declarations = PsiTreeUtil.findChildrenOfAnyType(file,
-                                                         FlatbuffersTypeDecl::class.java,
-                                                         FlatbuffersUnionDecl::class.java,
-                                                         FlatbuffersEnumDecl::class.java)
-    if (typeName != null) {
-        declarations = declarations.filter { typeName == it.name }
-    }
-    return declarations.toList()
-}

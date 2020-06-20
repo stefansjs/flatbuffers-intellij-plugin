@@ -341,37 +341,40 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident (DOT ident)*
+  // (ident DOT)*
+  public static boolean declared_namespace(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declared_namespace")) return false;
+    Marker m = enter_section_(b, l, _NONE_, DECLARED_NAMESPACE, "<declared namespace>");
+    while (true) {
+      int c = current_position_(b);
+      if (!declared_namespace_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "declared_namespace", c)) break;
+    }
+    exit_section_(b, l, m, true, false, null);
+    return true;
+  }
+
+  // ident DOT
+  private static boolean declared_namespace_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declared_namespace_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ident(b, l + 1);
+    r = r && consumeToken(b, DOT);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // declared_namespace ident
   public static boolean declared_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declared_type")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ident(b, l + 1);
-    r = r && declared_type_1(b, l + 1);
-    exit_section_(b, m, DECLARED_TYPE, r);
-    return r;
-  }
-
-  // (DOT ident)*
-  private static boolean declared_type_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declared_type_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!declared_type_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "declared_type_1", c)) break;
-    }
-    return true;
-  }
-
-  // DOT ident
-  private static boolean declared_type_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declared_type_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, DOT);
+    r = declared_namespace(b, l + 1);
     r = r && ident(b, l + 1);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, DECLARED_TYPE, r);
     return r;
   }
 
