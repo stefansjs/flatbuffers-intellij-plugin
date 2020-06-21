@@ -28,8 +28,14 @@ public class FlatbuffersUnionvalDeclImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
-  public List<FlatbuffersIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
+  public FlatbuffersDeclaredType getDeclaredType() {
+    return findNotNullChildByClass(FlatbuffersDeclaredType.class);
+  }
+
+  @Override
+  @Nullable
+  public FlatbuffersIdent getIdent() {
+    return findChildByClass(FlatbuffersIdent.class);
   }
 
 }

@@ -1137,32 +1137,32 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident ( COLON ident )?
+  // ( ident COLON )? declared_type
   public static boolean unionval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unionval_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ident(b, l + 1);
-    r = r && unionval_decl_1(b, l + 1);
+    r = unionval_decl_0(b, l + 1);
+    r = r && declared_type(b, l + 1);
     exit_section_(b, m, UNIONVAL_DECL, r);
     return r;
   }
 
-  // ( COLON ident )?
-  private static boolean unionval_decl_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "unionval_decl_1")) return false;
-    unionval_decl_1_0(b, l + 1);
+  // ( ident COLON )?
+  private static boolean unionval_decl_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unionval_decl_0")) return false;
+    unionval_decl_0_0(b, l + 1);
     return true;
   }
 
-  // COLON ident
-  private static boolean unionval_decl_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "unionval_decl_1_0")) return false;
+  // ident COLON
+  private static boolean unionval_decl_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unionval_decl_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, COLON);
-    r = r && ident(b, l + 1);
+    r = ident(b, l + 1);
+    r = r && consumeToken(b, COLON);
     exit_section_(b, m, null, r);
     return r;
   }

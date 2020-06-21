@@ -100,11 +100,8 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(element: FlatbuffersUnionvalDecl, holder: AnnotationHolder) {
-        applyAttribute(element.identList.last(), holder, CLASS_REFERENCE)
-        if( element.identList.size > 1 ) {
-            // Again, there should only be either one or two identifiers
-            applyAttribute(element.identList[0], holder, UNION_ALIAS)
-        }
+        element.ident?.let { applyAttribute(it, holder, UNION_ALIAS) }
+        applyAttribute(element.declaredType, holder, CLASS_REFERENCE)
     }
 
     private fun applyFormatting(element: FlatbuffersNamespaceDecl, holder: AnnotationHolder) {

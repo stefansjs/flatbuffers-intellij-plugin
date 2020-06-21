@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface FlatbuffersUnionvalDecl extends PsiElement {
 
   @NotNull
-  List<FlatbuffersIdent> getIdentList();
+  FlatbuffersDeclaredType getDeclaredType();
+
+  @Nullable
+  FlatbuffersIdent getIdent();
 
 }
