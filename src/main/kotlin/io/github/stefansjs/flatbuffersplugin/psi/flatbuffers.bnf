@@ -144,7 +144,7 @@ declared_namespace ::= (ident DOT)*
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 
-unionval_decl ::= ident ( COLON ident )?
+unionval_decl ::= ( ident COLON )? declared_type
 
 metadata ::= LPAREN metadata_value ( COMMA metadata_value )* RPAREN
 
