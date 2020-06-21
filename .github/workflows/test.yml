@@ -25,6 +25,7 @@ jobs:
         run: ./gradlew test
 
       - name: Publish Results
+        if: {{ success() || failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: test-results
