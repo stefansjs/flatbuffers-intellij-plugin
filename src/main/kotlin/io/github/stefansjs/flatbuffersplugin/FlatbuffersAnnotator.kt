@@ -78,18 +78,21 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(element: FlatbuffersFieldDecl, holder: AnnotationHolder) {
-        applyAttribute(element.identList[0], holder, MEMBER)
-        applyFormatting(element.fieldType?.declaredType, holder)
-        if( element.identList.size > 1 ) {
-            // according to the grammar there should either be a constant or identifier after an equal sign.
-            // There's currently no possibility of anything else
-            applyAttribute(element.identList[1], holder, ENUM_REFERENCE)
-        }
+        // Flatbuffers lets you use protected keywords as field names.
+        // Conceptually I like to think of identifiers as being generic identifiers _or_ keyword identifiers, but since
+        // the lexer will eliminate those tokens entirely, it's possible to have a null identifier and no alternative.
+        element.fieldIdent.ident?.let { applyAttribute(it, holder, MEMBER) }
+
+        // declared type is similar. It might be a built-in keyword (which does not become part of the PSI) or an
+        // identifier, which should be referential of some declared type
+        element.fieldType?.declaredType?.let { applyFormatting(it, holder) }
+
+        // according to the grammar there should either be a constant or identifier after an equal sign.
+        // There's currently no identifier allowed other than an enum value
+        element.fieldValue?.ident?.let { applyAttribute(it, holder, ENUM_REFERENCE) }
     }
 
-    private fun applyFormatting(declaredType: FlatbuffersDeclaredType?, holder: AnnotationHolder) {
-        if( declaredType == null ) return
-
+    private fun applyFormatting(declaredType: FlatbuffersDeclaredType, holder: AnnotationHolder) {
         applyAttribute(declaredType.ident, holder, CLASS_REFERENCE)
 
         val namespaceParts = declaredType.declaredNamespace.identList

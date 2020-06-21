@@ -11,14 +11,14 @@ import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
 
-public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements FlatbuffersFieldDecl {
+public class FlatbuffersFieldValueImpl extends ASTWrapperPsiElement implements FlatbuffersFieldValue {
 
-  public FlatbuffersFieldDeclImpl(@NotNull ASTNode node) {
+  public FlatbuffersFieldValueImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitFieldDecl(this);
+    visitor.visitFieldValue(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,27 +27,15 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
   }
 
   @Override
-  @NotNull
-  public FlatbuffersFieldIdent getFieldIdent() {
-    return findNotNullChildByClass(FlatbuffersFieldIdent.class);
+  @Nullable
+  public FlatbuffersIdent getIdent() {
+    return findChildByClass(FlatbuffersIdent.class);
   }
 
   @Override
   @Nullable
-  public FlatbuffersFieldType getFieldType() {
-    return findChildByClass(FlatbuffersFieldType.class);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersFieldValue getFieldValue() {
-    return findChildByClass(FlatbuffersFieldValue.class);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersMetadata getMetadata() {
-    return findChildByClass(FlatbuffersMetadata.class);
+  public FlatbuffersScalar getScalar() {
+    return findChildByClass(FlatbuffersScalar.class);
   }
 
 }

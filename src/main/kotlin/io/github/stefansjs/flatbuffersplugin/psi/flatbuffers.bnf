@@ -90,8 +90,17 @@ private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 root_decl ::= ROOT_TYPE declared_type SEMICOLON
               {pin=declared_type}
 
-field_decl ::= ident COLON field_type ( EQUALS (scalar|ident) )? metadata? SEMICOLON
+field_decl ::= field_ident COLON field_type ( EQUALS field_value )? metadata? SEMICOLON
                {pin=1}
+
+// A field identifier is allowed to have flatbuffers keywords because the schema compiles down to other languages
+// I guess the philosophy is that we don't prevent field names based on a language that isn't the generated language
+field_ident ::= ident | keyword
+field_value ::= ident | scalar
+
+private keyword ::= primitive
+                  | TABLE
+                  | STRUCT
 
 rpc_decl ::= RPC_SERVICE ident LCURLY rpc_method+ RCURLY
              {pin=ident}
