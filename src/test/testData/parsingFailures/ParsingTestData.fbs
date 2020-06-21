@@ -32,8 +32,37 @@ table Monster {
   test:Any;
 }
 
-
 multiple identifiers with a semicolon;
+
+
+/* This test data comes from a github bugreport on field names using flatbuffers reserved keywords
+ * https://github.com/stefansjs/flatbuffers-intellij-plugin/issues/7
+ */
+table Typeful {
+	id           : uint64	;
+	int          : int		;
+	int8         : int8		;
+	int16        : int16	;
+	int32        : int32	;
+	int64        : int64	;
+	uint         : uint		;
+	uint8        : uint8	;
+	uint16       : uint16	;
+	uint32       : uint32	;
+	uint64       : uint64	;
+	bool         : bool		;
+	string       : string	;
+	stringvector : [string]	;
+	byte         : byte		;
+	ubyte        : ubyte	;
+	bytevector   : [byte]	;
+	ubytevector  : [ubyte]	;
+	float32      : float32	;
+	float64      : float64	;
+	float        : float	;
+	double       : double	;
+}
+
 
 
 tab BadKeyword {

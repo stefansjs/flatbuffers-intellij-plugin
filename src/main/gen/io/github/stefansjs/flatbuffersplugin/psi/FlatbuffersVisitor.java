@@ -56,7 +56,15 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFieldIdent(@NotNull FlatbuffersFieldIdent o) {
+    visitPsiElement(o);
+  }
+
   public void visitFieldType(@NotNull FlatbuffersFieldType o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFieldValue(@NotNull FlatbuffersFieldValue o) {
     visitPsiElement(o);
   }
 

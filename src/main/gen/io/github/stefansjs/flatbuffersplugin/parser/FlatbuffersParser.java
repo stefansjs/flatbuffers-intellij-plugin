@@ -483,13 +483,12 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident COLON field_type ( EQUALS (scalar|ident) )? metadata? SEMICOLON
+  // field_ident COLON field_type ( EQUALS field_value )? metadata? SEMICOLON
   public static boolean field_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_decl")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, FIELD_DECL, null);
-    r = ident(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, FIELD_DECL, "<field decl>");
+    r = field_ident(b, l + 1);
     p = r; // pin = 1
     r = r && report_error_(b, consumeToken(b, COLON));
     r = p && report_error_(b, field_type(b, l + 1)) && r;
@@ -500,30 +499,21 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // ( EQUALS (scalar|ident) )?
+  // ( EQUALS field_value )?
   private static boolean field_decl_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_decl_3")) return false;
     field_decl_3_0(b, l + 1);
     return true;
   }
 
-  // EQUALS (scalar|ident)
+  // EQUALS field_value
   private static boolean field_decl_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_decl_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQUALS);
-    r = r && field_decl_3_0_1(b, l + 1);
+    r = r && field_value(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // scalar|ident
-  private static boolean field_decl_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "field_decl_3_0_1")) return false;
-    boolean r;
-    r = scalar(b, l + 1);
-    if (!r) r = ident(b, l + 1);
     return r;
   }
 
@@ -532,6 +522,18 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "field_decl_4")) return false;
     metadata(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // ident | keyword
+  public static boolean field_ident(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "field_ident")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_IDENT, "<field ident>");
+    r = ident(b, l + 1);
+    if (!r) r = keyword(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -545,6 +547,18 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = primitive(b, l + 1);
     if (!r) r = array_type(b, l + 1);
     if (!r) r = declared_type(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ident | scalar
+  public static boolean field_value(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "field_value")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FIELD_VALUE, "<field value>");
+    r = ident(b, l + 1);
+    if (!r) r = scalar(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -706,6 +720,19 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = dec_integer_constant(b, l + 1);
     if (!r) r = hex_integer_constant(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // primitive
+  //                   | TABLE
+  //                   | STRUCT
+  static boolean keyword(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "keyword")) return false;
+    boolean r;
+    r = primitive(b, l + 1);
+    if (!r) r = consumeToken(b, TABLE);
+    if (!r) r = consumeToken(b, STRUCT);
     return r;
   }
 
