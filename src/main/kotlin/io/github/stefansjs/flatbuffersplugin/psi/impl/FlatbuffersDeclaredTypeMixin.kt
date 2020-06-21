@@ -8,9 +8,6 @@ import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersTypeReference
 
 abstract class FlatbuffersDeclaredTypeMixin(node: ASTNode): FlatbuffersDeclaredType, ASTWrapperPsiElement(node) {
     override fun getReference(): PsiReference? {
-        if(identList.size == 0) return null
-
-        val typeName = identList.last() ?: return null
-        return FlatbuffersTypeReference(typeName)
+        return FlatbuffersTypeReference(this)
     }
 }

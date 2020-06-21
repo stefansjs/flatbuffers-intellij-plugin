@@ -8,16 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
 
-public class FlatbuffersDeclaredTypeImpl extends FlatbuffersDeclaredTypeMixin implements FlatbuffersDeclaredType {
+public class FlatbuffersDeclaredNamespaceImpl extends ASTWrapperPsiElement implements FlatbuffersDeclaredNamespace {
 
-  public FlatbuffersDeclaredTypeImpl(@NotNull ASTNode node) {
+  public FlatbuffersDeclaredNamespaceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitDeclaredType(this);
+    visitor.visitDeclaredNamespace(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,14 +28,8 @@ public class FlatbuffersDeclaredTypeImpl extends FlatbuffersDeclaredTypeMixin im
 
   @Override
   @NotNull
-  public FlatbuffersDeclaredNamespace getDeclaredNamespace() {
-    return findNotNullChildByClass(FlatbuffersDeclaredNamespace.class);
-  }
-
-  @Override
-  @NotNull
-  public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
+  public List<FlatbuffersIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersIdent.class);
   }
 
 }

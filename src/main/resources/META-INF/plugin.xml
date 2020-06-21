@@ -6,11 +6,7 @@
   <description>Editing support for flatbuffers schema files (.fbs)</description>
 
   <change-notes>
-    <![CDATA[v0.1.3<br/>
-    <br/>
-    This release provides new features!<br/>
-    - local reference highlighting<br/>
-    - basic keyword and reference autocomplete]]>
+    This release improves parsing error handling, and provides support for c-style block comments
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

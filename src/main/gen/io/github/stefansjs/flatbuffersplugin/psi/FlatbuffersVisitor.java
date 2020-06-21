@@ -32,6 +32,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDeclaredNamespace(@NotNull FlatbuffersDeclaredNamespace o) {
+    visitPsiElement(o);
+  }
+
   public void visitDeclaredType(@NotNull FlatbuffersDeclaredType o) {
     visitPsiElement(o);
   }

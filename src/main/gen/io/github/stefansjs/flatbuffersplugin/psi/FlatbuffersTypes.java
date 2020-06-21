@@ -13,6 +13,7 @@ public interface FlatbuffersTypes {
   IElementType BOOLEAN_CONSTANT = new FlatbuffersElementType("BOOLEAN_CONSTANT");
   IElementType DECIMAL_FLOAT_CONSTANT = new FlatbuffersElementType("DECIMAL_FLOAT_CONSTANT");
   IElementType DECLARATION = new FlatbuffersElementType("DECLARATION");
+  IElementType DECLARED_NAMESPACE = new FlatbuffersElementType("DECLARED_NAMESPACE");
   IElementType DECLARED_TYPE = new FlatbuffersElementType("DECLARED_TYPE");
   IElementType DEC_INTEGER_CONSTANT = new FlatbuffersElementType("DEC_INTEGER_CONSTANT");
   IElementType DOCUMENTATION = new FlatbuffersElementType("DOCUMENTATION");
@@ -119,6 +120,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == DECLARATION) {
         return new FlatbuffersDeclarationImpl(node);
+      }
+      else if (type == DECLARED_NAMESPACE) {
+        return new FlatbuffersDeclaredNamespaceImpl(node);
       }
       else if (type == DECLARED_TYPE) {
         return new FlatbuffersDeclaredTypeImpl(node);
