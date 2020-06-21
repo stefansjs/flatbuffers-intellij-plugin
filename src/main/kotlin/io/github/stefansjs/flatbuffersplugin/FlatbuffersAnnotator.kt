@@ -88,11 +88,12 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(declaredType: FlatbuffersDeclaredType?, holder: AnnotationHolder) {
-        if (declaredType == null) return
+        if( declaredType == null ) return
 
-        val parts = declaredType.identList
-        applyAttribute(parts.last(), holder, CLASS_REFERENCE)
-        parts.subList(0, parts.lastIndex).map { applyAttribute(it, holder, NAMESPACE_REF) }
+        applyAttribute(declaredType.ident, holder, CLASS_REFERENCE)
+
+        val namespaceParts = declaredType.declaredNamespace.identList
+        namespaceParts.map { applyAttribute(it, holder, NAMESPACE_REF) }
     }
 
     private fun applyFormatting(element: FlatbuffersUnionvalDecl, holder: AnnotationHolder) {
