@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugins>
-    <!-- Version 0.1.5b https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/tag/v0.1.5-beta2 -->
-    <plugin id="io.github.stefansjs.flatbuffersplugin" version="0.1.5-beta" url="https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/download/v0.1.5-beta2/flatbuffers-plugin-0.1.5-beta+12.zip">
+    <!-- Version 0.1.5 https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/tag/v0.1.5 -->
+    <plugin id="io.github.stefansjs.flatbuffersplugin" version="0.1.5" url="https://github.com/stefansjs/flatbuffers-intellij-plugin/releases/tag/v0.1.5">
         <idea-version since-build="182.3684.101"/>
         <name>Flatbuffers Support</name>
         <description>Editing support for flatbuffers schema files (.fbs)</description>
