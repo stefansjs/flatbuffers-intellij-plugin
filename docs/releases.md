@@ -57,6 +57,8 @@ This release provides an initial version of a flatbuffers editing plugin for Int
   - [ ] Publish. Don't worry, you can continue to edit the release
 - [ ] edit `updatePlugins.xml` to point to the github release
 - [ ] QA the plugin in an installed IDE
+  - [ ] Install the downloaded .zip file in an installed IDE (i.e. not the one downloaded by gradle)
+  - [ ] There's no formal process for testing. Just use the plugin a little
   - [ ] Make any necessary bugfix changes on the release branch
     - [ ] Push any necessary changes
     - [ ] update the github release page by incrementing the beta number
@@ -66,11 +68,14 @@ This release provides an initial version of a flatbuffers editing plugin for Int
 - [ ] Make a final release on github with the build artifact and publish it
   - [ ] Remove beta from the version string in build.gradle
   - [ ] push to release
+  - [ ] sanity-check the final release build in an installed IDE
   - [ ] edit the release page tag by removing beta
   - [ ] Add the final binary to the github release
   - [ ] uncheck the "draft release" box
   - [ ] publish it
 - [ ] Publish the plugin on JetBrains Hub https://plugins.jetbrains.com/plugin/14326-flatbuffers-support
 - [ ] merge to master
+- [ ] edit `updatePlugins.xml` with latest release
 - [ ] Increment the version in build.gradle to the next alpha version
+- [ ] merge any changes from this checklist into `releases.md`
 ```
