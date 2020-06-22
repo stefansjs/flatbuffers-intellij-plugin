@@ -7,9 +7,11 @@
 
   <change-notes>
     <![CDATA[This release includes enhancements to the parser, including
-- tables may use reserved flatbuffers keywords as field names
-- reference highlighting accounts for types that include namespaces
-- unions declarations will highlight type references]]>
+    <ul>
+      <li>tables may use reserved flatbuffers keywords as field names</li>
+      <li>reference highlighting accounts for types that include namespaces</li>
+      <li>unions declarations will highlight type references</li>
+    </ul>]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
