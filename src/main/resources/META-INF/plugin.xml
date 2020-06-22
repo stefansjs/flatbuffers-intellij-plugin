@@ -6,7 +6,10 @@
   <description>Editing support for flatbuffers schema files (.fbs)</description>
 
   <change-notes>
-    This release improves parsing error handling, and provides support for c-style block comments
+    <![CDATA[This release includes enhancements to the parser, including
+- tables may use reserved flatbuffers keywords as field names
+- reference highlighting accounts for types that include namespaces
+- unions declarations will highlight type references]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
