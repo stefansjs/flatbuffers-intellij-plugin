@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.stefansjs.flatbuffersplugin'
-version "0.1.5a-${getBuildNumber()}"
+version "0.1.5b-${getBuildNumber()}"
 
 repositories {
     mavenCentral()
