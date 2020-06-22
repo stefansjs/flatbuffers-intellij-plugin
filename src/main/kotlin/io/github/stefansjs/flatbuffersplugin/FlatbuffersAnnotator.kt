@@ -86,6 +86,7 @@ class FlatbuffersAnnotator: Annotator {
         // declared type is similar. It might be a built-in keyword (which does not become part of the PSI) or an
         // identifier, which should be referential of some declared type
         element.fieldType?.declaredType?.let { applyFormatting(it, holder) }
+        element.fieldType?.arrayType?.declaredType?.let { applyFormatting(it, holder) }
 
         // according to the grammar there should either be a constant or identifier after an equal sign.
         // There's currently no identifier allowed other than an enum value
