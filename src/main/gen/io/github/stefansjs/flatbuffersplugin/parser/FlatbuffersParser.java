@@ -40,13 +40,14 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   public static boolean array_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "array_type")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ARRAY_TYPE, null);
     r = consumeToken(b, LBRACK);
-    r = r && array_type_1(b, l + 1);
-    r = r && consumeToken(b, RBRACK);
-    exit_section_(b, m, ARRAY_TYPE, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, array_type_1(b, l + 1));
+    r = p && consumeToken(b, RBRACK) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // primitive | declared_type
