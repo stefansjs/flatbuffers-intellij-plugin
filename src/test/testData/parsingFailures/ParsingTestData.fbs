@@ -69,5 +69,17 @@ tab BadKeyword {
   one:int = 1;
 }
 
+table CascadeFailures
+{
+  //Arrays without pins can consume too many tokens and break the rest of the table.
+  //If the parser is implemented correctly, one bad element shouldn't cause the rest of the elements to go unrecognized.
+  openArray:[Faux;
+  goodElement:[Color];
+  emptyArray:[];
+  moreGoodElements[Typeful];
+  badArrayClassName:[a.];
+  moreBetter:Monster;
+}
+
 
 root_type Monster;
