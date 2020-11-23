@@ -26,6 +26,7 @@ compileTestKotlin {
 
 intellij {
     version '2018.2'
+    alternativeIdePath = findProperty('io.github.stefansjs.flatbuffersplugin.idePath')
     downloadSources true
     updateSinceUntilBuild false
 }
