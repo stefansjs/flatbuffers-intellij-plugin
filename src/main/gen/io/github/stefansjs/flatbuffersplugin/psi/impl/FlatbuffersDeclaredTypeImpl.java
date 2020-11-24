@@ -32,9 +32,9 @@ public class FlatbuffersDeclaredTypeImpl extends FlatbuffersDeclaredTypeMixin im
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
+    return findChildByClass(FlatbuffersIdent.class);
   }
 
 }

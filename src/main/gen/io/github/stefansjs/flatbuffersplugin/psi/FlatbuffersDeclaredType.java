@@ -10,7 +10,7 @@ public interface FlatbuffersDeclaredType extends PsiElement {
   @NotNull
   FlatbuffersDeclaredNamespace getDeclaredNamespace();
 
-  @NotNull
+  @Nullable
   FlatbuffersIdent getIdent();
 
 }

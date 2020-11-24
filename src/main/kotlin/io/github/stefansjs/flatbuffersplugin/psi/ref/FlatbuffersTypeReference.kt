@@ -21,8 +21,8 @@ import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionDecl
 
 class FlatbuffersTypeReference(element: FlatbuffersDeclaredType) :
     PsiReferenceBase<FlatbuffersDeclaredType>(element,
-                                              TextRange(element.ident.startOffsetInParent,
-                                                        element.ident.startOffsetInParent + element.ident.textLength))
+                                              TextRange(element.ident!!.startOffsetInParent,
+                                                        element.ident!!.startOffsetInParent + element.ident!!.textLength))
 {
     override fun resolve(): PsiElement? {
         // Try and find the declaration locally first. IIUC flatbuffers only allows one declaratino per namespace,
