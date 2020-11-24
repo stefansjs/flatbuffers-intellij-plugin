@@ -162,7 +162,6 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   // unionval_decl ( COMMA unionval_decl )* COMMA?
   static boolean commasep_unionval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "commasep_unionval_decl")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = unionval_decl(b, l + 1);
@@ -370,13 +369,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   // declared_namespace ident
   public static boolean declared_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declared_type")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, DECLARED_TYPE, "<declared type>");
     r = declared_namespace(b, l + 1);
+    p = r; // pin = 1
     r = r && ident(b, l + 1);
-    exit_section_(b, m, DECLARED_TYPE, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -1141,12 +1140,11 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   // ( ident COLON )? declared_type
   public static boolean unionval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unionval_decl")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, UNIONVAL_DECL, "<unionval decl>");
     r = unionval_decl_0(b, l + 1);
     r = r && declared_type(b, l + 1);
-    exit_section_(b, m, UNIONVAL_DECL, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

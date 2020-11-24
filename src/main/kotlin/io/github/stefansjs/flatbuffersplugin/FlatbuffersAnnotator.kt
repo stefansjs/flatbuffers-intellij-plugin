@@ -94,7 +94,7 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(declaredType: FlatbuffersDeclaredType, holder: AnnotationHolder) {
-        applyAttribute(declaredType.ident, holder, CLASS_REFERENCE)
+        declaredType.ident?.let { applyAttribute(it, holder, CLASS_REFERENCE) }
 
         val namespaceParts = declaredType.declaredNamespace.identList
         namespaceParts.map { applyAttribute(it, holder, NAMESPACE_REF) }
