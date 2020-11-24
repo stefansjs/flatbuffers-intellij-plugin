@@ -28,4 +28,6 @@ table Monster {
   test:Any;
 }
 
+table Empty {}
+
 root_type Monster;
