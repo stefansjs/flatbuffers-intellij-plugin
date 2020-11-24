@@ -63,27 +63,25 @@ namespace_decl ::= NAMESPACE ident ( DOT ident )* SEMICOLON
 attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
                    {pin=2}
 
-type_decl ::= ( TABLE | STRUCT ) ident metadata? LCURLY field_decl* RCURLY
-              {pin=2
-               mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
-               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
-               methods=[getName setName getNameIdentifier]}
+type_name ::= ident
+              {
+                mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+                implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+                methods=[getName setName getNameIdentifier]
+              }
+type_decl ::= ( TABLE | STRUCT ) type_name metadata? LCURLY field_decl* RCURLY
+              {pin=type_name
+              }
 
-enum_decl ::= documentation? ENUM ident ( COLON primitive )? metadata? LCURLY commasep_enumval_decl? RCURLY
-              {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
-               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
-               methods=[getName setName getNameIdentifier]
-               pin=ident
-               }
+enum_decl ::= documentation? ENUM type_name ( COLON primitive )? metadata? LCURLY commasep_enumval_decl? RCURLY
+              {pin=type_name
+              }
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
-union_decl ::= documentation? union ident LCURLY commasep_unionval_decl? RCURLY
-              {mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
-               implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
-               methods=[getName setName getNameIdentifier]
-               pin=ident
-               }
+union_decl ::= documentation? union type_name LCURLY commasep_unionval_decl? RCURLY
+              {pin=type_name
+              }
 
 private commasep_unionval_decl ::= unionval_decl ( COMMA unionval_decl )* COMMA?
 
@@ -137,11 +135,13 @@ private float_type ::= float
                      | float64
 
 array_type ::= LBRACK (primitive | declared_type) RBRACK {pin=1}
-declared_type ::= declared_namespace ident
-                  {mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersDeclaredTypeMixin"
-                   pin=1
+declared_type ::= declared_namespace declared_name
+                  {pin=1
                   }
 declared_namespace ::= (ident DOT)* {pin=2}
+declared_name ::= ident
+                  {mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersDeclaredNameMixin"
+                  }
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 

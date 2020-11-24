@@ -13,6 +13,7 @@ public interface FlatbuffersTypes {
   IElementType BOOLEAN_CONSTANT = new FlatbuffersElementType("BOOLEAN_CONSTANT");
   IElementType DECIMAL_FLOAT_CONSTANT = new FlatbuffersElementType("DECIMAL_FLOAT_CONSTANT");
   IElementType DECLARATION = new FlatbuffersElementType("DECLARATION");
+  IElementType DECLARED_NAME = new FlatbuffersElementType("DECLARED_NAME");
   IElementType DECLARED_NAMESPACE = new FlatbuffersElementType("DECLARED_NAMESPACE");
   IElementType DECLARED_TYPE = new FlatbuffersElementType("DECLARED_TYPE");
   IElementType DEC_INTEGER_CONSTANT = new FlatbuffersElementType("DEC_INTEGER_CONSTANT");
@@ -43,6 +44,7 @@ public interface FlatbuffersTypes {
   IElementType SPECIAL_FLOAT_CONSTANT = new FlatbuffersElementType("SPECIAL_FLOAT_CONSTANT");
   IElementType STRING_CONSTANT = new FlatbuffersElementType("STRING_CONSTANT");
   IElementType TYPE_DECL = new FlatbuffersElementType("TYPE_DECL");
+  IElementType TYPE_NAME = new FlatbuffersElementType("TYPE_NAME");
   IElementType UNIONVAL_DECL = new FlatbuffersElementType("UNIONVAL_DECL");
   IElementType UNION_DECL = new FlatbuffersElementType("UNION_DECL");
   IElementType VALUE = new FlatbuffersElementType("VALUE");
@@ -122,6 +124,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == DECLARATION) {
         return new FlatbuffersDeclarationImpl(node);
+      }
+      else if (type == DECLARED_NAME) {
+        return new FlatbuffersDeclaredNameImpl(node);
       }
       else if (type == DECLARED_NAMESPACE) {
         return new FlatbuffersDeclaredNamespaceImpl(node);
@@ -212,6 +217,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == TYPE_DECL) {
         return new FlatbuffersTypeDeclImpl(node);
+      }
+      else if (type == TYPE_NAME) {
+        return new FlatbuffersTypeNameImpl(node);
       }
       else if (type == UNIONVAL_DECL) {
         return new FlatbuffersUnionvalDeclImpl(node);

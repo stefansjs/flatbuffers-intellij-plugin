@@ -32,6 +32,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDeclaredName(@NotNull FlatbuffersDeclaredName o) {
+    visitPsiElement(o);
+  }
+
   public void visitDeclaredNamespace(@NotNull FlatbuffersDeclaredNamespace o) {
     visitPsiElement(o);
   }
@@ -45,7 +49,7 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumDecl(@NotNull FlatbuffersEnumDecl o) {
-    visitNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitEnumvalDecl(@NotNull FlatbuffersEnumvalDecl o) {
@@ -145,11 +149,15 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeDecl(@NotNull FlatbuffersTypeDecl o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeName(@NotNull FlatbuffersTypeName o) {
     visitNamedElement(o);
   }
 
   public void visitUnionDecl(@NotNull FlatbuffersUnionDecl o) {
-    visitNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitUnionvalDecl(@NotNull FlatbuffersUnionvalDecl o) {

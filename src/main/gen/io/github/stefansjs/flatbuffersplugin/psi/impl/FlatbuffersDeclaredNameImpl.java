@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
 
-public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements FlatbuffersTypeDecl {
+public class FlatbuffersDeclaredNameImpl extends FlatbuffersDeclaredNameMixin implements FlatbuffersDeclaredName {
 
-  public FlatbuffersTypeDeclImpl(@NotNull ASTNode node) {
+  public FlatbuffersDeclaredNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitTypeDecl(this);
+    visitor.visitDeclaredName(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,20 +27,8 @@ public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements Fla
 
   @Override
   @NotNull
-  public List<FlatbuffersFieldDecl> getFieldDeclList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersFieldDecl.class);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersMetadata getMetadata() {
-    return findChildByClass(FlatbuffersMetadata.class);
-  }
-
-  @Override
-  @NotNull
-  public FlatbuffersTypeName getTypeName() {
-    return findNotNullChildByClass(FlatbuffersTypeName.class);
+  public FlatbuffersIdent getIdent() {
+    return findNotNullChildByClass(FlatbuffersIdent.class);
   }
 
 }

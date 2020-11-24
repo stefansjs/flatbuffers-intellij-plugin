@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FlatbuffersDeclaredType extends PsiElement {
-
-  @Nullable
-  FlatbuffersDeclaredName getDeclaredName();
+public interface FlatbuffersDeclaredName extends PsiElement {
 
   @NotNull
-  FlatbuffersDeclaredNamespace getDeclaredNamespace();
+  FlatbuffersIdent getIdent();
 
 }

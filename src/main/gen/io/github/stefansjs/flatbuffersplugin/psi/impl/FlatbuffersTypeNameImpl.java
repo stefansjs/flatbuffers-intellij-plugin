@@ -8,17 +8,18 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
-public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements FlatbuffersTypeDecl {
+public class FlatbuffersTypeNameImpl extends FlatbuffersNamedElementImpl implements FlatbuffersTypeName {
 
-  public FlatbuffersTypeDeclImpl(@NotNull ASTNode node) {
+  public FlatbuffersTypeNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitTypeDecl(this);
+    visitor.visitTypeName(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,20 +29,25 @@ public class FlatbuffersTypeDeclImpl extends ASTWrapperPsiElement implements Fla
 
   @Override
   @NotNull
-  public List<FlatbuffersFieldDecl> getFieldDeclList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FlatbuffersFieldDecl.class);
+  public FlatbuffersIdent getIdent() {
+    return findNotNullChildByClass(FlatbuffersIdent.class);
   }
 
   @Override
-  @Nullable
-  public FlatbuffersMetadata getMetadata() {
-    return findChildByClass(FlatbuffersMetadata.class);
+  public String getName() {
+    return FlatbuffersPsiImplUtilKt.getName(this);
   }
 
   @Override
   @NotNull
-  public FlatbuffersTypeName getTypeName() {
-    return findNotNullChildByClass(FlatbuffersTypeName.class);
+  public FlatbuffersNamedElement setName(@NotNull String newName) {
+    return FlatbuffersPsiImplUtilKt.setName(this, newName);
+  }
+
+  @Override
+  @NotNull
+  public FlatbuffersIdent getNameIdentifier() {
+    return FlatbuffersPsiImplUtilKt.getNameIdentifier(this);
   }
 
 }
