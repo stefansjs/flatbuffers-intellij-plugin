@@ -51,13 +51,13 @@ class FlatbuffersAnnotator: Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         when (element) {
             is FlatbuffersTypeDecl -> {
-                applyAttribute(element.ident, holder, CLASS_NAME)
+                applyAttribute(getNameIdentifier(element.typeName), holder, CLASS_NAME)
             }
             is FlatbuffersEnumDecl -> {
-                applyAttribute(getNameIdentifier(element), holder, CLASS_NAME)
+                applyAttribute(getNameIdentifier(element.typeName), holder, CLASS_NAME)
             }
             is FlatbuffersUnionDecl -> {
-                applyAttribute(element.ident, holder, CLASS_NAME)
+                applyAttribute(getNameIdentifier(element.typeName), holder, CLASS_NAME)
             }
             is FlatbuffersFieldDecl -> {
                 applyFormatting(element, holder)
@@ -94,10 +94,12 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyFormatting(declaredType: FlatbuffersDeclaredType, holder: AnnotationHolder) {
-        declaredType.ident?.let { applyAttribute(it, holder, CLASS_REFERENCE) }
-
+        //namespace parts are optional because types are not required to be fully qualified
         val namespaceParts = declaredType.declaredNamespace.identList
         namespaceParts.map { applyAttribute(it, holder, NAMESPACE_REF) }
+
+        //type name is actually optional in invalid-syntax cases (which keeps the entire parser from barfing)
+        declaredType.declaredName?.let { applyAttribute(it, holder, CLASS_REFERENCE) }
     }
 
     private fun applyFormatting(element: FlatbuffersUnionvalDecl, holder: AnnotationHolder) {

@@ -15,16 +15,7 @@
  */
 package io.github.stefansjs.flatbuffersplugin.psi.impl
 
-import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
-import com.intellij.psi.search.FileTypeIndex
-import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.psi.util.PsiTreeUtil
-import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeName
 import io.github.stefansjs.flatbuffersplugin.psi.createClass
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement
 
@@ -56,18 +47,6 @@ fun <T : FlatbuffersNamedElement> setName(element: T, newName: String): Flatbuff
     return element
 }
 
-// FlatbuffersNamedElement implementations for FlatbuffersTypeDecl
-fun getNameIdentifier(element: FlatbuffersTypeDecl) = element.ident
-fun getName(element: FlatbuffersTypeDecl) = element.ident.text
-fun setName(element: FlatbuffersTypeDecl, newName: String) = setName<FlatbuffersTypeDecl>(element, newName)
-
-// Replicate the same for FlatbuffersEnumDecl
-fun getNameIdentifier(element: FlatbuffersEnumDecl) = element.ident
-fun getName(element: FlatbuffersEnumDecl) = element.ident.text
-fun setName(element: FlatbuffersEnumDecl, newName: String) = setName<FlatbuffersEnumDecl>(element, newName)
-
-// and for union decl
-fun getNameIdentifier(element: FlatbuffersUnionDecl) = element.ident
-fun getName(element: FlatbuffersUnionDecl) = element.ident.text
-fun setName(element: FlatbuffersUnionDecl, newName: String) = setName<FlatbuffersUnionDecl>(element, newName)
-
+fun getNameIdentifier(element: FlatbuffersTypeName) = element.ident
+fun getName(element: FlatbuffersTypeName) = getNameIdentifier(element).text
+fun setName(element: FlatbuffersTypeName, newName: String) = setName<FlatbuffersTypeName>(element, newName)

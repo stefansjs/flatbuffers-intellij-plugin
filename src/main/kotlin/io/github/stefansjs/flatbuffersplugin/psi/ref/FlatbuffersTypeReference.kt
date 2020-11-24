@@ -14,15 +14,14 @@ import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersDeclaredType
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumDecl
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeDecl
-import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionDecl
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersDeclaredName
 
-class FlatbuffersTypeReference(element: FlatbuffersDeclaredType) :
-    PsiReferenceBase<FlatbuffersDeclaredType>(element,
-                                              TextRange(element.ident!!.startOffsetInParent,
-                                                        element.ident!!.startOffsetInParent + element.ident!!.textLength))
+fun getTextRangeInParent(ident: PsiElement): TextRange {
+    return TextRange(ident.startOffsetInParent, ident.startOffsetInParent + ident.textLength)
+}
+
+class FlatbuffersTypeReference(element: FlatbuffersDeclaredName) :
+    PsiReferenceBase<FlatbuffersDeclaredName>(element, getTextRangeInParent(element.ident))
 {
     override fun resolve(): PsiElement? {
         // Try and find the declaration locally first. IIUC flatbuffers only allows one declaratino per namespace,
@@ -73,10 +72,7 @@ private fun findTypes(project: Project, typeName: String? = null): List<Flatbuff
 
 private fun findTypes(file: PsiFile, typeName: String? = null): List<FlatbuffersNamedElement>
 {
-    var declarations = PsiTreeUtil.findChildrenOfAnyType(file,
-                                                         FlatbuffersTypeDecl::class.java,
-                                                         FlatbuffersUnionDecl::class.java,
-                                                         FlatbuffersEnumDecl::class.java)
+    var declarations = PsiTreeUtil.findChildrenOfAnyType(file, FlatbuffersNamedElement::class.java)
     if (typeName != null) {
         declarations = declarations.filter { typeName == it.name }
     }
