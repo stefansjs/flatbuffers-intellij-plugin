@@ -104,7 +104,10 @@ class FlatbuffersAnnotator: Annotator {
 
     private fun applyFormatting(element: FlatbuffersUnionvalDecl, holder: AnnotationHolder) {
         element.ident?.let { applyAttribute(it, holder, UNION_ALIAS) }
-        applyAttribute(element.declaredType, holder, CLASS_REFERENCE)
+        // This is intentionally duplicate of applyFormatting on FlatbuffersDeclaredType
+        // Basically because the declared type has a pin in the parser, it fails for union declarations
+        element.declaredNamespace.identList.map { applyAttribute(it, holder, NAMESPACE_REF) }
+        applyAttribute(element.declaredName, holder, CLASS_REFERENCE)
     }
 
     private fun applyFormatting(element: FlatbuffersNamespaceDecl, holder: AnnotationHolder) {

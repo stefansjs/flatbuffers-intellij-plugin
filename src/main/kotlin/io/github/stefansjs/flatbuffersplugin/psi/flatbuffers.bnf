@@ -138,14 +138,19 @@ array_type ::= LBRACK (primitive | declared_type) RBRACK {pin=1}
 declared_type ::= declared_namespace declared_name
                   {pin=1
                   }
-declared_namespace ::= (ident DOT)* {pin=2}
+declared_namespace ::= (ident DOT)*
+                   {pin=2
+                   }
 declared_name ::= ident
                   {mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersDeclaredNameMixin"
                   }
 
 enumval_decl ::= ident ( EQUALS integer_constant )?
 
-unionval_decl ::= ( ident COLON )? declared_type
+// This is explicitly duplicating the structure for a declared_type, but without the pin.
+// Essentially the pin is necessary for all other cases, but by putting it in a union value where a trailing comma is
+// expected it starts to believe that it's finding an empty namespace rather than allowing nothing to come after the comma
+unionval_decl ::= ( ident COLON )? declared_namespace declared_name
 
 metadata ::= LPAREN metadata_value ( COMMA metadata_value )* RPAREN
 

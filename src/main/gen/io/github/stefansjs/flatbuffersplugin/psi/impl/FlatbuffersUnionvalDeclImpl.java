@@ -28,8 +28,14 @@ public class FlatbuffersUnionvalDeclImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
-  public FlatbuffersDeclaredType getDeclaredType() {
-    return findNotNullChildByClass(FlatbuffersDeclaredType.class);
+  public FlatbuffersDeclaredName getDeclaredName() {
+    return findNotNullChildByClass(FlatbuffersDeclaredName.class);
+  }
+
+  @Override
+  @NotNull
+  public FlatbuffersDeclaredNamespace getDeclaredNamespace() {
+    return findNotNullChildByClass(FlatbuffersDeclaredNamespace.class);
   }
 
   @Override
