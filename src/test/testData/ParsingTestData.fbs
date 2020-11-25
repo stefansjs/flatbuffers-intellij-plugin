@@ -30,4 +30,10 @@ table Monster {
 
 table Empty {}
 
+union UnionWithTrailingComma
+{
+    first,
+    second,
+}
+
 root_type Monster;
