@@ -21,6 +21,7 @@ public class FlatbuffersFloatConstantImpl extends ASTWrapperPsiElement implement
     visitor.visitFloatConstant(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);

@@ -21,6 +21,7 @@ public class FlatbuffersFieldDeclImpl extends ASTWrapperPsiElement implements Fl
     visitor.visitFieldDecl(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
