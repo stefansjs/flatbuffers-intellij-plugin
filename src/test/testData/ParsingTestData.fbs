@@ -1,5 +1,7 @@
 // example IDL file
 
+include "somefile.fbs";
+
 namespace MyGame;
 
 attribute "priority";
