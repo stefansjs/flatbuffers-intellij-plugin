@@ -267,16 +267,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(NAMESPACE |
-  //                            TABLE |
-  //                            STRUCT |
-  //                            ENUM |
-  //                            UNION |
-  //                            ROOT_TYPE |
-  //                            FILE_EXTENSION |
-  //                            FILE_IDENTIFIER |
-  //                            ATTRIBUTE |
-  //                            RPC_SERVICE)
+  // !(decl_start)
   static boolean decl_recover(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_recover")) return false;
     boolean r;
@@ -286,6 +277,17 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // (decl_start)
+  private static boolean decl_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "decl_recover_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = decl_start(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // NAMESPACE |
   //                            TABLE |
   //                            STRUCT |
@@ -296,8 +298,8 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   //                            FILE_IDENTIFIER |
   //                            ATTRIBUTE |
   //                            RPC_SERVICE
-  private static boolean decl_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "decl_recover_0")) return false;
+  static boolean decl_start(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "decl_start")) return false;
     boolean r;
     r = consumeToken(b, NAMESPACE);
     if (!r) r = consumeToken(b, TABLE);
@@ -337,7 +339,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     if (!r) r = attribute_decl(b, l + 1);
     if (!r) r = rpc_decl(b, l + 1);
     if (!r) r = object(b, l + 1);
-    exit_section_(b, l, m, r, false, decl_recover_parser_);
+    exit_section_(b, l, m, r, false, FlatbuffersParser::decl_recover);
     return r;
   }
 
@@ -672,14 +674,40 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   // INCLUDE string_constant SEMICOLON
   public static boolean incl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "incl")) return false;
-    if (!nextTokenIs(b, INCLUDE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, INCL, "<incl>");
     r = consumeToken(b, INCLUDE);
-    r = r && string_constant(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, INCL, r);
+    p = r; // pin = INCLUDE
+    r = r && report_error_(b, string_constant(b, l + 1));
+    r = p && consumeToken(b, SEMICOLON) && r;
+    exit_section_(b, l, m, r, p, FlatbuffersParser::incl_recover);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // !(incl_start | decl_start)
+  static boolean incl_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "incl_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !incl_recover_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // incl_start | decl_start
+  private static boolean incl_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "incl_recover_0")) return false;
+    boolean r;
+    r = incl_start(b, l + 1);
+    if (!r) r = decl_start(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // INCLUDE
+  static boolean incl_start(PsiBuilder b, int l) {
+    return consumeToken(b, INCLUDE);
   }
 
   /* ********************************************************** */
@@ -905,6 +933,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  static boolean pre_include_error(PsiBuilder b, int l) {
+    Marker m = enter_section_(b, l, _NONE_);
+    exit_section_(b, l, m, true, false, FlatbuffersParser::incl_recover);
+    return true;
+  }
+
+  /* ********************************************************** */
   // int_type | float_type | string
   public static boolean primitive(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "primitive")) return false;
@@ -1003,35 +1038,43 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // incl* declaration*
+  // pre_include_error? incl* declaration*
   static boolean schema(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "schema")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = schema_0(b, l + 1);
     r = r && schema_1(b, l + 1);
+    r = r && schema_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // incl*
+  // pre_include_error?
   private static boolean schema_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "schema_0")) return false;
+    pre_include_error(b, l + 1);
+    return true;
+  }
+
+  // incl*
+  private static boolean schema_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "schema_1")) return false;
     while (true) {
       int c = current_position_(b);
       if (!incl(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "schema_0", c)) break;
+      if (!empty_element_parsed_guard_(b, "schema_1", c)) break;
     }
     return true;
   }
 
   // declaration*
-  private static boolean schema_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "schema_1")) return false;
+  private static boolean schema_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "schema_2")) return false;
     while (true) {
       int c = current_position_(b);
       if (!declaration(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "schema_1", c)) break;
+      if (!empty_element_parsed_guard_(b, "schema_2", c)) break;
     }
     return true;
   }
@@ -1218,9 +1261,4 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  static final Parser decl_recover_parser_ = new Parser() {
-    public boolean parse(PsiBuilder b, int l) {
-      return decl_recover(b, l + 1);
-    }
-  };
 }

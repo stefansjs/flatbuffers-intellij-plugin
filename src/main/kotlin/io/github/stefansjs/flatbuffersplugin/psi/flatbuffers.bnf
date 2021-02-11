@@ -31,9 +31,18 @@
   ]
 }
 
-schema ::= incl* declaration*
+schema ::= pre_include_error? incl* declaration*
+
+// If you place a bunch of junk before the first statement then the parser won't know how to recover
+// This specifically aids includes because they pin on the "include" token and precede any other declarations
+private pre_include_error ::= {recoverWhile=incl_recover}
 
 incl ::= INCLUDE string_constant SEMICOLON
+        {pin=INCLUDE
+         recoverWhile=incl_recover
+        }
+private incl_recover ::= !(incl_start | decl_start)
+private incl_start ::= INCLUDE
 
 declaration ::= namespace_decl
               | type_decl
@@ -46,7 +55,8 @@ declaration ::= namespace_decl
               | rpc_decl
               | object
               {recoverWhile=decl_recover}
-private decl_recover ::= !(NAMESPACE |
+private decl_recover ::= !(decl_start)
+private decl_start ::= (NAMESPACE |
                            TABLE |
                            STRUCT |
                            ENUM |

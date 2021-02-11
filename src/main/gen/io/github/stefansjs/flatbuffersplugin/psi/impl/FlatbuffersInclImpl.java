@@ -27,9 +27,9 @@ public class FlatbuffersInclImpl extends ASTWrapperPsiElement implements Flatbuf
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersStringConstant getStringConstant() {
-    return findNotNullChildByClass(FlatbuffersStringConstant.class);
+    return findChildByClass(FlatbuffersStringConstant.class);
   }
 
 }

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface FlatbuffersIncl extends PsiElement {
 
-  @NotNull
+  @Nullable
   FlatbuffersStringConstant getStringConstant();
 
 }
