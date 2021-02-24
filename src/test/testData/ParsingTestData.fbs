@@ -1,6 +1,7 @@
 // example IDL file
 
 include "somefile.fbs";
+native_include "native_type_test_impl.h";//native_includes must precede any declarations
 
 namespace MyGame;
 
@@ -37,5 +38,23 @@ union UnionWithTrailingComma
     first,
     second,
 }
+
+namespace Geometry;
+
+attribute force_align;
+
+struct Vector3D (native_type:"Native::Vector3D", force_align)
+{
+  // according to the flatbuffers parser implementation, native_inline and native_default are only relevant to a struct
+  x:float (native_inline, native_default:10);
+  y:float;
+  z:float;
+}
+
+// Howerver, a custom allocator may be applied to a struct or a table, esp to allocate native struct types
+table ApplicationData(native_custom_alloc:"custom_allocator") {
+  vectors:[Vector3D];
+}
+
 
 root_type Monster;
