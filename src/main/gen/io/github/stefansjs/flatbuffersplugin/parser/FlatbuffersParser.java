@@ -267,37 +267,27 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(decl_start)
+  // !decl_start
   static boolean decl_recover(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_recover")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NOT_);
-    r = !decl_recover_0(b, l + 1);
+    r = !decl_start(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // (decl_start)
-  private static boolean decl_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "decl_recover_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = decl_start(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
   /* ********************************************************** */
-  // NAMESPACE |
-  //                            TABLE |
-  //                            STRUCT |
-  //                            ENUM |
-  //                            UNION |
-  //                            ROOT_TYPE |
-  //                            FILE_EXTENSION |
-  //                            FILE_IDENTIFIER |
-  //                            ATTRIBUTE |
-  //                            RPC_SERVICE
+  // NAMESPACE
+  //         | TABLE
+  //         | STRUCT
+  //         | ENUM
+  //         | UNION
+  //         | ROOT_TYPE
+  //         | FILE_EXTENSION
+  //         | FILE_IDENTIFIER
+  //         | ATTRIBUTE
+  //         | RPC_SERVICE
   static boolean decl_start(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "decl_start")) return false;
     boolean r;
@@ -316,15 +306,15 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // namespace_decl
-  //               | type_decl
-  //               | enum_decl
-  //               | union_decl
-  //               | root_decl
-  //               | file_extension_decl
-  //               | file_identifier_decl
-  //               | attribute_decl
-  //               | rpc_decl
-  //               | object
+  //         | type_decl
+  //         | enum_decl
+  //         | union_decl
+  //         | root_decl
+  //         | file_extension_decl
+  //         | file_identifier_decl
+  //         | attribute_decl
+  //         | rpc_decl
+  //         | object
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
     boolean r;
@@ -553,8 +543,8 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // primitive
-  //              | array_type
-  //              | declared_type
+  //         | array_type
+  //         | declared_type
   public static boolean field_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_type")) return false;
     boolean r;
@@ -621,9 +611,9 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // float
-  //                      | double
-  //                      | float32
-  //                      | float64
+  //         | double
+  //         | float32
+  //         | float64
   static boolean float_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "float_type")) return false;
     boolean r;
@@ -696,22 +686,22 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // bool
-  //                    | byte
-  //                    | ubyte
-  //                    | short
-  //                    | ushort
-  //                    | int
-  //                    | uint
-  //                    | long
-  //                    | ulong
-  //                    | int8
-  //                    | uint8
-  //                    | int16
-  //                    | uint16
-  //                    | int32
-  //                    | uint32
-  //                    | int64
-  //                    | uint64
+  //         | byte
+  //         | ubyte
+  //         | short
+  //         | ushort
+  //         | int
+  //         | uint
+  //         | long
+  //         | ulong
+  //         | int8
+  //         | uint8
+  //         | int16
+  //         | uint16
+  //         | int32
+  //         | uint32
+  //         | int64
+  //         | uint64
   static boolean int_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "int_type")) return false;
     boolean r;
@@ -750,8 +740,8 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // primitive
-  //                   | TABLE
-  //                   | STRUCT
+  //         | TABLE
+  //         | STRUCT
   static boolean keyword(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "keyword")) return false;
     boolean r;
