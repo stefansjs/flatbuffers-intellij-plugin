@@ -31,18 +31,27 @@
   ]
 }
 
-schema ::= pre_include_error? incl* declaration*
+schema ::= pre_decl_error? pre_decl* declaration*
 
 // If you place a bunch of junk before the first statement then the parser won't know how to recover
 // This specifically aids includes because they pin on the "include" token and precede any other declarations
-private pre_include_error ::= {recoverWhile=incl_recover}
+private pre_decl_error ::= {recoverWhile=pre_decl_recover}
 
-incl ::= INCLUDE string_constant SEMICOLON
-        {pin=INCLUDE
-         recoverWhile=incl_recover
+// Flatbuffers requires includes before any declarations.
+// native_include is treated like an include for some reason
+private pre_decl ::= incl
+                   | native_incl
+                   {recoverWhile=pre_decl_recover}
+private pre_decl_recover ::= !(pre_decl_start | decl_start)
+private pre_decl_start ::= (INCLUDE | IMPORT | NATIVE_INCLUDE)
+
+incl ::= (INCLUDE | IMPORT) string_constant SEMICOLON
+        {pin=1
         }
-private incl_recover ::= !(incl_start | decl_start)
-private incl_start ::= INCLUDE
+
+native_incl ::= NATIVE_INCLUDE string_constant SEMICOLON
+            {pin=NATIVE_INCLUDE
+            }
 
 declaration ::= namespace_decl
               | type_decl

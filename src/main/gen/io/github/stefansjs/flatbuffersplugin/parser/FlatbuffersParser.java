@@ -671,43 +671,27 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // INCLUDE string_constant SEMICOLON
+  // (INCLUDE | IMPORT) string_constant SEMICOLON
   public static boolean incl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "incl")) return false;
+    if (!nextTokenIs(b, "<incl>", IMPORT, INCLUDE)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, INCL, "<incl>");
-    r = consumeToken(b, INCLUDE);
-    p = r; // pin = INCLUDE
+    r = incl_0(b, l + 1);
+    p = r; // pin = 1
     r = r && report_error_(b, string_constant(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, FlatbuffersParser::incl_recover);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  /* ********************************************************** */
-  // !(incl_start | decl_start)
-  static boolean incl_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "incl_recover")) return false;
+  // INCLUDE | IMPORT
+  private static boolean incl_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "incl_0")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !incl_recover_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    r = consumeToken(b, INCLUDE);
+    if (!r) r = consumeToken(b, IMPORT);
     return r;
-  }
-
-  // incl_start | decl_start
-  private static boolean incl_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "incl_recover_0")) return false;
-    boolean r;
-    r = incl_start(b, l + 1);
-    if (!r) r = decl_start(b, l + 1);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // INCLUDE
-  static boolean incl_start(PsiBuilder b, int l) {
-    return consumeToken(b, INCLUDE);
   }
 
   /* ********************************************************** */
@@ -884,6 +868,21 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // NATIVE_INCLUDE string_constant SEMICOLON
+  public static boolean native_incl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "native_incl")) return false;
+    if (!nextTokenIs(b, NATIVE_INCLUDE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, NATIVE_INCL, null);
+    r = consumeToken(b, NATIVE_INCLUDE);
+    p = r; // pin = NATIVE_INCLUDE
+    r = r && report_error_(b, string_constant(b, l + 1));
+    r = p && consumeToken(b, SEMICOLON) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // object_value ( COMMA object_value )*
   public static boolean object(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object")) return false;
@@ -933,10 +932,54 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  static boolean pre_include_error(PsiBuilder b, int l) {
+  // incl
+  //                    | native_incl
+  static boolean pre_decl(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pre_decl")) return false;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_);
-    exit_section_(b, l, m, true, false, FlatbuffersParser::incl_recover);
+    r = incl(b, l + 1);
+    if (!r) r = native_incl(b, l + 1);
+    exit_section_(b, l, m, r, false, FlatbuffersParser::pre_decl_recover);
+    return r;
+  }
+
+  /* ********************************************************** */
+  static boolean pre_decl_error(PsiBuilder b, int l) {
+    Marker m = enter_section_(b, l, _NONE_);
+    exit_section_(b, l, m, true, false, FlatbuffersParser::pre_decl_recover);
     return true;
+  }
+
+  /* ********************************************************** */
+  // !(pre_decl_start | decl_start)
+  static boolean pre_decl_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pre_decl_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !pre_decl_recover_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // pre_decl_start | decl_start
+  private static boolean pre_decl_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pre_decl_recover_0")) return false;
+    boolean r;
+    r = pre_decl_start(b, l + 1);
+    if (!r) r = decl_start(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // INCLUDE | IMPORT | NATIVE_INCLUDE
+  static boolean pre_decl_start(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pre_decl_start")) return false;
+    boolean r;
+    r = consumeToken(b, INCLUDE);
+    if (!r) r = consumeToken(b, IMPORT);
+    if (!r) r = consumeToken(b, NATIVE_INCLUDE);
+    return r;
   }
 
   /* ********************************************************** */
@@ -1038,7 +1081,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // pre_include_error? incl* declaration*
+  // pre_decl_error? pre_decl* declaration*
   static boolean schema(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "schema")) return false;
     boolean r;
@@ -1050,19 +1093,19 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // pre_include_error?
+  // pre_decl_error?
   private static boolean schema_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "schema_0")) return false;
-    pre_include_error(b, l + 1);
+    pre_decl_error(b, l + 1);
     return true;
   }
 
-  // incl*
+  // pre_decl*
   private static boolean schema_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "schema_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!incl(b, l + 1)) break;
+      if (!pre_decl(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "schema_1", c)) break;
     }
     return true;

@@ -42,6 +42,8 @@ BLOCK_COMMENT="/*" !([^]* "*/" [^]*) ("*/")?
   {WHITE_SPACE}        { return WHITE_SPACE; }
 
   "include"            { return INCLUDE; }
+  "import"             { return IMPORT; }
+  "native_include"     { return NATIVE_INCLUDE; }
   "namespace"          { return NAMESPACE; }
   "attribute"          { return ATTRIBUTE; }
   "table"              { return TABLE; }

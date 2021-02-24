@@ -78,6 +78,8 @@ class FlatbuffersSyntaxHighlighter: SyntaxHighlighterBase() {
             return NUMBER_KEYS
         }
         else if(token == FlatbuffersTypes.INCLUDE ||
+                token == FlatbuffersTypes.IMPORT ||
+                token == FlatbuffersTypes.NATIVE_INCLUDE ||
                 token == FlatbuffersTypes.NAMESPACE ||
                 token == FlatbuffersTypes.TABLE ||
                 token == FlatbuffersTypes.STRUCT ||
