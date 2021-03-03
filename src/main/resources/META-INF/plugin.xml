@@ -6,12 +6,11 @@
   <description>Editing support for flatbuffers schema files (.fbs)</description>
 
   <change-notes>
-    <![CDATA[This release includes minor improvements to parsing and plugin loading, including
+    <![CDATA[This release fixing parsing bugs, including
+
     <ul>
-      <li>Support for dynamic plugin loading for low-friction updates</li>
-      <li>Better robustness for field parsing within a table allows subsequent fields to be syntax highlighted even when
-          the field being edited contains syntax errors</li>
-      <li>Fix for type highlighting under the table/struct/enum name rather than table/struct/enum keyword</li>
+      <li>provides better parsing error handling in includes section</li>
+      <li>provides support for native_include and other native_* attributes</li>
     </ul>]]>
   </change-notes>
 
