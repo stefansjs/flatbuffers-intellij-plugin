@@ -24,7 +24,6 @@
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory
             implementation="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileTypeFactory"
-            dynamic="true"
     />
     <fileType
             name="Flatbuffers file"
@@ -32,31 +31,25 @@
             language="Flatbuffers"
             extensions="fbs"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType"
-            dynamic="true"
     />
     <colorSettingsPage
             implementation="io.github.stefansjs.flatbuffersplugin.FlatbuffersColorSettingsPage"
-            dynamic="true"
     />
     <lang.parserDefinition
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersParserDefinition"
-            dynamic="true"
     />
     <lang.syntaxHighlighterFactory
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersSyntaxHighlighterFactory"
-            dynamic="true"
     />
     <annotator
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersAnnotator"
-            dynamic="true"
     />
     <completion.contributor
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.completion.FlatbuffersCompletionContributor"
-            dynamic="true"
     />
   </extensions>
 </idea-plugin>
