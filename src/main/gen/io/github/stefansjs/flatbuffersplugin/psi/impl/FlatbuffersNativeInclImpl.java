@@ -11,14 +11,14 @@ import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
 
-public class FlatbuffersStringConstantImpl extends ASTWrapperPsiElement implements FlatbuffersStringConstant {
+public class FlatbuffersNativeInclImpl extends ASTWrapperPsiElement implements FlatbuffersNativeIncl {
 
-  public FlatbuffersStringConstantImpl(@NotNull ASTNode node) {
+  public FlatbuffersNativeInclImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitStringConstant(this);
+    visitor.visitNativeIncl(this);
   }
 
   @Override
@@ -28,9 +28,9 @@ public class FlatbuffersStringConstantImpl extends ASTWrapperPsiElement implemen
   }
 
   @Override
-  @NotNull
-  public PsiElement getStringLiteral() {
-    return findNotNullChildByType(STRING_LITERAL);
+  @Nullable
+  public FlatbuffersStringConstant getStringConstant() {
+    return findChildByClass(FlatbuffersStringConstant.class);
   }
 
 }

@@ -1,6 +1,14 @@
 // example IDL file
 
+front matter before the first includes causes a special type of failure;
+
+include "some_schema.fbs";
+include bad_include;
+include "another_schema.fbs";
+
 namespace MyGame;
+
+include "in_the_wrong_place.fbs";
 
 attribute "priority";
 

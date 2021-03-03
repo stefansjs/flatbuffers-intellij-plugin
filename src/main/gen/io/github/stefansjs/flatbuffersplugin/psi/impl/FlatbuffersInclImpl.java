@@ -21,15 +21,16 @@ public class FlatbuffersInclImpl extends ASTWrapperPsiElement implements Flatbuf
     visitor.visitIncl(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FlatbuffersStringConstant getStringConstant() {
-    return findNotNullChildByClass(FlatbuffersStringConstant.class);
+    return findChildByClass(FlatbuffersStringConstant.class);
   }
 
 }

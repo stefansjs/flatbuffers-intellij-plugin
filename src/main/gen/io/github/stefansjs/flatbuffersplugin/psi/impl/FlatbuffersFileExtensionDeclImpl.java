@@ -21,6 +21,7 @@ public class FlatbuffersFileExtensionDeclImpl extends ASTWrapperPsiElement imple
     visitor.visitFileExtensionDecl(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);

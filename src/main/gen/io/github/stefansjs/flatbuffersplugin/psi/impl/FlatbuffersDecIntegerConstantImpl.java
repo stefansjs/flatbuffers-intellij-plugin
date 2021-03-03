@@ -21,6 +21,7 @@ public class FlatbuffersDecIntegerConstantImpl extends ASTWrapperPsiElement impl
     visitor.visitDecIntegerConstant(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);

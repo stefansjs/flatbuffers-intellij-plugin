@@ -34,6 +34,7 @@ public interface FlatbuffersTypes {
   IElementType INTEGER_CONSTANT = new FlatbuffersElementType("INTEGER_CONSTANT");
   IElementType METADATA = new FlatbuffersElementType("METADATA");
   IElementType NAMESPACE_DECL = new FlatbuffersElementType("NAMESPACE_DECL");
+  IElementType NATIVE_INCL = new FlatbuffersElementType("NATIVE_INCL");
   IElementType OBJECT = new FlatbuffersElementType("OBJECT");
   IElementType PRIMITIVE = new FlatbuffersElementType("PRIMITIVE");
   IElementType ROOT_DECL = new FlatbuffersElementType("ROOT_DECL");
@@ -72,6 +73,7 @@ public interface FlatbuffersTypes {
   IElementType HEX_FLOAT = new FlatbuffersTokenType("HEX_FLOAT");
   IElementType HEX_INTEGER = new FlatbuffersTokenType("HEX_INTEGER");
   IElementType IDENTIFIER = new FlatbuffersTokenType("IDENTIFIER");
+  IElementType IMPORT = new FlatbuffersTokenType("IMPORT");
   IElementType INCLUDE = new FlatbuffersTokenType("INCLUDE");
   IElementType INT = new FlatbuffersTokenType("int");
   IElementType INT16 = new FlatbuffersTokenType("int16");
@@ -83,6 +85,7 @@ public interface FlatbuffersTypes {
   IElementType LONG = new FlatbuffersTokenType("long");
   IElementType LPAREN = new FlatbuffersTokenType("LPAREN");
   IElementType NAMESPACE = new FlatbuffersTokenType("NAMESPACE");
+  IElementType NATIVE_INCLUDE = new FlatbuffersTokenType("NATIVE_INCLUDE");
   IElementType QUESTION_MARK = new FlatbuffersTokenType("QUESTION_MARK");
   IElementType RBRACK = new FlatbuffersTokenType("RBRACK");
   IElementType RCURLY = new FlatbuffersTokenType("RCURLY");
@@ -187,6 +190,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == NAMESPACE_DECL) {
         return new FlatbuffersNamespaceDeclImpl(node);
+      }
+      else if (type == NATIVE_INCL) {
+        return new FlatbuffersNativeInclImpl(node);
       }
       else if (type == OBJECT) {
         return new FlatbuffersObjectImpl(node);

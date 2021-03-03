@@ -112,6 +112,10 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitNativeIncl(@NotNull FlatbuffersNativeIncl o) {
+    visitPsiElement(o);
+  }
+
   public void visitObject(@NotNull FlatbuffersObject o) {
     visitPsiElement(o);
   }

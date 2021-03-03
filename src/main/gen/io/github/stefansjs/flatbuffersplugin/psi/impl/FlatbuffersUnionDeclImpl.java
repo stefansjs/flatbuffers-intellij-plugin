@@ -21,6 +21,7 @@ public class FlatbuffersUnionDeclImpl extends ASTWrapperPsiElement implements Fl
     visitor.visitUnionDecl(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);

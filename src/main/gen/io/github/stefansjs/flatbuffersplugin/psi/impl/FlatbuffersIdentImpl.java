@@ -21,6 +21,7 @@ public class FlatbuffersIdentImpl extends ASTWrapperPsiElement implements Flatbu
     visitor.visitIdent(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
