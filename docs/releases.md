@@ -13,7 +13,7 @@ almost entirely set out using github. Thanks github.
 
 Feature development is done on master for as long as I am the only developer.
  
-Pull requests may be done on feature branches and merged to release.
+Pull requests may be done on feature branches and merged to master.
  
 `release` is treated as a Release Candidate (RC) branch for testing in production environments. RC fixes are done 
 directly on the release branch. QA iterations are done on release until a final release can be published. Releases are 
