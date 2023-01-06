@@ -181,7 +181,7 @@ private float_type ::=
         | float32
         | float64
 
-array_type ::= LBRACK (primitive | declared_type) RBRACK
+array_type ::= LBRACK (primitive | declared_type) (COLON dec_integer_constant)? RBRACK
 {
     pin=1
 }
