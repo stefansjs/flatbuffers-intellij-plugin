@@ -29,6 +29,12 @@ public class FlatbuffersArrayTypeImpl extends ASTWrapperPsiElement implements Fl
 
   @Override
   @Nullable
+  public FlatbuffersDecIntegerConstant getDecIntegerConstant() {
+    return findChildByClass(FlatbuffersDecIntegerConstant.class);
+  }
+
+  @Override
+  @Nullable
   public FlatbuffersDeclaredType getDeclaredType() {
     return findChildByClass(FlatbuffersDeclaredType.class);
   }

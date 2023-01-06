@@ -764,7 +764,7 @@ Flatbuffers File(0,1932)
               FlatbuffersDeclaredNameImpl(DECLARED_NAME)(1787,1791)
                 FlatbuffersIdentImpl(IDENT)(1787,1791)
                   PsiElement(flatbuffers.IDENTIFIER)('Faux')(1787,1791)
-            PsiErrorElement:flatbuffers.DOT or flatbuffers.RBRACK expected, got ';'(1791,1791)
+            PsiErrorElement:flatbuffers.COLON, flatbuffers.DOT or flatbuffers.RBRACK expected, got ';'(1791,1791)
               <empty list>
         PsiElement(flatbuffers.SEMICOLON)(';')(1791,1792)
       PsiWhiteSpace('\n  ')(1792,1795)
