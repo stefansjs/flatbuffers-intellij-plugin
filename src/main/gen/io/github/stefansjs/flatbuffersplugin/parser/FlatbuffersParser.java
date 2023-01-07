@@ -36,7 +36,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACK (primitive | declared_type) RBRACK
+  // LBRACK (primitive | declared_type) (COLON dec_integer_constant)? RBRACK
   public static boolean array_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "array_type")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
@@ -45,6 +45,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACK);
     p = r; // pin = 1
     r = r && report_error_(b, array_type_1(b, l + 1));
+    r = p && report_error_(b, array_type_2(b, l + 1)) && r;
     r = p && consumeToken(b, RBRACK) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -56,6 +57,24 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     boolean r;
     r = primitive(b, l + 1);
     if (!r) r = declared_type(b, l + 1);
+    return r;
+  }
+
+  // (COLON dec_integer_constant)?
+  private static boolean array_type_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_type_2")) return false;
+    array_type_2_0(b, l + 1);
+    return true;
+  }
+
+  // COLON dec_integer_constant
+  private static boolean array_type_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_type_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COLON);
+    r = r && dec_integer_constant(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 

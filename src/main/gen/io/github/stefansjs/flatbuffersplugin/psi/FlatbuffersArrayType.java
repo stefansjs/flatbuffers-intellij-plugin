@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface FlatbuffersArrayType extends PsiElement {
 
   @Nullable
+  FlatbuffersDecIntegerConstant getDecIntegerConstant();
+
+  @Nullable
   FlatbuffersDeclaredType getDeclaredType();
 
   @Nullable
