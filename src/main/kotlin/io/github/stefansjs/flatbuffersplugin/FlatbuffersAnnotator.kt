@@ -28,6 +28,7 @@ import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersUnionvalDecl
 import io.github.stefansjs.flatbuffersplugin.psi.impl.getNameIdentifier
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.EditorColorsManager
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -115,8 +116,10 @@ class FlatbuffersAnnotator: Annotator {
     }
 
     private fun applyAttribute(element: PsiElement, holder: AnnotationHolder, textAttributesKey: TextAttributesKey) {
-        val annotation = holder.createInfoAnnotation(element, null)
         val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(textAttributesKey)
-        annotation.enforcedTextAttributes = attributes
+        val annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .range(element)
+            .enforcedTextAttributes(attributes)
+            .create()
     }
 }
