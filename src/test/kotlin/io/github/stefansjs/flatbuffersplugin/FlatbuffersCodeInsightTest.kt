@@ -16,15 +16,15 @@
 
 package io.github.stefansjs.flatbuffersplugin
 
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
-class FlatbuffersCodeInsightTest: LightCodeInsightFixtureTestCase() {
+class FlatbuffersCodeInsightTest: LightJavaCodeInsightFixtureTestCase() {
     override fun getTestDataPath() = "src/test/testData"
 
     /**
      *  The annotator is meant primarily for annotating warnings and errors, but it also provides functionality for
-     *  modifying the highlighting. Currently we're only really doing highlighting and not yet doing code-intelligence
-     *  types of annotations. Hence we test checkInfos=true and ignoreExtraHighlighting=false
+     *  modifying the highlighting. Currently, we're only really doing highlighting and not yet doing code-intelligence
+     *  types of annotations. Hence, we test checkInfos=true and ignoreExtraHighlighting=false
      */
     fun testAnnotator() {
         myFixture.configureByFiles("HighlightTestData.fbs")
