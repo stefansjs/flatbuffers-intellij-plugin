@@ -117,7 +117,7 @@ class FlatbuffersAnnotator: Annotator {
 
     private fun applyAttribute(element: PsiElement, holder: AnnotationHolder, textAttributesKey: TextAttributesKey) {
         val attributes = EditorColorsManager.getInstance().globalScheme.getAttributes(textAttributesKey)
-        val annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .range(element)
             .enforcedTextAttributes(attributes)
             .create()
