@@ -6,7 +6,11 @@
   <description>Editing support for flatbuffers schema files (.fbs)</description>
 
   <change-notes>
-    <![CDATA[This release fixing parsing bugs, including
+    <![CDATA[<h3>v0.4</h3>
+    This release provides additional bugfixes for fixed-sized arrays plus additional internal fixes
+
+    <h3>v0.3</h3>
+    This release fixing parsing bugs, including
 
     <ul>
       <li>provides better parsing error handling in includes section</li>
