@@ -39,6 +39,8 @@ sourceSets.main.java.srcDir 'src/main/gen'
 test {
 }
 
+runIde.jvmArgs += "-XX:+UnlockDiagnosticVMOptions"
+
 def getGitHash() {
     def stdout = new ByteArrayOutputStream()
     exec {
