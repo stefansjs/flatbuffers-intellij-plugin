@@ -16,4 +16,7 @@ public interface FlatbuffersUnionvalDecl extends PsiElement {
   @Nullable
   FlatbuffersIdent getIdent();
 
+  @Nullable
+  FlatbuffersIntegerConstant getIntegerConstant();
+
 }

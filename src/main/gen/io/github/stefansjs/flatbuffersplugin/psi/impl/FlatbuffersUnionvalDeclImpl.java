@@ -45,4 +45,10 @@ public class FlatbuffersUnionvalDeclImpl extends ASTWrapperPsiElement implements
     return findChildByClass(FlatbuffersIdent.class);
   }
 
+  @Override
+  @Nullable
+  public FlatbuffersIntegerConstant getIntegerConstant() {
+    return findChildByClass(FlatbuffersIntegerConstant.class);
+  }
+
 }

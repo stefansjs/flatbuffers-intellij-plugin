@@ -1257,7 +1257,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( ident COLON )? declared_namespace declared_name
+  // ( ident COLON )? declared_namespace declared_name ( EQUALS integer_constant )?
   public static boolean unionval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unionval_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -1266,6 +1266,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = unionval_decl_0(b, l + 1);
     r = r && declared_namespace(b, l + 1);
     r = r && declared_name(b, l + 1);
+    r = r && unionval_decl_3(b, l + 1);
     exit_section_(b, m, UNIONVAL_DECL, r);
     return r;
   }
@@ -1284,6 +1285,24 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = ident(b, l + 1);
     r = r && consumeToken(b, COLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ( EQUALS integer_constant )?
+  private static boolean unionval_decl_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unionval_decl_3")) return false;
+    unionval_decl_3_0(b, l + 1);
+    return true;
+  }
+
+  // EQUALS integer_constant
+  private static boolean unionval_decl_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unionval_decl_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, EQUALS);
+    r = r && integer_constant(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
