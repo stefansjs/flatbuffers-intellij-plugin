@@ -203,7 +203,7 @@ enumval_decl ::= ident ( EQUALS integer_constant )?
 // This is explicitly duplicating the structure for a declared_type, but without the pin.
 // Essentially the pin is necessary for all other cases, but by putting it in a union value where a trailing comma is
 // expected it starts to believe that it's finding an empty namespace rather than allowing nothing to come after the comma
-unionval_decl ::= ( ident COLON )? declared_namespace declared_name
+unionval_decl ::= ( ident COLON )? declared_namespace declared_name ( EQUALS integer_constant )?
 
 metadata ::= LPAREN metadata_value ( COMMA metadata_value )* RPAREN
 

@@ -39,6 +39,11 @@ union UnionWithTrailingComma
     second,
 }
 
+union UnionWithDiscriminants {
+  Monster = 3,
+  MyMonster: Monster = 5,
+}
+
 namespace Geometry;
 
 attribute force_align;
