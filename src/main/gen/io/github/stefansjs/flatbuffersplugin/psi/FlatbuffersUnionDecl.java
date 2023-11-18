@@ -10,6 +10,9 @@ public interface FlatbuffersUnionDecl extends PsiElement {
   @Nullable
   FlatbuffersDocumentation getDocumentation();
 
+  @Nullable
+  FlatbuffersMetadata getMetadata();
+
   @NotNull
   FlatbuffersTypeName getTypeName();
 

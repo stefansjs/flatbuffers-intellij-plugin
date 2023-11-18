@@ -117,7 +117,7 @@ enum_decl ::= documentation? ENUM type_name ( COLON primitive )? metadata? LCURL
 
 private commasep_enumval_decl ::= enumval_decl ( COMMA enumval_decl )* COMMA?
 
-union_decl ::= documentation? union type_name LCURLY commasep_unionval_decl? RCURLY
+union_decl ::= documentation? union type_name metadata? LCURLY commasep_unionval_decl? RCURLY
 {
     pin=type_name
 }
