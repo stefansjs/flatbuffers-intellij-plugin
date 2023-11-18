@@ -1225,7 +1225,7 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // documentation? union type_name LCURLY commasep_unionval_decl? RCURLY
+  // documentation? union type_name metadata? LCURLY commasep_unionval_decl? RCURLY
   public static boolean union_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "union_decl")) return false;
     if (!nextTokenIs(b, "<union decl>", DOCLINE, UNION)) return false;
@@ -1235,8 +1235,9 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, UNION);
     r = r && type_name(b, l + 1);
     p = r; // pin = type_name
-    r = r && report_error_(b, consumeToken(b, LCURLY));
-    r = p && report_error_(b, union_decl_4(b, l + 1)) && r;
+    r = r && report_error_(b, union_decl_3(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LCURLY)) && r;
+    r = p && report_error_(b, union_decl_5(b, l + 1)) && r;
     r = p && consumeToken(b, RCURLY) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -1249,9 +1250,16 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // metadata?
+  private static boolean union_decl_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "union_decl_3")) return false;
+    metadata(b, l + 1);
+    return true;
+  }
+
   // commasep_unionval_decl?
-  private static boolean union_decl_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "union_decl_4")) return false;
+  private static boolean union_decl_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "union_decl_5")) return false;
     commasep_unionval_decl(b, l + 1);
     return true;
   }

@@ -34,6 +34,12 @@ public class FlatbuffersUnionDeclImpl extends ASTWrapperPsiElement implements Fl
   }
 
   @Override
+  @Nullable
+  public FlatbuffersMetadata getMetadata() {
+    return findChildByClass(FlatbuffersMetadata.class);
+  }
+
+  @Override
   @NotNull
   public FlatbuffersTypeName getTypeName() {
     return findNotNullChildByClass(FlatbuffersTypeName.class);
