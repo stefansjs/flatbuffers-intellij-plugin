@@ -22,6 +22,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
+import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
@@ -37,7 +38,7 @@ class FlatbuffersParserDefinition: ParserDefinition {
     override fun createLexer(project: Project?) = FlatbuffersLexerAdapter()
     override fun createParser(project: Project?) = FlatbuffersParser()
 
-    override fun createFile(fileViewProvider: FileViewProvider?) = FlatbuffersFile(fileViewProvider!!)
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = FlatbuffersFile(viewProvider)
     override fun createElement(node: ASTNode?) = FlatbuffersTypes.Factory.createElement(node)
 
     override fun getFileNodeType() = FILE
