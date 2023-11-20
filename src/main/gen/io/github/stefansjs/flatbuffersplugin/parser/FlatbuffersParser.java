@@ -353,13 +353,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident
+  // IDENTIFIER
   public static boolean declared_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declared_name")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ident(b, l + 1);
+    r = consumeToken(b, IDENTIFIER);
     exit_section_(b, m, DECLARED_NAME, r);
     return r;
   }
@@ -1213,13 +1213,13 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident
+  // IDENTIFIER
   public static boolean type_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_name")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ident(b, l + 1);
+    r = consumeToken(b, IDENTIFIER);
     exit_section_(b, m, TYPE_NAME, r);
     return r;
   }

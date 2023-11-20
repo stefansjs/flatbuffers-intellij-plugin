@@ -5,18 +5,19 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
+import com.intellij.openapi.util.NlsSafe;
 
 public interface FlatbuffersTypeName extends FlatbuffersNamedElement {
 
   @NotNull
-  FlatbuffersIdent getIdent();
+  PsiElement getIdentifier();
 
-  String getName();
+  @NlsSafe String getName();
 
   @NotNull
   FlatbuffersNamedElement setName(@NotNull String newName);
 
   @NotNull
-  FlatbuffersIdent getNameIdentifier();
+  PsiElement getNameIdentifier();
 
 }

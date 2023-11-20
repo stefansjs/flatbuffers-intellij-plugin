@@ -15,13 +15,14 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import io.github.stefansjs.flatbuffersplugin.FlatbuffersFileType
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersDeclaredName
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeName
 
 fun getTextRangeInParent(ident: PsiElement): TextRange {
     return TextRange(ident.startOffsetInParent, ident.startOffsetInParent + ident.textLength)
 }
 
 class FlatbuffersTypeReference(element: FlatbuffersDeclaredName) :
-    PsiReferenceBase<FlatbuffersDeclaredName>(element, getTextRangeInParent(element.ident))
+    PsiReferenceBase<FlatbuffersDeclaredName>(element, getTextRangeInParent(element.identifier))
 {
     override fun resolve(): PsiElement? {
         // Try and find the declaration locally first. IIUC flatbuffers only allows one declaratino per namespace,
@@ -54,6 +55,10 @@ class FlatbuffersTypeReference(element: FlatbuffersDeclaredName) :
         }.toTypedArray()
     }
 
+    override fun handleElementRename(newElementName: String): PsiElement {
+        element.setName(newElementName)
+        return element
+    }
 }
 
 // Reference resolvers. Based (conveniently) on the above getName implementations
@@ -72,9 +77,8 @@ private fun findTypes(project: Project, typeName: String? = null): List<Flatbuff
 
 private fun findTypes(file: PsiFile, typeName: String? = null): List<FlatbuffersNamedElement>
 {
-    var declarations = PsiTreeUtil.findChildrenOfAnyType(file, FlatbuffersNamedElement::class.java)
-    if (typeName != null) {
-        declarations = declarations.filter { typeName == it.name }
+    val types = PsiTreeUtil.findChildrenOfAnyType(file, FlatbuffersTypeName::class.java).filterNotNull().filter {
+        typeName == it.name
     }
-    return declarations.toList()
+    return types.toList()
 }

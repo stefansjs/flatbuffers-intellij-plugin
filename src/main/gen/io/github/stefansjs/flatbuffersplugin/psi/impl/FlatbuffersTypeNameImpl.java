@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
+import com.intellij.openapi.util.NlsSafe;
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
 public class FlatbuffersTypeNameImpl extends FlatbuffersNamedElementImpl implements FlatbuffersTypeName {
@@ -30,12 +31,12 @@ public class FlatbuffersTypeNameImpl extends FlatbuffersNamedElementImpl impleme
 
   @Override
   @NotNull
-  public FlatbuffersIdent getIdent() {
-    return findNotNullChildByClass(FlatbuffersIdent.class);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
   @Override
-  public String getName() {
+  public @NlsSafe String getName() {
     return FlatbuffersPsiImplUtilKt.getName(this);
   }
 
@@ -47,7 +48,7 @@ public class FlatbuffersTypeNameImpl extends FlatbuffersNamedElementImpl impleme
 
   @Override
   @NotNull
-  public FlatbuffersIdent getNameIdentifier() {
+  public PsiElement getNameIdentifier() {
     return FlatbuffersPsiImplUtilKt.getNameIdentifier(this);
   }
 
