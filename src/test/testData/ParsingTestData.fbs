@@ -39,6 +39,10 @@ union UnionWithTrailingComma
     second,
 }
 
+union UnionWithAttributes (priority) {
+    first, second
+}
+
 union UnionWithDiscriminants {
   Monster = 3,
   MyMonster: Monster = 5,
