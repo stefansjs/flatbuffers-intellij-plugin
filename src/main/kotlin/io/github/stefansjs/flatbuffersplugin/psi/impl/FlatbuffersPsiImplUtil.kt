@@ -15,6 +15,8 @@
  */
 package io.github.stefansjs.flatbuffersplugin.psi.impl
 
+import com.intellij.psi.PsiElement
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersDeclaredName
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeName
 import io.github.stefansjs.flatbuffersplugin.psi.createClass
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement
@@ -36,8 +38,7 @@ import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement
 
 
 // Named element generics
-fun <T : FlatbuffersNamedElement> setName(element: T, newName: String): FlatbuffersNamedElement
-{
+fun <T : FlatbuffersNamedElement> setName(element: T, newName: String): FlatbuffersNamedElement {
     val identifierNode = element.nameIdentifier!!.node
 
     val type = createClass(element.project, newName)
@@ -47,6 +48,10 @@ fun <T : FlatbuffersNamedElement> setName(element: T, newName: String): Flatbuff
     return element
 }
 
-fun getNameIdentifier(element: FlatbuffersTypeName) = element.ident
-fun getName(element: FlatbuffersTypeName) = getNameIdentifier(element).text
+fun getNameIdentifier(element: FlatbuffersTypeName): PsiElement = element.identifier
+fun getName(element: FlatbuffersTypeName) = element.identifier.text
 fun setName(element: FlatbuffersTypeName, newName: String) = setName<FlatbuffersTypeName>(element, newName)
+
+fun getNameIdentifier(element: FlatbuffersDeclaredName): PsiElement = element.identifier
+fun getName(element: FlatbuffersDeclaredName) = element.identifier.text
+fun setName(element: FlatbuffersDeclaredName, newName: String) = setName<FlatbuffersDeclaredName>(element, newName)

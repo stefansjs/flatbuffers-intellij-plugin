@@ -95,8 +95,9 @@ attribute_decl ::= ATTRIBUTE ( ident | string_constant ) SEMICOLON
     pin=2
 }
 
-type_name ::= ident
+type_name ::= IDENTIFIER
 {
+    pin=1
     mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
     implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
     methods=[
@@ -193,9 +194,16 @@ declared_namespace ::= (ident DOT)*
 {
     pin=2
 }
-declared_name ::= ident
+declared_name ::= IDENTIFIER
 {
+    pin=1
     mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersDeclaredNameMixin"
+    implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+    methods=[
+        getName
+        setName
+        getNameIdentifier
+    ]
 }
 
 enumval_decl ::= ident ( EQUALS integer_constant )?

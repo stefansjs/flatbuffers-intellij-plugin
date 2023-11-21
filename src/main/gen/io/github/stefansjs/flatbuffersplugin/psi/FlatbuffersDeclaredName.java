@@ -4,10 +4,20 @@ package io.github.stefansjs.flatbuffersplugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
+import com.intellij.openapi.util.NlsSafe;
 
-public interface FlatbuffersDeclaredName extends PsiElement {
+public interface FlatbuffersDeclaredName extends FlatbuffersNamedElement {
 
   @NotNull
-  FlatbuffersIdent getIdent();
+  PsiElement getIdentifier();
+
+  @NlsSafe String getName();
+
+  @NotNull
+  FlatbuffersNamedElement setName(@NotNull String newName);
+
+  @NotNull
+  PsiElement getNameIdentifier();
 
 }
