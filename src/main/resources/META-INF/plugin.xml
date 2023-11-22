@@ -45,10 +45,6 @@
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersSyntaxHighlighterFactory"
     />
-<!--    <lang.refactoringSupport-->
-<!--            language="Flatbuffers"-->
-<!--            implementationClass="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersRefactoringupportProvider"-->
-<!--    />-->
     <annotator
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersAnnotator"
