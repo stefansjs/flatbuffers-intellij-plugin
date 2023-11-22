@@ -11,18 +11,18 @@ There is a lengthy process for creating release binaries below. The process is c
 almost entirely set out using github. Thanks github.
 
 
-Feature development is done on master for as long as I am the only developer.
+Feature development is done on main for as long as I am the only developer.
  
-Pull requests may be done on feature branches and merged to master.
+Pull requests may be done on feature branches and merged to main.
  
 `release` is treated as a Release Candidate (RC) branch for testing in production environments. RC fixes are done 
 directly on the release branch. QA iterations are done on release until a final release can be published. Releases are 
-published and tagged on the release branch and merged back to master after releases are done.
+published and tagged on the release branch and merged back to main after releases are done.
 
 ## Release Process
 
 This may be a living document. Each time you do a release make edits directly in that release's md file, and then come
-back to update this template _after_ merging to master.
+back to update this template _after_ merging to main.
 
 To create a release, start by checking out `release` and adding a new release markdown to `docs/releases/vX.Y.Z.md` with
 the following markdown.
@@ -39,7 +39,7 @@ This release provides an initial version of a flatbuffers editing plugin for Int
 ## Checklist
 
 - [ ] checkout the release branch
-- [ ] merge origin/master
+- [ ] merge origin/main
 - [ ] create markdown file in `docs/releases/v<Release Number>.md` for the potential new release with the new version
  number
   - [ ] Update the markdown title with the upcoming version
@@ -74,7 +74,7 @@ This release provides an initial version of a flatbuffers editing plugin for Int
   - [ ] uncheck the "draft release" box
   - [ ] publish it
 - [ ] Publish the plugin on JetBrains Hub https://plugins.jetbrains.com/plugin/14326-flatbuffers-support
-- [ ] merge to master
+- [ ] merge to main
 - [ ] edit `updatePlugins.xml` with latest release
 - [ ] Increment the version in build.gradle to the next alpha version
 - [ ] merge any changes from this checklist into `releases.md`
