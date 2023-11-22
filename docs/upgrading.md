@@ -33,6 +33,20 @@ are two places to set this value.
     - `<idea-version since-build="232"/>`
     - unfortunately, [build.gradle](../build.gradle) `patchPluginXml.sinceBuild = '232'` 
 
+## JBR
+
+The JetBrains runtime specifies a minimum java version. In order to generate consistent code, we have to tell kotlin 
+which version of the java it needs to be compatible with in [build.gradle](../build.gradle)
+
+```groovy
+compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+```
+
 ## Kotlin stdlib
 
 This is specified in the gradle plugin [build.gradle](../build.gradle)
