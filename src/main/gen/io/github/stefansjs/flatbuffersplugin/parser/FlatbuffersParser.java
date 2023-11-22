@@ -476,16 +476,17 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident ( EQUALS integer_constant )?
+  // IDENTIFIER ( EQUALS integer_constant )?
   public static boolean enumval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enumval_decl")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = ident(b, l + 1);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ENUMVAL_DECL, null);
+    r = consumeToken(b, IDENTIFIER);
+    p = r; // pin = 1
     r = r && enumval_decl_1(b, l + 1);
-    exit_section_(b, m, ENUMVAL_DECL, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // ( EQUALS integer_constant )?

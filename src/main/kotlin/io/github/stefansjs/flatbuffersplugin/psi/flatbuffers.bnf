@@ -206,7 +206,17 @@ declared_name ::= IDENTIFIER
     ]
 }
 
-enumval_decl ::= ident ( EQUALS integer_constant )?
+enumval_decl ::= IDENTIFIER ( EQUALS integer_constant )?
+{
+    pin=1
+    mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+    implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+    methods=[
+        getName
+        setName
+        getNameIdentifier
+    ]
+}
 
 // This is explicitly duplicating the structure for a declared_type, but without the pin.
 // Essentially the pin is necessary for all other cases, but by putting it in a union value where a trailing comma is

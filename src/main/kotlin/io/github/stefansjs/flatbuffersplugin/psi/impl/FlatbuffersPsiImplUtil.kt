@@ -17,6 +17,7 @@ package io.github.stefansjs.flatbuffersplugin.psi.impl
 
 import com.intellij.psi.PsiElement
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersDeclaredName
+import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersEnumvalDecl
 import io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypeName
 import io.github.stefansjs.flatbuffersplugin.psi.createClass
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement
@@ -55,3 +56,7 @@ fun setName(element: FlatbuffersTypeName, newName: String) = setName<Flatbuffers
 fun getNameIdentifier(element: FlatbuffersDeclaredName): PsiElement = element.identifier
 fun getName(element: FlatbuffersDeclaredName) = element.identifier.text
 fun setName(element: FlatbuffersDeclaredName, newName: String) = setName<FlatbuffersDeclaredName>(element, newName)
+
+fun getNameIdentifier(element: FlatbuffersEnumvalDecl): PsiElement = element.identifier
+fun getName(element: FlatbuffersEnumvalDecl) = element.identifier.text
+fun setName(element: FlatbuffersEnumvalDecl, newName: String) = setName<FlatbuffersEnumvalDecl>(element, newName)

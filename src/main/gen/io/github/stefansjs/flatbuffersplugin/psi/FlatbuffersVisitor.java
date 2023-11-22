@@ -53,7 +53,7 @@ public class FlatbuffersVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumvalDecl(@NotNull FlatbuffersEnumvalDecl o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitFieldDecl(@NotNull FlatbuffersFieldDecl o) {

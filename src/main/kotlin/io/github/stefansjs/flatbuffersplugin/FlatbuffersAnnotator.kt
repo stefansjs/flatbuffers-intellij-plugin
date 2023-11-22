@@ -64,7 +64,7 @@ class FlatbuffersAnnotator: Annotator {
                 applyFormatting(element, holder)
             }
             is FlatbuffersEnumvalDecl -> {
-                applyAttribute(element.ident, holder, ENUM_VALUE)
+                applyAttribute(element.identifier, holder, ENUM_VALUE)
             }
             is FlatbuffersUnionvalDecl -> {
                 applyFormatting(element, holder)
