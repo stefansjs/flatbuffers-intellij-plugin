@@ -29,8 +29,8 @@ public class FlatbuffersFieldValueImpl extends ASTWrapperPsiElement implements F
 
   @Override
   @Nullable
-  public FlatbuffersIdent getIdent() {
-    return findChildByClass(FlatbuffersIdent.class);
+  public FlatbuffersEnumValue getEnumValue() {
+    return findChildByClass(FlatbuffersEnumValue.class);
   }
 
   @Override

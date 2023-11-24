@@ -476,6 +476,18 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean enum_value(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_value")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, ENUM_VALUE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // IDENTIFIER ( EQUALS integer_constant )?
   public static boolean enumval_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enumval_decl")) return false;
@@ -577,12 +589,12 @@ public class FlatbuffersParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident | scalar
+  // enum_value | scalar
   public static boolean field_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_value")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FIELD_VALUE, "<field value>");
-    r = ident(b, l + 1);
+    r = enum_value(b, l + 1);
     if (!r) r = scalar(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;

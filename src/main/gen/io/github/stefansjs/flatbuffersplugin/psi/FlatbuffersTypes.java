@@ -20,6 +20,7 @@ public interface FlatbuffersTypes {
   IElementType DOCUMENTATION = new FlatbuffersElementType("DOCUMENTATION");
   IElementType ENUMVAL_DECL = new FlatbuffersElementType("ENUMVAL_DECL");
   IElementType ENUM_DECL = new FlatbuffersElementType("ENUM_DECL");
+  IElementType ENUM_VALUE = new FlatbuffersElementType("ENUM_VALUE");
   IElementType FIELD_DECL = new FlatbuffersElementType("FIELD_DECL");
   IElementType FIELD_IDENT = new FlatbuffersElementType("FIELD_IDENT");
   IElementType FIELD_TYPE = new FlatbuffersElementType("FIELD_TYPE");
@@ -148,6 +149,9 @@ public interface FlatbuffersTypes {
       }
       else if (type == ENUM_DECL) {
         return new FlatbuffersEnumDeclImpl(node);
+      }
+      else if (type == ENUM_VALUE) {
+        return new FlatbuffersEnumValueImpl(node);
       }
       else if (type == FIELD_DECL) {
         return new FlatbuffersFieldDeclImpl(node);

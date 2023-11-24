@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface FlatbuffersFieldValue extends PsiElement {
 
   @Nullable
-  FlatbuffersIdent getIdent();
+  FlatbuffersEnumValue getEnumValue();
 
   @Nullable
   FlatbuffersScalar getScalar();
