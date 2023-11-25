@@ -64,7 +64,7 @@ class FlatbuffersAnnotator: Annotator {
                 applyFormatting(element, holder)
             }
             is FlatbuffersEnumvalDecl -> {
-                applyAttribute(element.ident, holder, ENUM_VALUE)
+                applyAttribute(element.identifier, holder, ENUM_VALUE)
             }
             is FlatbuffersUnionvalDecl -> {
                 applyFormatting(element, holder)
@@ -91,7 +91,7 @@ class FlatbuffersAnnotator: Annotator {
 
         // according to the grammar there should either be a constant or identifier after an equal sign.
         // There's currently no identifier allowed other than an enum value
-        element.fieldValue?.ident?.let { applyAttribute(it, holder, ENUM_REFERENCE) }
+        element.fieldValue?.enumValue?.let { applyAttribute(it, holder, ENUM_REFERENCE) }
     }
 
     private fun applyFormatting(declaredType: FlatbuffersDeclaredType, holder: AnnotationHolder) {

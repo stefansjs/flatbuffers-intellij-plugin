@@ -8,31 +8,24 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.stefansjs.flatbuffersplugin.psi.FlatbuffersTypes.*;
-import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl;
 import io.github.stefansjs.flatbuffersplugin.psi.*;
 import com.intellij.openapi.util.NlsSafe;
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 
-public class FlatbuffersEnumvalDeclImpl extends FlatbuffersNamedElementImpl implements FlatbuffersEnumvalDecl {
+public class FlatbuffersEnumValueImpl extends FlatbuffersEnumValueMixin implements FlatbuffersEnumValue {
 
-  public FlatbuffersEnumvalDeclImpl(@NotNull ASTNode node) {
+  public FlatbuffersEnumValueImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FlatbuffersVisitor visitor) {
-    visitor.visitEnumvalDecl(this);
+    visitor.visitEnumValue(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FlatbuffersVisitor) accept((FlatbuffersVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FlatbuffersIntegerConstant getIntegerConstant() {
-    return findChildByClass(FlatbuffersIntegerConstant.class);
   }
 
   @Override

@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 import io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement;
 import com.intellij.openapi.util.NlsSafe;
 
-public interface FlatbuffersEnumvalDecl extends FlatbuffersNamedElement {
-
-  @Nullable
-  FlatbuffersIntegerConstant getIntegerConstant();
+public interface FlatbuffersEnumValue extends FlatbuffersNamedElement {
 
   @NotNull
   PsiElement getIdentifier();

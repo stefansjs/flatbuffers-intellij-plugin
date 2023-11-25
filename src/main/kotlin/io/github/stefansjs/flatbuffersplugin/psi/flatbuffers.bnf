@@ -138,7 +138,7 @@ field_decl ::= field_ident COLON field_type ( EQUALS field_value )? metadata? SE
 // A field identifier is allowed to have flatbuffers keywords because the schema compiles down to other languages
 // I guess the philosophy is that we don't prevent field names based on a language that isn't the generated language
 field_ident ::= ident | keyword
-field_value ::= ident | scalar
+field_value ::= enum_value | scalar
 
 private keyword ::=
         primitive
@@ -206,7 +206,17 @@ declared_name ::= IDENTIFIER
     ]
 }
 
-enumval_decl ::= ident ( EQUALS integer_constant )?
+enumval_decl ::= IDENTIFIER ( EQUALS integer_constant )?
+{
+    pin=1
+    mixin="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElementImpl"
+    implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+    methods=[
+        getName
+        setName
+        getNameIdentifier
+    ]
+}
 
 // This is explicitly duplicating the structure for a declared_type, but without the pin.
 // Essentially the pin is necessary for all other cases, but by putting it in a union value where a trailing comma is
@@ -218,6 +228,18 @@ metadata ::= LPAREN metadata_value ( COMMA metadata_value )* RPAREN
 private metadata_value ::= ident ( COLON single_value )?
 
 scalar ::= integer_constant | float_constant | boolean_constant
+
+enum_value ::= IDENTIFIER
+{
+    pin=1
+    mixin="io.github.stefansjs.flatbuffersplugin.psi.impl.FlatbuffersEnumValueMixin"
+    implements="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersNamedElement"
+    methods=[
+        getName
+        setName
+        getNameIdentifier
+    ]
+}
 
 object ::= object_value ( COMMA object_value )*
 private object_value ::= ident COLON value
