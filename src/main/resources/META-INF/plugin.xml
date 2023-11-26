@@ -49,6 +49,10 @@
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersSyntaxHighlighterFactory"
     />
+    <lang.findUsagesProvider
+            language="Flatbuffers"
+            implementationClass="io.github.stefansjs.flatbuffersplugin.psi.ref.FlatbuffersFindUsagesProvider"
+    />
     <annotator
             language="Flatbuffers"
             implementationClass="io.github.stefansjs.flatbuffersplugin.FlatbuffersAnnotator"
