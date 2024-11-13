@@ -17,9 +17,9 @@ Instructions for installing in your jetbrains IDE are at https://www.jetbrains.c
 
 To get early access to releases you can install this GitHub repository as a plugin server. To add this GitHub repo as a plugin repository, use one of the following links and follow the IntelliJ instructions https://www.jetbrains.com/help/idea/managing-plugins.html#repos 
 
-#### master 
+#### main 
 
-https://raw.githubusercontent.com/stefansjs/flatbuffers-intellij-plugin/master/updatePlugins.xml
+https://raw.githubusercontent.com/stefansjs/flatbuffers-intellij-plugin/main/updatePlugins.xml
 
 Use master to get official releases before they're available from JetBrains
 
